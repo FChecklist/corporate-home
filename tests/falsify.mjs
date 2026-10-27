@@ -12,18 +12,19 @@ import { runCases } from "./run.mjs";
 const HERE = dirname(fileURLToPath(import.meta.url)), SITE = resolve(HERE, "..");
 
 export const MUTATIONS = {
-  T01: [{ file: "index.html", find: 'href="/for-hr.html"', replace: 'href="/for-hr-gone.html"', why: "a menu link points at a page that does not exist" }],
+  T01: [{ file: "index.html", find: 'href="/for-hr"', replace: 'href="/for-hr-gone"', why: "a menu link points at a page that does not exist" }],
   T02: [{ file: "index.html", find: '<article class="card soon">', replace: '<article class="card soon"><a href="https://luckydraw.corporatetambola.com/">x</a>', why: "Lucky Draw gets a link before it exists" }],
   T03: [{ file: "index.html", find: '<script src="/theme.js"></script>', replace: '<script src="/theme.js"></script><script src="/missing-file.js"></script>', why: "a script file is missing" }],
   T04: [{ file: "site.css", find: "--muted:#A9B5CE", replace: "--muted:#3A4660", all: true, why: "dark mode grey text becomes unreadable" }],
   T05: [{ file: "site.css", find: ":focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:6px}", replace: ":focus-visible{outline:none}", why: "the focus ring is removed" }],
   T06: [{ file: "site.css", find: ".brand{display:flex;", replace: ".brand{min-width:430px;display:flex;", why: "one element that is too wide for a phone" }],
   T07: [{ file: "site.css", find: "  .tabbar{display:none}\n  body{padding-bottom:0}", replace: "  body{padding-bottom:0}", why: "the bottom bar stays on a phone on its side" }],
-  T08: [{ file: "site.css", find: "@media (min-width:900px){", replace: "@media (min-width:1000px){", why: "the laptop design starts at 1000 px, not 900" }],
+  T08: [{ file: "site.css", find: "@media (min-width:900px){", replace: "@media (min-width:1000px){", why: "the laptop design starts at 1000 px, not 900" },
+         { file: "site.css", find: "nav.main a,.top .tbtn{padding:0 9px;font-size:15px}", replace: "nav.main a,.top .tbtn{padding:0 24px;font-size:15px}", why: "top bar links too wide between 900 and 1100 px" }],
   T09: [{ file: "index.html", find: "<h2>Three steps.</h2>", replace: "<h2>100% secure, bank-grade, Rs 999 only</h2>", why: "a big claim and a price appear" }],
   T10: [{ file: "index.html", find: "<h2>Three steps.</h2>", replace: "<h1>Three steps.</h1>", why: "a second h1" }],
   T11: [{ file: "site.css", find: "--muted:#4F5B73", replace: "--muted:#B5BCCB", why: "light mode grey text is too pale" }],
-  T12: [{ file: "sw.js", find: '"/privacy.html", ', replace: "", why: "a page is no longer saved for offline" }],
+  T12: [{ file: "sw.js", find: '"/privacy", ', replace: "", why: "a page is no longer saved for offline" }],
   T13: [{ file: "index.html", find: '<link rel="stylesheet" href="/site.css">', replace: '<link rel="stylesheet" href="/site.css"><script src="https://stats.example.com/a.js"></script>', why: "an outside tracker is added" }],
   T14: [{ file: "site.js", find: 'localStorage.setItem("cg-theme", next)', replace: "void next", why: "the choice is no longer remembered" }],
 };

@@ -66,9 +66,9 @@ img,svg{max-width:100%}
 .brand span{white-space:nowrap}
 .menu{display:none;margin-left:auto;min-height:44px;min-width:44px;padding:0 16px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font:600 15px/1 var(--sans);cursor:pointer}
 nav.main{margin-left:auto;display:flex;align-items:center;gap:2px}
-nav.main a,.tbtn{display:inline-flex;align-items:center;min-height:44px;padding:0 13px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:15.5px;font-weight:500}
+nav.main a,.tbtn{white-space:nowrap;display:inline-flex;align-items:center;min-height:44px;padding:0 13px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:15.5px;font-weight:500}
 nav.main a:hover,.tbtn:hover{background:var(--tint)}
-nav.main a[aria-current=page]{box-shadow:inset 0 -3px 0 var(--gold);border-radius:8px 8px 0 0}
+nav.main a[aria-current=page]{box-shadow:inset 0 -3px 0 var(--goldt);border-radius:8px 8px 0 0}
 nav.main a.btn{margin-left:8px;color:var(--on-action);font-weight:600;padding:0 20px;min-height:44px}
 nav.main a.btn:hover{background:var(--action)}
 .tbtn{border:0;background:transparent;cursor:pointer;font-family:var(--sans)}
@@ -89,9 +89,9 @@ section{padding-block:clamp(48px,7vw,92px)}
 .sec-head{max-width:44em;margin-bottom:clamp(26px,4vw,44px)}
 .sec-head p:last-child{margin-bottom:0}
 .alt{background:var(--tint);border-block:1px solid var(--line)}
-.occasions{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-wrap:wrap;gap:8px 0;color:var(--ink);font-weight:500}
+.occasions{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-wrap:wrap;gap:8px 28px;color:var(--ink);font-weight:500}
 .occasions li{display:flex;align-items:center}
-.occasions li+li:before{content:"";width:5px;height:5px;border-radius:50%;background:var(--gold);margin:0 14px}
+.occasions li:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold);margin-right:10px;flex:none}
 .two{display:grid;gap:28px}
 
 /* ---------- game cards ---------- */
@@ -143,7 +143,7 @@ section{padding-block:clamp(48px,7vw,92px)}
 /* ---------- steps ---------- */
 .steps{list-style:none;margin:0;padding:0;display:grid;gap:26px;counter-reset:s}
 .steps li{counter-increment:s;position:relative;padding-left:64px;min-width:0}
-.steps li:before{content:counter(s);position:absolute;left:0;top:-4px;font:600 46px/1 var(--serif);color:var(--gold)}
+.steps li:before{content:counter(s);position:absolute;left:0;top:-4px;font:600 46px/1 var(--serif);color:var(--goldt)}
 .steps h3{margin-bottom:.3em}
 .steps p{margin:0;color:var(--muted)}
 
@@ -204,25 +204,27 @@ dl.contact dd{margin:0;font-size:18px}
 @media (max-width:899.98px){
   body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
   html.js .menu{display:inline-flex;align-items:center;justify-content:center}
-  html.js nav.main{display:none;position:absolute;left:0;right:0;top:100%;margin:0;background:var(--bg);border-bottom:1px solid var(--line);padding:8px var(--gutter) 16px;flex-direction:column;align-items:stretch;gap:0;max-height:calc(100vh - var(--bar));max-height:calc(100dvh - var(--bar));overflow-y:auto}
+  html.js nav.main{display:none;position:absolute;left:0;right:0;top:100%;margin:0;background:var(--bg);border-bottom:1px solid var(--line);padding:8px var(--gutter) 16px;flex-direction:column;align-items:stretch;gap:0;max-height:calc(100vh - var(--bar) - 76px);max-height:calc(100dvh - var(--bar) - 76px - env(safe-area-inset-bottom,0px));overflow-y:auto}
   html.js nav.main.open{display:flex}
   nav.main a,.tbtn{min-height:52px;font-size:17px;border-bottom:1px solid var(--line);border-radius:0;padding:0 4px}
   nav.main a[aria-current=page]{box-shadow:none;color:var(--link);font-weight:700}
   nav.main a.btn{margin:14px 0 0;border:1.5px solid var(--action);border-radius:10px;justify-content:center}
-  .top .wrap{position:relative}
   html:not(.js) .top .wrap{flex-wrap:wrap;padding-block:8px}
   html:not(.js) nav.main{margin-left:0;flex-wrap:wrap;width:100%}
   .tabbar{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:45;background:var(--bg);border-top:1px solid var(--line);padding:10px var(--gutter) calc(10px + env(safe-area-inset-bottom,0px))}
   .tabbar .btn{flex:1 1 0;min-height:48px;padding:0 10px;font-size:15.5px}
   .tabbar .btn.main{flex:1.35 1 0}
   .steps li{padding-left:56px}
+  html{scroll-padding-bottom:84px}
+  .foot .tbtn{border:0;min-height:44px;padding:0}
 }
+@media (max-width:359.98px){.brand{font-size:18px;gap:8px}.brand svg{width:30px;height:30px}.menu{padding:0 12px}}
 /* phone on its side or any screen that is short: nothing sticks to the bottom, the top bar scrolls away */
 @media (max-height:480px){
   .tabbar{display:none}
   body{padding-bottom:0}
-  .top{position:static}
-  html{scroll-padding-top:12px}
+  .top{position:relative}
+  html{scroll-padding-top:12px;scroll-padding-bottom:0}
   html.js nav.main{max-height:none}
 }
 @media (min-width:600px) and (max-width:899.98px){
@@ -235,6 +237,12 @@ dl.contact dd{margin:0;font-size:18px}
 }
 
 /* =================== LAPTOP DESIGN (900 px and up) =================== */
+@media (min-width:900px) and (max-width:1119.98px){
+  .top .wrap{gap:8px}
+  nav.main a,.top .tbtn{padding:0 9px;font-size:15px}
+  nav.main a.btn{margin-left:4px;padding:0 16px}
+  .top .tbtn{display:none}
+}
 @media (min-width:900px){
   .hero .wrap{grid-template-columns:1.12fr .88fr;gap:56px}
   .six{display:grid}
@@ -261,7 +269,13 @@ dl.contact dd{margin:0;font-size:18px}
 }
 @media (min-width:1500px){:root{--maxw:1200px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
-@media print{.top,.tabbar,.skip{display:none}body{background:#fff;color:#000}}
+@media print{:root,:root[data-theme=dark]{--bg:#fff;--paper:#fff;--tint:#fff;--ink:#000;--muted:#222;--line:#999;--band:#fff;--on-band:#000;--band-muted:#000;--band-gold:#000;--cta-bg:#fff;--cta-on:#000;--cta-btn:#000;--cta-btn-on:#fff;--link:#000}.top,.tabbar,.skip,.six{display:none}body{background:#fff;color:#000}}
 .sprite{position:absolute;width:0;height:0;overflow:hidden}
 main:focus{outline:0}
 .contactline a{display:inline-flex;align-items:center;min-height:44px}
+.band :focus-visible,.cta :focus-visible{outline-color:#fff}
+.acts:empty{display:none}
+html:not(.js) [data-theme-toggle]{display:none}
+.h3{font-family:var(--serif);font-weight:600;font-size:clamp(20px,2vw,23px);line-height:1.25;letter-spacing:-.01em;margin:0 0 .5em}
+.row .h3,.card .h3{margin:0 0 .3em}
+.plain-list-gap{margin:0}

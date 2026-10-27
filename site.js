@@ -2,8 +2,9 @@
 (function () {
   var d = document.documentElement;
   var btn = document.getElementById("menu"), nav = document.getElementById("nav");
-  function setOpen(o) { nav.classList.toggle("open", o); btn.setAttribute("aria-expanded", o ? "true" : "false"); btn.textContent = o ? "Close" : "Menu"; }
+  function setOpen(o) { nav.classList.toggle("open", o); btn.setAttribute("aria-expanded", o ? "true" : "false"); }
   if (btn && nav) {
+    window.matchMedia("(min-width: 900px)").addEventListener("change", function (e) { if (e.matches) setOpen(false); });
     btn.addEventListener("click", function () { setOpen(!nav.classList.contains("open")); });
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && nav.classList.contains("open")) { setOpen(false); btn.focus(); } });
     nav.addEventListener("click", function (e) { if (e.target.closest && e.target.closest("a[href^='#']")) setOpen(false); });

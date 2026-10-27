@@ -8,7 +8,7 @@ import { join, extname, resolve } from "node:path";
 export const WIDTHS = [320, 360, 390, 414, 600, 768, 1024, 1280, 1440, 1920];
 export const heightFor = (w) => (w < 700 ? 800 : w < 1100 ? 900 : 1000);
 export const PAGES = ["index", "games", "how-it-works", "for-hr", "privacy", "contact", "404", "offline"];
-export const pageUrl = (base, p) => base + (p === "index" ? "/" : "/" + p + ".html");
+export const pageUrl = (base, p) => base + (p === "index" ? "/" : "/" + p);
 
 const MIME = { ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".svg": "image/svg+xml", ".woff2": "font/woff2", ".xml": "application/xml", ".txt": "text/plain; charset=utf-8", ".json": "application/json" };
 

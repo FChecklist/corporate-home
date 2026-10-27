@@ -30,7 +30,7 @@ export const CASES = [
       for (const h of hrefs(html)) {
         if (h.startsWith("#")) c.check(`${f}: anchor ${h} exists`, ids.has(h.slice(1)), "no such id");
         else if (h.startsWith("/") && h.includes("#")) {
-          const [p, a] = h.split("#"); const tf = p === "/" ? "index.html" : p.slice(1); const th = existsSync(join(root, tf)) ? read(root, tf) : "";
+          const [p, a] = h.split("#"); const tf = p === "/" ? "index.html" : p.slice(1) + ".html"; const th = existsSync(join(root, tf)) ? read(root, tf) : "";
           c.check(`${f}: ${h} anchor exists`, new RegExp(`\\bid="${a}"`).test(th), "no such id");
         }
       }
@@ -177,6 +177,13 @@ export const CASES = [
       c.check(`${p} @900: laptop design (no bottom bar, no Menu button, links in a row)`, b.tab === "none" && b.menu === "none" && b.nav === "flex" && b.dir === "row" && (b.six === "n/a" || b.six === "grid"), JSON.stringify(b));
       await o900.close();
     }
+    // between 900 and about 1200 the top bar is the tightest: links must stay on one line and not touch the name
+    for (const w of [900, 960, 1024, 1100, 1180]) {
+      const o = await openPage(browser, base + "/", { w, h: 900 });
+      const t = await o.page.evaluate(() => { const links = [...document.querySelectorAll("nav.main a, nav.main .tbtn")].filter((e) => e.getClientRects().length); const br = document.querySelector(".brand").getBoundingClientRect(); const first = Math.min(...links.map((e) => e.getBoundingClientRect().left)); return { tall: Math.max(...links.map((e) => e.getBoundingClientRect().height)), head: document.querySelector(".top").getBoundingClientRect().height, gap: first - br.right, wrapW: document.querySelector(".top .wrap").scrollWidth - document.querySelector(".top .wrap").clientWidth }; });
+      c.check(`top bar @${w}: one line, links clear of the name, nothing spills`, t.tall <= 56 && t.head <= 80 && t.gap >= 4 && t.wrapW <= 1, JSON.stringify(t));
+      await o.close();
+    }
   } },
 
   { id: "T09", name: "The words: required lines are there; no price, no big claim, no emoji, no customer names; short", async run({ root, c }) {
@@ -185,7 +192,7 @@ export const CASES = [
     c.check("the headline says what we do", home.includes("Online games for company events, for your invited people only."), "missing");
     c.check("data deletion: 'within 24 hours after the game ends'", home.includes("erased within 24 hours after the game ends"), "missing");
     c.check("compliance: 'Designed to follow' DPDP, GDPR, CCPA", /Designed to follow India's DPDP Act, the EU GDPR and US privacy laws such as the CCPA/.test(home), "missing");
-    c.check("close group: 'Only the people you invite can play.'", home.includes("Only the people you invite can play."), "missing");
+    c.check("close group: 'Your game is for the people you invite.'", home.includes("Your game is for the people you invite.") && home.includes("You decide who joins"), "missing");
     for (const n of ["Tambola", "Bingo", "Tic Tac Toe", "Snakes and Ladders", "Luck by Chance", "Lucky Draw"]) c.check(`home names ${n}`, home.includes(n), "missing");
     const words = home.split(/\s+/).length;
     c.check(`home page is short (${words} words, limit 850)`, words <= 850, words);
@@ -237,12 +244,12 @@ export const CASES = [
     const o = await openPage(browser, base + "/", { w: 1280 });
     const p = o.page;
     await p.evaluate(() => navigator.serviceWorker.ready.then(() => true));
-    await p.waitForFunction(async () => (await caches.keys()).length > 0 && (await (await caches.open("home-v1")).keys()).length >= 10, null, { timeout: 15000 }).catch(() => {});
-    await p.goto(base + "/games.html"); await p.waitForTimeout(300);
+    await p.waitForFunction(async () => (await caches.keys()).length > 0 && (await (await caches.open("home-v2")).keys()).length >= 12, null, { timeout: 15000 }).catch(() => {});
+    await p.goto(base + "/games"); await p.waitForTimeout(300);
     await o.ctx.setOffline(true);
-    await p.goto(base + "/games.html", { waitUntil: "load" });
+    await p.goto(base + "/games", { waitUntil: "load" });
     c.check("offline: a visited page opens", (await p.textContent("h1")).includes("Six games for your people"), await p.title());
-    await p.goto(base + "/privacy.html", { waitUntil: "load" });
+    await p.goto(base + "/privacy", { waitUntil: "load" });
     c.check("offline: a page that was saved at install opens", (await p.textContent("h1")).includes("What we keep"), await p.title());
     await p.goto(base + "/never-opened-page", { waitUntil: "load" }).catch(() => {});
     c.check("offline: an unknown page shows the offline page", (await p.textContent("h1")).includes("You are offline"), await p.title());
@@ -278,7 +285,7 @@ export const CASES = [
     const before = await bg();
     await p.click("nav [data-theme-toggle]");
     c.check("button: page turns dark", (await p.getAttribute("html", "data-theme")) === "dark" && (await bg()) < before - 300, "no change");
-    await p.goto(base + "/games.html");
+    await p.goto(base + "/games");
     c.check("choice is remembered on the next page", (await p.getAttribute("html", "data-theme")) === "dark", "forgot");
     await p.reload();
     c.check("choice survives a reload", (await p.getAttribute("html", "data-theme")) === "dark", "forgot");
