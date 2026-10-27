@@ -36,7 +36,7 @@ if (import.meta.url === "file:///" + process.argv[1].replace(/\\/g, "/")) {
   const only = a.includes("--only") ? a[a.indexOf("--only") + 1].split(",") : Object.keys(MUTATIONS);
   const before = hashDir(SITE);
   const chrome = await launchChrome();
-  let stayedGreen = 0, invalid = 0, red = 0;
+  let stayedGreen = 0, invalid = 0, red = 0; const baselines = {};
   try {
     for (const id of only) for (const m of MUTATIONS[id]) {
       const tmp = mkdtempSync(join(tmpdir(), "home-falsify-"));
@@ -46,6 +46,8 @@ if (import.meta.url === "file:///" + process.argv[1].replace(/\\/g, "/")) {
         if (!src.includes(m.find)) { console.log(`INVALID ${id}: text to break not found in ${m.file}: ${m.find.slice(0, 50)}`); invalid++; continue; }
         src = m.all ? src.split(m.find).join(m.replace) : src.replace(m.find, m.replace);
         writeFileSync(p, src);
+        if (!baselines[id]) { const [b] = await runCases([id], SITE, chrome.browser); baselines[id] = b.failed.length === 0 ? "green" : "red"; if (b.failed.length) console.log(`BASELINE RED ${id}: ${b.failed[0].name}`); }
+        if (baselines[id] === "red") { invalid++; continue; }
         const [r] = await runCases([id], tmp, chrome.browser);
         if (r.failed.length) { red++; console.log(`RED (good)  ${id}  ${m.why}  -> ${r.failed.length} of ${r.checks} checks failed, e.g. "${r.failed[0].name}"`); }
         else { stayedGreen++; console.log(`STAYED GREEN (bad)  ${id}  ${m.why}`); }

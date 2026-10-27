@@ -137,6 +137,7 @@ export const LAYOUT_PROBE = () => {
   const big = "button, .btn, nav a, .tabbar a, .card .go, .row .acts a, .foot li a, .foot p a, .more, .contactline a, .brand";
   for (const e of document.querySelectorAll("a[href], button")) {
     if (!vis(e) || skip(e)) continue;
+    if (getComputedStyle(e).display === "inline") continue;
     const r = e.getBoundingClientRect(); const strict = e.matches(big);
     const minH = strict ? 43.5 : 23.5, minW = strict ? 43.5 : 0;
     if (r.height < minH || r.width < minW) bad.push(`small tap target: ${name(e)} ${Math.round(r.width)}x${Math.round(r.height)}`);

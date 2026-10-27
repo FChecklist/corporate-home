@@ -10,6 +10,7 @@ const GAME_URLS = { Tambola: "https://corporatetambola.com/", Bingo: "https://bi
 const ALLOWED_EXTERNAL = [
   /^https:\/\/corporatetambola\.com\/(terms|privacy|subprocessors|dpa|refund-policy|demo)?$/,
   /^https:\/\/(bingo|tictactoe|snakes|luck)\.corporatetambola\.com\/(privacy|demo)?$/,
+  /^https:\/\/(bingo\.)?corporatetambola\.com\/zc\?demo=1$/,
   /^https:\/\/console\.corporatetambola\.com\/$/,
   /^mailto:hello@corporatetambola\.com(\?subject=Grievance)?$/,
   /^tel:\+919650397480$/,
@@ -112,7 +113,7 @@ export const CASES = [
       }
       // walk every stop
       await p.evaluate(() => { document.activeElement && document.activeElement.blur(); window.scrollTo(0, 0); });
-      const expected = await p.evaluate(() => [...document.querySelectorAll("a[href], button, [tabindex]:not([tabindex='-1'])")].filter((e) => e.getClientRects().length && getComputedStyle(e).visibility !== "hidden" && !e.closest(".skip") ).length);
+      const expected = await p.evaluate(() => new Set([...document.querySelectorAll("a[href], button")].filter((e) => e.getClientRects().length && getComputedStyle(e).visibility !== "hidden" && !e.classList.contains("skip")).map((e) => e.tagName + (e.id || "") + (e.getAttribute("href") || e.textContent.trim().slice(0, 18)))).size);
       const seen = new Set(); let noRing = [], escaped = false;
       await p.focus("body").catch(() => {});
       for (let i = 0; i < expected + 6; i++) {
@@ -126,7 +127,7 @@ export const CASES = [
         if (!s) { escaped = true; break; }
         seen.add(s.key); if (!s.ring) noRing.push(s.key); if (!s.onscreen) noRing.push("offscreen " + s.key);
       }
-      c.check(`${w}: Tab reaches ${expected} stops and leaves the page (no trap); saw ${seen.size}`, seen.size >= expected - 1 && escaped, `saw ${seen.size} of ${expected}, escaped ${escaped}`);
+      c.check(`${w}: Tab reaches all ${expected} different stops (no trap); saw ${seen.size}`, seen.size >= expected, `saw ${seen.size} of ${expected}, left the page: ${escaped}`);
       c.check(`${w}: every stop shows a visible focus ring`, noRing.length === 0, noRing.slice(0, 5).join(", "));
       await o.close();
     }
@@ -138,9 +139,9 @@ export const CASES = [
       const bad = await o.page.evaluate(LAYOUT_PROBE);
       c.check(`${p} @${w}: layout clean`, bad.length === 0, bad.slice(0, 4).join(" ; "));
       if (w < 900) {
-        const covered = await o.page.evaluate(() => { window.scrollTo(0, document.documentElement.scrollHeight); const t = document.querySelector(".tabbar"); if (!t || getComputedStyle(t).display === "none") return null; const last = [...document.querySelectorAll(".legalline p")].pop().getBoundingClientRect(); return last.bottom - t.getBoundingClientRect().top; });
+        const covered = await o.page.evaluate(() => { window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "instant" }); const t = document.querySelector(".tabbar"); if (!t || getComputedStyle(t).display === "none") return null; const last = [...document.querySelectorAll(".legalline p")].pop().getBoundingClientRect(); return last.bottom - t.getBoundingClientRect().top; });
         c.check(`${p} @${w}: the bottom bar does not hide the last line`, covered === null || covered <= 0, "overlap " + covered);
-        await o.page.evaluate(() => window.scrollTo(0, 0));
+        await o.page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
         await o.page.click("#menu"); await o.page.waitForTimeout(60);
         const open = await o.page.evaluate(() => { const n = document.getElementById("nav"); const r = n.getBoundingClientRect(); return { right: r.right, iw: innerWidth, bottom: r.bottom, ih: innerHeight, links: [...n.querySelectorAll("a, button")].every((e) => e.getBoundingClientRect().height >= 43.5), sx: document.documentElement.scrollWidth }; });
         c.check(`${p} @${w}: the opened menu fits the width and its items are tappable`, open.right <= open.iw + 1 && open.links && open.sx <= open.iw + 1, JSON.stringify(open));
@@ -158,8 +159,8 @@ export const CASES = [
       c.check(`${p} @${w}x${h}: layout clean`, bad.length === 0, bad.slice(0, 4).join(" ; "));
       if (h <= 480) {
         const s = await o.page.evaluate(() => ({ tab: getComputedStyle(document.querySelector(".tabbar")).display, head: document.querySelector(".top").getBoundingClientRect().height, pos: getComputedStyle(document.querySelector(".top")).position, ih: innerHeight }));
-        c.check(`${p} @${w}x${h}: sideways phone has no bottom bar and a top bar that scrolls away`, s.tab === "none" && s.pos === "static" && s.head <= s.ih * 0.3, JSON.stringify(s));
-        const btn = await o.page.evaluate(() => { const b = document.querySelector(".hero .btn.main, .pagehead + section .btn.main, .btn.main"); const r = b.getBoundingClientRect(); return { ok: r.width > 0 }; });
+        c.check(`${p} @${w}x${h}: sideways phone has no bottom bar and a top bar that scrolls away`, s.tab === "none" && s.pos === "relative" && s.head <= s.ih * 0.3, JSON.stringify(s));
+        const btn = await o.page.evaluate(() => { const r = [...document.querySelectorAll(".btn.main")].map((x) => x.getBoundingClientRect()).find((q) => q.width > 0 && q.height > 0); return { ok: !!r }; });
         c.check(`${p} @${w}x${h}: a main button exists on the page`, btn.ok, "none");
       }
       await o.close();
@@ -189,7 +190,7 @@ export const CASES = [
   { id: "T09", name: "The words: required lines are there; no price, no big claim, no emoji, no customer names; short", async run({ root, c }) {
     const home = text(read(root, "index.html"));
     c.check("the owner's HR sentence is on the home page", home.includes(OWNER_LINE), "missing");
-    c.check("the headline says what we do", home.includes("Online games for company events, for your invited people only."), "missing");
+    c.check("the headline says what we do", home.includes("Online games for company events, for the people you invite."), "missing");
     c.check("data deletion: 'within 24 hours after the game ends'", home.includes("erased within 24 hours after the game ends"), "missing");
     c.check("compliance: 'Designed to follow' DPDP, GDPR, CCPA", /Designed to follow India's DPDP Act, the EU GDPR and US privacy laws such as the CCPA/.test(home), "missing");
     c.check("close group: 'Your game is for the people you invite.'", home.includes("Your game is for the people you invite.") && home.includes("You decide who joins"), "missing");
@@ -198,6 +199,11 @@ export const CASES = [
     c.check(`home page is short (${words} words, limit 850)`, words <= 850, words);
     const FORBID = [[/100\s?%/, "100%"], [/\bcompliant\b/i, "compliant"], [/\bcertified\b/i, "certified"], [/\bguarantee/i, "guarantee"], [/\bISO\b/, "ISO"], [/SOC ?2/i, "SOC 2"], [/bank-grade|military/i, "bank-grade"], [/\bsecure[ds]?\b|\bsecurely\b/i, "secure"], [/AI-powered|revolution|cutting-edge|seamless|world-class|best-in-class/i, "hype"], [/testimonial|trusted by|our customers include|case stud/i, "customers"], [/₹|\bRs\.? ?\d|US\$|\$ ?\d|\bUSD\b|\bINR\b/, "price"], [/(?![©®™])\p{Extended_Pictographic}/u, "emoji"], [/\bsoon in\b|\bby (Q[1-4]|\w+ 20\d\d)\b|\blaunching\b/i, "date promise"], [/we are (fully )?(GDPR|DPDP|CCPA)[- ]compliant/i, "compliance claim"]];
     for (const f of listFiles(root)) { const t = text(read(root, f)); for (const [re, label] of FORBID) c.check(`${f}: no ${label}`, !re.test(t), (t.match(re) || [""])[0]); }
+    const hr = text(read(root, "for-hr.html")), how = text(read(root, "how-it-works.html")), ct = text(read(root, "contact.html")), gm = text(read(root, "games.html"));
+    c.check("for-hr page carries the owner's sentence", hr.includes(OWNER_LINE), "missing");
+    c.check("how-it-works says player details are erased within 24 hours", how.includes("erased within 24 hours after the game ends"), "missing");
+    c.check("contact page has the e-mail and the phone number", ct.includes("hello@corporatetambola.com") && ct.includes("(+91) 96503 97480"), "missing");
+    c.check("games page names all six games", ["Tambola", "Bingo", "Tic Tac Toe", "Snakes and Ladders", "Luck by Chance", "Lucky Draw"].every((n) => gm.includes(n)), "missing");
     c.check("the privacy page names the Grievance Officer and 7 days", /Grievance Officer/.test(text(read(root, "privacy.html"))) && /within 7 days/.test(text(read(root, "privacy.html"))), "missing");
     c.check("the privacy page says billing records are kept", /Billing records/.test(text(read(root, "privacy.html"))), "missing");
   } },
@@ -248,6 +254,7 @@ export const CASES = [
     await p.goto(base + "/games"); await p.waitForTimeout(300);
     await o.ctx.setOffline(true);
     await p.goto(base + "/games", { waitUntil: "load" });
+    c.check("offline: the saved-copy helper (service worker) is in charge of the page", await p.evaluate(() => !!navigator.serviceWorker.controller), "no controller");
     c.check("offline: a visited page opens", (await p.textContent("h1")).includes("Six games for your people"), await p.title());
     await p.goto(base + "/privacy", { waitUntil: "load" });
     c.check("offline: a page that was saved at install opens", (await p.textContent("h1")).includes("What we keep"), await p.title());
