@@ -194,7 +194,7 @@ export const CASES = [
   { id: "T09", name: "The words: required lines are there; no price, no big claim, no emoji, no customer names; short", async run({ root, c }) {
     const home = text(read(root, "index.html"));
     c.check("the owner's HR sentence is on the home page", home.includes(OWNER_LINE), "missing");
-    c.check("the headline says what we do", home.includes("Which game will you engage your various teams with this week?"), "missing");
+    c.check("the headline says what we do", home.includes("Which game will you use to engage your various teams this week?"), "missing");
     c.check("data deletion: 'within 24 hours after the game ends'", home.includes("erased within 24 hours after the game ends"), "missing");
     c.check("compliance: 'Designed to follow' DPDP, GDPR, CCPA", /Designed to follow India's DPDP Act, the EU GDPR and US privacy laws such as the CCPA/.test(home), "missing");
     c.check("close group: 'Your game is for the people you invite.'", home.includes("Your game is for the people you invite.") && home.includes("You decide who joins"), "missing");
