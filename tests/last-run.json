@@ -1,0 +1,83 @@
+{
+ "when": "2026-10-28T16:50:27.706Z",
+ "cases": 15,
+ "checks": 1289,
+ "failed": 0,
+ "perCase": [
+  {
+   "id": "T01",
+   "checks": 212,
+   "failed": 0
+  },
+  {
+   "id": "T02",
+   "checks": 233,
+   "failed": 0
+  },
+  {
+   "id": "T03",
+   "checks": 96,
+   "failed": 0
+  },
+  {
+   "id": "T04",
+   "checks": 72,
+   "failed": 0
+  },
+  {
+   "id": "T05",
+   "checks": 11,
+   "failed": 0
+  },
+  {
+   "id": "T06",
+   "checks": 224,
+   "failed": 0
+  },
+  {
+   "id": "T07",
+   "checks": 108,
+   "failed": 0
+  },
+  {
+   "id": "T08",
+   "checks": 17,
+   "failed": 0
+  },
+  {
+   "id": "T09",
+   "checks": 155,
+   "failed": 0
+  },
+  {
+   "id": "T10",
+   "checks": 69,
+   "failed": 0
+  },
+  {
+   "id": "T11",
+   "checks": 32,
+   "failed": 0
+  },
+  {
+   "id": "T12",
+   "checks": 4,
+   "failed": 0
+  },
+  {
+   "id": "T13",
+   "checks": 41,
+   "failed": 0
+  },
+  {
+   "id": "T14",
+   "checks": 7,
+   "failed": 0
+  },
+  {
+   "id": "T15",
+   "checks": 8,
+   "failed": 0
+  }
+ ]
+}
