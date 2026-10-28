@@ -6,7 +6,7 @@ import { join } from "node:path";
 import { WIDTHS, PAGES, pageUrl, openPage, checker, contrastRatio, COLOR_PROBE, LAYOUT_PROBE, listFiles, read, heightFor } from "./lib.mjs";
 
 const OWNER_LINE = "We work closely with HR teams in organizing online events and games.";
-const GAME_URLS = { Tambola: "https://corporatetambola.com/", Bingo: "https://bingo.corporatetambola.com/", "Tic Tac Toe": "https://tictactoe.corporatetambola.com/", "Snakes and Ladders": "https://snakes.corporatetambola.com/", "Luck by Chance": "https://luck.corporatetambola.com/" };
+const GAME_URLS = { Tambola: "https://housie.corporatetambola.com/", Bingo: "https://bingo.corporatetambola.com/", "Tic Tac Toe": "https://tictactoe.corporatetambola.com/", "Snakes and Ladders": "https://snakes.corporatetambola.com/", "Luck by Chance": "https://luck.corporatetambola.com/" };
 const ALLOWED_EXTERNAL = [
   /^https:\/\/corporatetambola\.com\/(terms|privacy|subprocessors|dpa|refund-policy|demo)?$/,
   /^https:\/\/(bingo|tictactoe|snakes|luck)\.corporatetambola\.com\/(privacy|demo)?$/,

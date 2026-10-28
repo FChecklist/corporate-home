@@ -71,7 +71,7 @@ nav.main a:hover,.tbtn:hover{background:var(--tint)}
 nav.main a[aria-current=page]{box-shadow:inset 0 -3px 0 var(--goldt);border-radius:8px 8px 0 0}
 nav.main a.btn{margin-left:8px;color:var(--on-action);font-weight:600;padding:0 20px;min-height:44px}
 nav.main a.btn:hover{background:var(--action)}
-.tbtn{border:0;background:transparent;cursor:pointer;font-family:var(--sans)}
+.tbtn{border:0;background:transparent;cursor:pointer;font-family:var(--sans);min-width:44px;justify-content:center}
 
 /* ---------- first screen ---------- */
 .hero{padding-block:clamp(40px,7vw,92px) clamp(36px,6vw,72px)}
@@ -190,7 +190,7 @@ dl.contact dd{margin:0;font-size:18px}
 .foot-grid{display:grid;gap:30px;grid-template-columns:1fr}
 .foot h2{font:600 13px/1.3 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--goldt);margin:0 0 8px}
 .foot ul{list-style:none;margin:0;padding:0}
-.foot li a,.foot p a{display:inline-flex;align-items:center;min-height:44px;color:var(--link)}
+.foot li a,.foot p a{display:inline-flex;align-items:center;min-height:44px;min-width:44px;color:var(--link)}
 .foot p{margin:0 0 6px}
 .foot .brandline{font:600 20px var(--serif);color:var(--ink);margin-bottom:6px}
 .legalline{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
@@ -279,3 +279,7 @@ html:not(.js) [data-theme-toggle]{display:none}
 .h3{font-family:var(--serif);font-weight:600;font-size:clamp(20px,2vw,23px);line-height:1.25;letter-spacing:-.01em;margin:0 0 .5em}
 .row .h3,.card .h3{margin:0 0 .3em}
 .plain-list-gap{margin:0}
+
+.choose{margin:18px 0 0;display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;font-size:15px}.choose span{color:var(--muted);font-weight:600}.choose a{border:1px solid var(--line);border-radius:999px;padding:6px 14px;text-decoration:none;color:var(--ink);background:var(--paper)}.choose a:hover,.choose a:focus-visible{border-color:var(--ink)}
+@media (max-width:899px){.hero .btn-row .btn:not(.main){display:none}.hero .btn-row{margin-top:22px}.hero .btn-row .btn.main{width:100%;justify-content:center;text-align:center}.choose{margin-top:16px}.choose span{width:100%}}
+@media (min-width:900px){.choose{margin-top:22px}}
