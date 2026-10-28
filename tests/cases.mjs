@@ -112,12 +112,16 @@ export const CASES = [
         await p.focus("#menu"); await p.keyboard.press("Enter");
       }
       // walk every stop
-      await p.evaluate(() => { document.activeElement && document.activeElement.blur(); window.scrollTo(0, 0); });
+      await p.evaluate(() => { document.activeElement && document.activeElement.blur(); window.scrollTo(0, 0); document.documentElement.style.scrollBehavior = "auto"; });
+      if (w < 900) { await p.focus("#menu"); await p.keyboard.press("Shift+Tab"); await p.keyboard.press("Shift+Tab"); }
+      else { await p.goto(pageUrl(base, "index")); await p.evaluate(() => { document.documentElement.style.scrollBehavior = "auto"; }); }
+      const total = await p.evaluate(() => [...document.querySelectorAll("a[href], button")].filter((e) => e.getClientRects().length && getComputedStyle(e).visibility !== "hidden").length);
       const expected = await p.evaluate(() => new Set([...document.querySelectorAll("a[href], button")].filter((e) => e.getClientRects().length && getComputedStyle(e).visibility !== "hidden" && !e.classList.contains("skip")).map((e) => e.tagName + (e.id || "") + (e.getAttribute("href") || e.textContent.trim().slice(0, 18)))).size);
+      const wantKeys = await p.evaluate(() => [...new Set([...document.querySelectorAll("a[href], button")].filter((e) => e.getClientRects().length && getComputedStyle(e).visibility !== "hidden" && !e.classList.contains("skip")).map((e) => e.tagName + (e.id || "") + (e.getAttribute("href") || e.textContent.trim().slice(0, 18))))]);
       const seen = new Set(); let noRing = [], escaped = false;
-      await p.focus("body").catch(() => {});
-      for (let i = 0; i < expected + 6; i++) {
+      for (let i = 0; i < total + 3; i++) {
         await p.keyboard.press("Tab");
+        await p.waitForTimeout(30);
         const s = await p.evaluate(() => {
           const e = document.activeElement; if (!e || e === document.body) return null;
           const t = (x) => { const cs = getComputedStyle(x); return (cs.outlineStyle !== "none" && parseFloat(cs.outlineWidth) > 0) || cs.boxShadow !== "none"; };
@@ -127,7 +131,7 @@ export const CASES = [
         if (!s) { escaped = true; break; }
         seen.add(s.key); if (!s.ring) noRing.push(s.key); if (!s.onscreen) noRing.push("offscreen " + s.key);
       }
-      c.check(`${w}: Tab reaches all ${expected} different stops (no trap); saw ${seen.size}`, seen.size >= expected, `saw ${seen.size} of ${expected}, left the page: ${escaped}`);
+      c.check(`${w}: Tab reaches all ${expected} different stops (no trap); saw ${seen.size}`, seen.size >= expected, `saw ${seen.size} of ${expected}, never reached: ${wantKeys.filter((k) => !seen.has(k)).join(" , ")}; left the page: ${escaped}`);
       c.check(`${w}: every stop shows a visible focus ring`, noRing.length === 0, noRing.slice(0, 5).join(", "));
       await o.close();
     }
@@ -136,14 +140,14 @@ export const CASES = [
   { id: "T06", name: "Fits every width 320 to 1920, every page: no sideways scroll, nothing cut or overlapping, tap targets, last line not hidden", async run({ base, browser, c }) {
     for (const w of WIDTHS) for (const p of PAGES) {
       const o = await openPage(browser, pageUrl(base, p), { w, record: { allow404: p === "404" } });
-      const bad = await o.page.evaluate(LAYOUT_PROBE);
+      const bad = await o.page.evaluate(LAYOUT_PROBE, w);
       c.check(`${p} @${w}: layout clean`, bad.length === 0, bad.slice(0, 4).join(" ; "));
       if (w < 900) {
         const covered = await o.page.evaluate(() => { window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "instant" }); const t = document.querySelector(".tabbar"); if (!t || getComputedStyle(t).display === "none") return null; const last = [...document.querySelectorAll(".legalline p")].pop().getBoundingClientRect(); return last.bottom - t.getBoundingClientRect().top; });
         c.check(`${p} @${w}: the bottom bar does not hide the last line`, covered === null || covered <= 0, "overlap " + covered);
         await o.page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
         await o.page.click("#menu"); await o.page.waitForTimeout(60);
-        const open = await o.page.evaluate(() => { const n = document.getElementById("nav"); const r = n.getBoundingClientRect(); return { right: r.right, iw: innerWidth, bottom: r.bottom, ih: innerHeight, links: [...n.querySelectorAll("a, button")].every((e) => e.getBoundingClientRect().height >= 43.5), sx: document.documentElement.scrollWidth }; });
+        const open = await o.page.evaluate((W) => { const n = document.getElementById("nav"); const r = n.getBoundingClientRect(); return { right: r.right, iw: W, bottom: r.bottom, ih: innerHeight, links: [...n.querySelectorAll("a, button")].every((e) => e.getBoundingClientRect().height >= 43.5), sx: document.documentElement.scrollWidth }; }, w);
         c.check(`${p} @${w}: the opened menu fits the width and its items are tappable`, open.right <= open.iw + 1 && open.links && open.sx <= open.iw + 1, JSON.stringify(open));
         c.check(`${p} @${w}: the opened menu stays on the screen or scrolls`, open.bottom <= open.ih + 1, JSON.stringify(open));
       }
@@ -155,7 +159,7 @@ export const CASES = [
     const SIZES = [[568, 320], [667, 375], [740, 360], [812, 375], [844, 390], [896, 414], [932, 430], [768, 1024], [1024, 768], [1366, 768], [1536, 864], [1920, 1080], [2560, 1080]];
     for (const [w, h] of SIZES) for (const p of ["index", "games", "privacy", "contact"]) {
       const o = await openPage(browser, pageUrl(base, p), { w, h });
-      const bad = await o.page.evaluate(LAYOUT_PROBE);
+      const bad = await o.page.evaluate(LAYOUT_PROBE, w);
       c.check(`${p} @${w}x${h}: layout clean`, bad.length === 0, bad.slice(0, 4).join(" ; "));
       if (h <= 480) {
         const s = await o.page.evaluate(() => ({ tab: getComputedStyle(document.querySelector(".tabbar")).display, head: document.querySelector(".top").getBoundingClientRect().height, pos: getComputedStyle(document.querySelector(".top")).position, ih: innerHeight }));
@@ -181,8 +185,8 @@ export const CASES = [
     // between 900 and about 1200 the top bar is the tightest: links must stay on one line and not touch the name
     for (const w of [900, 960, 1024, 1100, 1180]) {
       const o = await openPage(browser, base + "/", { w, h: 900 });
-      const t = await o.page.evaluate(() => { const links = [...document.querySelectorAll("nav.main a, nav.main .tbtn")].filter((e) => e.getClientRects().length); const br = document.querySelector(".brand").getBoundingClientRect(); const first = Math.min(...links.map((e) => e.getBoundingClientRect().left)); return { tall: Math.max(...links.map((e) => e.getBoundingClientRect().height)), head: document.querySelector(".top").getBoundingClientRect().height, gap: first - br.right, wrapW: document.querySelector(".top .wrap").scrollWidth - document.querySelector(".top .wrap").clientWidth }; });
-      c.check(`top bar @${w}: one line, links clear of the name, nothing spills`, t.tall <= 56 && t.head <= 80 && t.gap >= 4 && t.wrapW <= 1, JSON.stringify(t));
+      const t = await o.page.evaluate(() => { const links = [...document.querySelectorAll("nav.main a, nav.main .tbtn")].filter((e) => e.getClientRects().length); const br = document.querySelector(".brand").getBoundingClientRect(); const first = Math.min(...links.map((e) => e.getBoundingClientRect().left)); return { tall: Math.max(...links.map((e) => e.getBoundingClientRect().height)), head: document.querySelector(".top").getBoundingClientRect().height, gap: first - br.right, wrapW: document.querySelector(".top .wrap").scrollWidth - document.querySelector(".top .wrap").clientWidth, brandCut: document.querySelector(".brand").scrollWidth - document.querySelector(".brand").clientWidth }; });
+      c.check(`top bar @${w}: one line, links clear of the name, nothing spills`, t.tall <= 56 && t.head <= 80 && t.gap >= 4 && t.wrapW <= 1 && t.brandCut <= 1, JSON.stringify(t));
       await o.close();
     }
   } },
@@ -190,7 +194,7 @@ export const CASES = [
   { id: "T09", name: "The words: required lines are there; no price, no big claim, no emoji, no customer names; short", async run({ root, c }) {
     const home = text(read(root, "index.html"));
     c.check("the owner's HR sentence is on the home page", home.includes(OWNER_LINE), "missing");
-    c.check("the headline says what we do", home.includes("Online games for company events, for the people you invite."), "missing");
+    c.check("the headline says what we do", home.includes("Which game will you engage your team with this week?"), "missing");
     c.check("data deletion: 'within 24 hours after the game ends'", home.includes("erased within 24 hours after the game ends"), "missing");
     c.check("compliance: 'Designed to follow' DPDP, GDPR, CCPA", /Designed to follow India's DPDP Act, the EU GDPR and US privacy laws such as the CCPA/.test(home), "missing");
     c.check("close group: 'Your game is for the people you invite.'", home.includes("Your game is for the people you invite.") && home.includes("You decide who joins"), "missing");
