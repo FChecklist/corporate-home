@@ -8,9 +8,9 @@ import { WIDTHS, PAGES, pageUrl, openPage, checker, contrastRatio, COLOR_PROBE, 
 const OWNER_LINE = "We work closely with HR teams in organizing online events and games.";
 const GAME_URLS = { Tambola: "https://housie.corporatetambola.com/", Bingo: "https://bingo.corporatetambola.com/", "Tic Tac Toe": "https://tictactoe.corporatetambola.com/", "Snakes and Ladders": "https://snakes.corporatetambola.com/", "Luck by Chance": "https://luck.corporatetambola.com/" };
 const ALLOWED_EXTERNAL = [
-  /^https:\/\/corporatetambola\.com\/(terms|privacy|subprocessors|dpa|refund-policy|demo)?$/,
+  /^https:\/\/(housie\.)?corporatetambola\.com\/(terms|privacy|subprocessors|dpa|refund-policy|demo)?$/,
   /^https:\/\/(bingo|tictactoe|snakes|luck)\.corporatetambola\.com\/(privacy|demo)?$/,
-  /^https:\/\/(bingo\.)?corporatetambola\.com\/zc\?demo=1$/,
+  /^https:\/\/(housie\.|bingo\.)?corporatetambola\.com\/zc\?demo=1$/,
   /^https:\/\/console\.corporatetambola\.com\/$/,
   /^mailto:hello@corporatetambola\.com(\?subject=Grievance)?$/,
   /^tel:\+919650397480$/,
@@ -39,18 +39,25 @@ export const CASES = [
     const r = await fetch(base + "/no-such-page"); c.check("unknown page gives the 404 page with status 404", r.status === 404 && (await r.text()).includes("We cannot find that page"), "status " + r.status);
   } },
 
-  { id: "T02", name: "Outside links go only where they should; Lucky Draw has no link", async run({ root, c }) {
+  { id: "T02", name: "Outside links go only where they should; every game picture links to its game; Lucky Draw only to the contact page", async run({ root, c }) {
     for (const f of listFiles(root)) {
       const html = read(root, f);
       for (const h of hrefs(html)) if (/^(https?:|mailto:|tel:)/.test(h)) c.check(`${f}: ${h} is on the allowed list`, ALLOWED_EXTERNAL.some((re) => re.test(h)), "not allowed");
-      c.check(`${f}: Lucky Draw is never a link`, !/<a\b[^>]*>[^<]*Lucky Draw/.test(html) && !/luckydraw|lucky\./i.test(html.replace(/Lucky Draw/g, "")), "link to Lucky Draw");
+      const drawLinks = [...html.matchAll(/<a\b[^>]*>(?:(?!<\/a>)[\s\S])*?<\/a>/g)].map((m) => m[0]).filter((a) => /Lucky Draw|#i-draw/.test(a));
+      c.check(`${f}: Lucky Draw links only to the contact page`, drawLinks.every((a) => /href="\/contact"/.test(a)) && !/luckydraw|lucky\./i.test(html.replace(/Lucky Draw/g, "")), drawLinks.find((a) => !/href="\/contact"/.test(a)) || "lucky draw address");
     }
     for (const f of ["index.html", "games.html"]) {
       const html = read(root, f);
       for (const [n, u] of Object.entries(GAME_URLS)) c.check(`${f}: ${n} links to ${u}`, html.includes(`href="${u}"`), "missing");
-      const draw = html.match(/<article class="(?:card|row)[^"]*soon">[\s\S]*?<\/article>/);
-      c.check(`${f}: the Lucky Draw card says Coming soon`, !!draw && /Coming soon/.test(draw[0]) && !/<a\b/.test(draw[0]), draw ? "has a link" : "no card");
-      c.check(`${f}: Coming soon carries no date`, !!draw && !/\d/.test(text(draw[0]).replace("Lucky Draw", "")), "digits in card");
+      const draw = html.match(/<article class="(?:card|row) g-draw">[\s\S]*?<\/article>/);
+      c.check(`${f}: the Lucky Draw card has no status and links only to the contact page`, !!draw && !/\bsoon\b|Live now|class="tag/i.test(draw[0]) && [...draw[0].matchAll(/href="([^"#][^"]*)"/g)].every((m) => m[1] === "/contact"), draw ? draw[0].slice(0, 120) : "no card");
+      c.check(`${f}: the Lucky Draw card carries no date`, !!draw && !/\d/.test(text(draw[0]).replace("Lucky Draw", "")), "digits in card");
+      // every game picture is inside a link to that game's own address
+      const pics = [...html.matchAll(/<a\b([^>]*)>(?:(?!<\/a>)[\s\S])*?<use href="#i-(\w+)"/g)];
+      const want = { tambola: "https://housie.corporatetambola.com/", bingo: "https://bingo.corporatetambola.com/", ttt: "https://tictactoe.corporatetambola.com/", snakes: "https://snakes.corporatetambola.com/", luck: "https://luck.corporatetambola.com/", draw: "/contact" };
+      const used = (html.match(/<use href="#i-\w+"/g) || []).length;
+      c.check(`${f}: every game picture is a link (${pics.length} of ${used})`, used > 0 && pics.length === used, `${pics.length} of ${used}`);
+      for (const m of pics) c.check(`${f}: the ${m[2]} picture links to ${want[m[2]]}`, (m[1].match(/href="([^"]*)"/) || [])[1] === want[m[2]], m[1]);
     }
     c.check("every Sign in goes to the console", (read(root, "index.html").match(/href="https:\/\/console\.corporatetambola\.com\/"/g) || []).length >= 3, "too few");
   } },
@@ -68,7 +75,7 @@ export const CASES = [
   } },
 
   { id: "T04", name: "Light and dark: right colours, readable text (contrast computed from the real page)", async run({ base, browser, c }) {
-    const SELS = [["body", 4.5], [".lead", 4.5], [".kicker", 4.5], [".btn.main", 4.5], [".btn:not(.main)", 4.5], [".card p", 4.5], [".tag.live", 4.5], [".foot li a", 4.5], [".band h2", 4.5], [".band .lead", 4.5], [".keep li", 4.5], [".cta h2", 4.5], [".cta .btn.main", 4.5], [".cta .btn:not(.main)", 4.5], [".ticks li", 4.5], [".note-line", 4.5], [".legalline p", 4.5], ["nav.main a", 4.5], [".facts li", 4.5]];
+    const SELS = [["body", 4.5], [".lead", 4.5], [".kicker", 4.5], [".btn.main", 4.5], [".btn:not(.main)", 4.5], [".card p", 4.5], [".hero-contact", 4.5], [".moments p", 4.5], [".six a", 4.5], [".foot li a", 4.5], [".band h2", 4.5], [".band .lead", 4.5], [".keep li", 4.5], [".cta h2", 4.5], [".cta .btn.main", 4.5], [".cta .btn:not(.main)", 4.5], [".ticks li", 4.5], [".note-line", 4.5], [".legalline p", 4.5], ["nav.main a", 4.5], [".facts li", 4.5]];
     const lum = {};
     for (const scheme of ["light", "dark"]) {
       const o = await openPage(browser, pageUrl(base, "index"), { w: 1280, scheme });
@@ -201,8 +208,9 @@ export const CASES = [
     for (const n of ["Tambola", "Bingo", "Tic Tac Toe", "Snakes and Ladders", "Luck by Chance", "Lucky Draw"]) c.check(`home names ${n}`, home.includes(n), "missing");
     const words = home.split(/\s+/).length;
     c.check(`home page is short (${words} words, limit 850)`, words <= 850, words);
-    const FORBID = [[/100\s?%/, "100%"], [/\bcompliant\b/i, "compliant"], [/\bcertified\b/i, "certified"], [/\bguarantee/i, "guarantee"], [/\bISO\b/, "ISO"], [/SOC ?2/i, "SOC 2"], [/bank-grade|military/i, "bank-grade"], [/\bsecure[ds]?\b|\bsecurely\b/i, "secure"], [/AI-powered|revolution|cutting-edge|seamless|world-class|best-in-class/i, "hype"], [/testimonial|trusted by|our customers include|case stud/i, "customers"], [/₹|\bRs\.? ?\d|US\$|\$ ?\d|\bUSD\b|\bINR\b/, "price"], [/(?![©®™])\p{Extended_Pictographic}/u, "emoji"], [/\bsoon in\b|\bby (Q[1-4]|\w+ 20\d\d)\b|\blaunching\b/i, "date promise"], [/we are (fully )?(GDPR|DPDP|CCPA)[- ]compliant/i, "compliance claim"]];
-    for (const f of listFiles(root)) { const t = text(read(root, f)); for (const [re, label] of FORBID) c.check(`${f}: no ${label}`, !re.test(t), (t.match(re) || [""])[0]); }
+    const FORBID = [[/100\s?%/, "100%"], [/\bcompliant\b/i, "compliant"], [/\bcertified\b/i, "certified"], [/\bguarantee/i, "guarantee"], [/\bISO\b/, "ISO"], [/SOC ?2/i, "SOC 2"], [/bank-grade|military/i, "bank-grade"], [/\bsecure[ds]?\b|\bsecurely\b/i, "secure"], [/AI-powered|revolution|cutting-edge|seamless|world-class|best-in-class/i, "hype"], [/testimonial|trusted by|our customers include|case stud/i, "customers"], [/\bprivate\b/i, "the word private"], [/Live now|Coming soon/i, "status tag"], [/₹|\bRs\.? ?\d|US\$|\$ ?\d|\bUSD\b|\bINR\b/, "price"], [/(?![©®™])\p{Extended_Pictographic}/u, "emoji"], [/\bsoon in\b|\bby (Q[1-4]|\w+ 20\d\d)\b|\blaunching\b/i, "date promise"], [/we are (fully )?(GDPR|DPDP|CCPA)[- ]compliant/i, "compliance claim"]];
+    for (const f of listFiles(root)) { const t = text(read(root, f)); for (const [re, label] of FORBID) c.check(`${f}: no ${label}`, !re.test(t), (t.match(re) || [""])[0]); c.check(`${f}: no test or old addresses in the source`, !/pages\.dev|corporate-home/.test(read(root, f)), "old address"); }
+    c.check("the first screen shows the phone number and e-mail", /class="hero-contact"[^]*?tel:\+919650397480[^]*?mailto:hello@corporatetambola\.com/.test(read(root, "index.html")), "missing");
     const hr = text(read(root, "for-hr.html")), how = text(read(root, "how-it-works.html")), ct = text(read(root, "contact.html")), gm = text(read(root, "games.html"));
     c.check("for-hr page carries the owner's sentence", hr.includes(OWNER_LINE), "missing");
     c.check("how-it-works says player details are erased within 24 hours", how.includes("erased within 24 hours after the game ends"), "missing");
@@ -254,7 +262,7 @@ export const CASES = [
     const o = await openPage(browser, base + "/", { w: 1280 });
     const p = o.page;
     await p.evaluate(() => navigator.serviceWorker.ready.then(() => true));
-    await p.waitForFunction(async () => (await caches.keys()).length > 0 && (await (await caches.open("home-v2")).keys()).length >= 12, null, { timeout: 15000 }).catch(() => {});
+    await p.waitForFunction(async () => (await caches.keys()).length > 0 && (await (await caches.open("home-v4")).keys()).length >= 12, null, { timeout: 15000 }).catch(() => {});
     await p.goto(base + "/games"); await p.waitForTimeout(300);
     await o.ctx.setOffline(true);
     await p.goto(base + "/games", { waitUntil: "load" });
@@ -304,10 +312,21 @@ export const CASES = [
     c.check("button: back to light", (await p.getAttribute("html", "data-theme")) === "light", "no change");
     await o.close();
     const b = await openPage(browser, base + "/", { w: 390, scheme: "dark", extraInit: () => { Object.defineProperty(window, "localStorage", { get() { throw new Error("blocked"); } }); } });
-    c.check("storage blocked: the page still draws", (await b.page.textContent("h1")).includes("Online games"), "no h1");
+    c.check("storage blocked: the page still draws", (await b.page.textContent("h1")).includes("Which game"), "no h1");
     await b.page.click("#menu"); await b.page.click("[data-theme-toggle]");
     c.check("storage blocked: the button still works for this visit", (await b.page.getAttribute("html", "data-theme")) === "light", "no change");
     c.check("storage blocked: no error on the page", b.events.console.length === 0, b.events.console.join(" | "));
     await b.close();
+  } },
+
+  { id: "T15", name: "Nothing hides behind the sticky top bar: a heading you jump to sits below it (phone and laptop)", async run({ base, browser, c }) {
+    for (const w of [390, 1280]) for (const id of ["games", "game-day", "data-deletion", "compliance"]) {
+      const o = await openPage(browser, pageUrl(base, "index"), { w });
+      await o.page.evaluate((x) => { document.documentElement.style.scrollBehavior = "auto"; location.hash = x; }, id);
+      await o.page.waitForTimeout(150);
+      const r = await o.page.evaluate((x) => { const bar = document.querySelector(".top").getBoundingClientRect(); const t = document.getElementById(x).getBoundingClientRect(); return { bar: Math.round(bar.bottom), h2: Math.round(t.top), y: Math.round(scrollY) }; }, id);
+      c.check(`${w}: #${id} starts below the top bar`, r.y > 0 && r.h2 >= r.bar, JSON.stringify(r));
+      await o.close();
+    }
   } },
 ];

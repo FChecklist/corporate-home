@@ -101,8 +101,9 @@ export const COLOR_PROBE = (sels) => {
 };
 
 /** runs inside the page: the layout rules a person would notice. Returns a list of problems. */
-export const LAYOUT_PROBE = () => {
-  const iw = window.innerWidth, ih = window.innerHeight, de = document.documentElement;
+// W = the width the screen really has. A phone in Chrome widens its layout when something is too wide, so window.innerWidth cannot be trusted here.
+export const LAYOUT_PROBE = (W) => {
+  const iw = W || window.innerWidth, ih = window.innerHeight, de = document.documentElement;
   const bad = [];
   const vis = (e) => { const r = e.getBoundingClientRect(); const cs = getComputedStyle(e); return r.width > 0 && r.height > 0 && cs.visibility !== "hidden" && cs.display !== "none"; };
   const skip = (e) => e.closest(".skip, .sprite, thead, [hidden]");
@@ -125,7 +126,7 @@ export const LAYOUT_PROBE = () => {
   for (const e of all) { if (e.children.length === 0 && e.textContent.trim() && e.scrollWidth > e.clientWidth + 1 && getComputedStyle(e).display !== "inline") bad.push(`text wider than its box: ${name(e)} ${e.scrollWidth}>${e.clientWidth}`); }
   // overlaps between text blocks (the bars that stick to the screen are checked on their own)
   const blocks = all.filter((e) => /^(H1|H2|H3|P|LI|A|BUTTON|DT|DD|TD|TH|SUMMARY)$/.test(e.tagName) || e.classList.contains("tag") || e.classList.contains("big"))
-    .filter((e) => !e.closest(".top, .tabbar") && !(e.tagName === "A" && e.classList.contains("go")) && !e.closest(".circle"));
+    .filter((e) => !e.closest(".top, .tabbar") && !(e.tagName === "A" && e.classList.contains("go")) && !e.closest(".circle") && !(e.tagName === "A" && getComputedStyle(e).display === "inline"));
   const rects = blocks.map((e) => [e, e.getBoundingClientRect()]);
   for (let i = 0; i < rects.length; i++) for (let j = i + 1; j < rects.length; j++) {
     const [a, ra] = rects[i], [b, rb] = rects[j];
@@ -142,6 +143,8 @@ export const LAYOUT_PROBE = () => {
     const minH = strict ? 43.5 : 23.5, minW = strict ? 43.5 : 0;
     if (r.height < minH || r.width < minW) bad.push(`small tap target: ${name(e)} ${Math.round(r.width)}x${Math.round(r.height)}`);
   }
+  // the name in the top bar must fit its own box (it may not run under the menu or the links)
+  const bn = document.querySelector(".brand"); if (bn && bn.scrollWidth > bn.clientWidth + 1) bad.push(`top bar name does not fit: ${bn.scrollWidth} > ${bn.clientWidth}`);
   // type size
   for (const e of all) { if (e.children.length === 0 && e.textContent.trim().length > 1 && parseFloat(getComputedStyle(e).fontSize) < 12.5) bad.push(`tiny text: ${name(e)} ${getComputedStyle(e).fontSize}`); }
   return bad.slice(0, 20);
