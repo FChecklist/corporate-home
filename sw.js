@@ -1,7 +1,7 @@
 /* Corporate Games home: pages you have opened open again without internet; anything else shows the offline page.
    Touches only this site's own files. Change V when the files change. */
-const V = "home-v6";
-const CORE = ["/", "/games", "/how-it-works", "/for-hr", "/privacy", "/contact", "/offline", "/site.css", "/theme.js", "/site.js", "/favicon.svg", "/fonts/Inter-normal-400.woff2", "/fonts/Fraunces-normal-500-700.woff2"];
+const V = "home-v7";
+const CORE = ["/", "/games", "/how-it-works", "/for-hr", "/privacy", "/contact", "/offline", "/site.css", "/theme.js", "/site.js", "/gamesbar.js", "/gamesbar.css", "/favicon.svg", "/fonts/Inter-normal-400.woff2", "/fonts/Fraunces-normal-500-700.woff2"];
 self.addEventListener("install", (e) => { e.waitUntil(caches.open(V).then((c) => c.addAll(CORE)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== V).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });
 const save = (req, res) => { if (res && res.ok && res.type === "basic" && !res.redirected) { const copy = res.clone(); caches.open(V).then((c) => c.put(req, copy)); } return res; };

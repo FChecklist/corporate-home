@@ -10,8 +10,8 @@ const GAME_URLS = { Tambola: "https://housie.corporatetambola.com/", Bingo: "htt
 const ALLOWED_EXTERNAL = [
   /^https:\/\/(housie\.)?corporatetambola\.com\/(terms|privacy|subprocessors|dpa|refund-policy|demo)?$/,
   /^https:\/\/(bingo|tictactoe|snakes|luck)\.corporatetambola\.com\/(privacy|demo)?$/,
-  /^https:\/\/(housie\.|bingo\.)?corporatetambola\.com\/zc\?demo=1$/,
-  /^https:\/\/console\.corporatetambola\.com\/$/,
+  /^https:\/\/housie\.corporatetambola\.com\/zc(\?demo=1)?$/,
+  /^https:\/\/bingo\.corporatetambola\.com\/zc\?demo=1$/,
   /^mailto:hello@corporatetambola\.com(\?subject=Grievance)?$/,
   /^tel:\+919650397480$/,
 ];
@@ -59,7 +59,14 @@ export const CASES = [
       c.check(`${f}: every game picture is a link (${pics.length} of ${used})`, used > 0 && pics.length === used, `${pics.length} of ${used}`);
       for (const m of pics) c.check(`${f}: the ${m[2]} picture links to ${want[m[2]]}`, (m[1].match(/href="([^"]*)"/) || [])[1] === want[m[2]], m[1]);
     }
-    c.check("every Sign in goes to the console", (read(root, "index.html").match(/href="https:\/\/console\.corporatetambola\.com\/"/g) || []).length >= 3, "too few");
+    // the master console does not exist yet (console.corporatetambola.com has no address): nothing may link to it; Sign in goes to the working sign-in page
+    c.check("every Sign in goes to the working sign-in page https://housie.corporatetambola.com/zc", (read(root, "index.html").match(/href="https:\/\/housie\.corporatetambola\.com\/zc"/g) || []).length >= 3, "too few");
+    for (const f of listFiles(root)) c.check(`${f}: no link to console.corporatetambola.com (it does not exist yet)`, !/console\.corporatetambola\.com/.test(read(root, f)), "console link");
+    // the shared bar carries its own addresses: only the home site, the five game sites and the contact page; never the old hub, never the console
+    const bar = readFileSync(join(root, "gamesbar.js"), "utf8");
+    const barUrls = [...bar.matchAll(/"(https:\/\/[^"]+)"/g)].map((m) => m[1]);
+    c.check("gamesbar.js: at least 7 addresses, all on the allowed list", barUrls.length >= 7 && barUrls.every((u) => /^https:\/\/(home|housie|bingo|tictactoe|snakes|luck)\.corporatetambola\.com\/(contact)?$/.test(u)), barUrls.filter((u) => !/^https:\/\/(home|housie|bingo|tictactoe|snakes|luck)\.corporatetambola\.com\/(contact)?$/.test(u)).join(" "));
+    c.check("gamesbar.js: first item is the home site, never the old hub or the console", bar.includes('var HOME = "https://home.corporatetambola.com/"') && !/games\.corporatetambola\.com|console\.corporatetambola\.com/.test(bar), "wrong home");
   } },
 
   { id: "T03", name: "No errors in the console, no failed or missing files (all pages, light and dark, phone and laptop)", async run({ base, browser, c }) {
@@ -120,7 +127,12 @@ export const CASES = [
       }
       // walk every stop
       await p.evaluate(() => { document.activeElement && document.activeElement.blur(); window.scrollTo(0, 0); document.documentElement.style.scrollBehavior = "auto"; });
-      if (w < 900) { await p.focus("#menu"); await p.keyboard.press("Shift+Tab"); await p.keyboard.press("Shift+Tab"); }
+      if (w < 900) { // go back to the very first stop (the skip link): as many Shift+Tab as there are stops in front of the Menu button (skip link, the games bar, the name)
+        const inFront = await p.evaluate(() => [...document.querySelectorAll("a[href], button")].filter((e) => e.getClientRects().length && getComputedStyle(e).visibility !== "hidden").indexOf(document.getElementById("menu")));
+        await p.focus("#menu"); for (let i = 0; i < inFront; i++) await p.keyboard.press("Shift+Tab");
+        const atTop = await p.evaluate(() => document.activeElement.className);
+        c.check(`${w}: Shift+Tab from the Menu button goes back to the skip link first`, atTop.includes("skip"), atTop);
+      }
       else { await p.goto(pageUrl(base, "index")); await p.evaluate(() => { document.documentElement.style.scrollBehavior = "auto"; }); }
       const total = await p.evaluate(() => [...document.querySelectorAll("a[href], button")].filter((e) => e.getClientRects().length && getComputedStyle(e).visibility !== "hidden").length);
       const expected = await p.evaluate(() => new Set([...document.querySelectorAll("a[href], button")].filter((e) => e.getClientRects().length && getComputedStyle(e).visibility !== "hidden" && !e.classList.contains("skip")).map((e) => e.tagName + (e.id || "") + (e.getAttribute("href") || e.textContent.trim().slice(0, 18)))).size);
@@ -206,8 +218,9 @@ export const CASES = [
     c.check("compliance: 'Designed to follow' DPDP, GDPR, CCPA", /Designed to follow India's DPDP Act, the EU GDPR and US privacy laws such as the CCPA/.test(home), "missing");
     c.check("close group: 'Your game is for the people you invite.'", home.includes("Your game is for the people you invite.") && home.includes("You decide who joins"), "missing");
     for (const n of ["Tambola", "Bingo", "Tic Tac Toe", "Snakes and Ladders", "Luck by Chance", "Lucky Draw"]) c.check(`home names ${n}`, home.includes(n), "missing");
-    const words = home.split(/\s+/).length;
-    c.check(`home page is short (${words} words, limit 850)`, words <= 850, words);
+    // the first screen carries the game picker twice (.choose on laptops, .six on phones; only one shows): count the page with the phone one, the longer, once
+    const words = text(read(root, "index.html").replace(/<div class="choose">[\s\S]*?<\/ul><\/div>/, "")).split(/\s+/).length;
+    c.check("home page is short (limit 850 words)", words <= 850, words + " words");
     const FORBID = [[/100\s?%/, "100%"], [/\bcompliant\b/i, "compliant"], [/\bcertified\b/i, "certified"], [/\bguarantee/i, "guarantee"], [/\bISO\b/, "ISO"], [/SOC ?2/i, "SOC 2"], [/bank-grade|military/i, "bank-grade"], [/\bsecure[ds]?\b|\bsecurely\b/i, "secure"], [/AI-powered|revolution|cutting-edge|seamless|world-class|best-in-class/i, "hype"], [/testimonial|trusted by|our customers include|case stud/i, "customers"], [/\bprivate\b/i, "the word private"], [/Live now|Coming soon/i, "status tag"], [/₹|\bRs\.? ?\d|US\$|\$ ?\d|\bUSD\b|\bINR\b/, "price"], [/(?![©®™])\p{Extended_Pictographic}/u, "emoji"], [/\bsoon in\b|\bby (Q[1-4]|\w+ 20\d\d)\b|\blaunching\b/i, "date promise"], [/we are (fully )?(GDPR|DPDP|CCPA)[- ]compliant/i, "compliance claim"]];
     for (const f of listFiles(root)) { const t = text(read(root, f)); for (const [re, label] of FORBID) c.check(`${f}: no ${label}`, !re.test(t), (t.match(re) || [""])[0]); c.check(`${f}: no test or old addresses in the source`, !/pages\.dev|corporate-home/.test(read(root, f)), "old address"); }
     c.check("the first screen shows the phone number and e-mail", /class="hero-contact"[^]*?tel:\+919650397480[^]*?mailto:hello@corporatetambola\.com/.test(read(root, "index.html")), "missing");
@@ -232,7 +245,7 @@ export const CASES = [
         const imgs = [...document.querySelectorAll("svg[role=img]")].filter((s) => !s.getAttribute("aria-label")).length;
         const decor = [...document.querySelectorAll("svg:not([role=img])")].filter((s) => s.getAttribute("aria-hidden") !== "true").length;
         const ctl = document.getElementById("menu"); const target = ctl && document.getElementById(ctl.getAttribute("aria-controls"));
-        return { h1: hs.filter((x) => x === 1).length, jump, dup, unnamed, imgs, decor, lang: document.documentElement.lang, title: document.title, desc: !!document.querySelector("meta[name=description][content]"), main: document.querySelectorAll("main").length, nav: document.querySelectorAll("nav[aria-label]").length, footer: document.querySelectorAll("footer").length, header: document.querySelectorAll("header").length, current: document.querySelectorAll("nav [aria-current=page]").length, ctl: !!target, expanded: ctl && ctl.getAttribute("aria-expanded") };
+        return { h1: hs.filter((x) => x === 1).length, jump, dup, unnamed, imgs, decor, lang: document.documentElement.lang, title: document.title, desc: !!document.querySelector("meta[name=description][content]"), main: document.querySelectorAll("main").length, nav: document.querySelectorAll("nav[aria-label]").length, footer: document.querySelectorAll("footer").length, header: document.querySelectorAll("header").length, current: document.querySelectorAll("[aria-current=page]").length, barHome: !!document.querySelector(".cgb-home"), ctl: !!target, expanded: ctl && ctl.getAttribute("aria-expanded") };
       });
       c.check(`${p}: exactly one h1`, r.h1 === 1, r.h1);
       c.check(`${p}: headings do not skip a level`, !r.jump, "skip");
@@ -242,7 +255,10 @@ export const CASES = [
       c.check(`${p}: language, description, one main, a header, a nav and a footer`, r.lang === "en" && r.desc && r.main === 1 && r.header === 1 && r.nav >= 1 && r.footer === 1, JSON.stringify(r));
       c.check(`${p}: the Menu button points at the list`, r.ctl && r.expanded === "false", JSON.stringify(r));
       c.check(`${p}: the title is unique`, !titles.has(r.title) && /Corporate Games/.test(r.title), r.title); titles.add(r.title);
-      if (!["404", "offline", "index"].includes(p)) c.check(`${p}: the current page is marked in the menu`, r.current === 1, r.current);
+      // one mark for the one page you are on: the bar's Corporate Games mark on the front page, the site menu on the other pages (the bar says aria-current="true" there)
+      if (!["404", "offline"].includes(p)) c.check(`${p}: exactly one aria-current="page" on the page`, r.current === 1, r.current + " marks");
+      else c.check(`${p}: at most one aria-current="page" on the page`, r.current <= 1, r.current + " marks");
+      c.check(`${p}: the Corporate Games bar is on the page`, r.barHome, "no bar");
       await o.close();
     }
   } },
@@ -258,11 +274,12 @@ export const CASES = [
     }
   } },
 
-  { id: "T12", name: "Works offline: pages open again without internet; unknown page shows the offline page", async run({ base, browser, c }) {
+  { id: "T12", name: "Works offline: pages open again without internet; unknown page shows the offline page", async run({ base, browser, root, c }) {
     const o = await openPage(browser, base + "/", { w: 1280 });
     const p = o.page;
     await p.evaluate(() => navigator.serviceWorker.ready.then(() => true));
-    await p.waitForFunction(async () => (await caches.keys()).length > 0 && (await (await caches.open("home-v4")).keys()).length >= 12, null, { timeout: 15000 }).catch(() => {});
+    const cacheName = (read(root, "sw.js").match(/const V = "([^"]+)"/) || [])[1];
+    await p.waitForFunction(async (name) => (await caches.keys()).includes(name) && (await (await caches.open(name)).keys()).length >= 12, cacheName, { timeout: 15000 }).catch(() => {});
     await p.goto(base + "/games"); await p.waitForTimeout(300);
     await o.ctx.setOffline(true);
     await p.goto(base + "/games", { waitUntil: "load" });

@@ -16,3 +16,7 @@
   Cache-Control: no-cache
 /theme.js
   Cache-Control: no-cache
+/gamesbar.js
+  Cache-Control: no-cache
+/gamesbar.css
+  Cache-Control: no-cache
