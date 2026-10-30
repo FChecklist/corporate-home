@@ -1,0 +1,3 @@
+# Cloudflare Pages redirects for home.corporatetambola.com.
+# There are none on purpose. In particular /version.json must be answered by this site, never sent to another host.
+# tools/build.mjs fails the build if a rule here mentions /version.json or points a page at another host.

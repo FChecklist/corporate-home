@@ -1,8 +1,10 @@
 {
   "name": "corporate-games-home",
   "private": true,
-  "description": "home.corporatetambola.com: plain static pages, no build step. Tests need Playwright and axe-core from the other Corporate Tambola folders (see tests/lib.mjs).",
+  "description": "home.corporatetambola.com: plain static pages. One small build step (tools/build.mjs) writes dist/ with version.json. Tests need Playwright and axe-core from the other Corporate Tambola folders (see tests/lib.mjs).",
   "scripts": {
+    "build": "node tools/build.mjs",
+    "contrast": "node tools/contrast-pairs.mjs",
     "test": "node C:/ct/test-sites/console/tools/heavy-run.mjs -- node tests/run.mjs",
     "falsify": "node C:/ct/test-sites/console/tools/heavy-run.mjs -- node tests/falsify.mjs",
     "serve": "node tests/serve.mjs"

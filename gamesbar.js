@@ -16,7 +16,7 @@
     { id: "tictactoe", name: "Tic Tac Toe", url: "https://tictactoe.corporatetambola.com/", badge: "cgb-ttt" },
     { id: "snakes", name: "Snakes and Ladders", url: "https://snakes.corporatetambola.com/", badge: "cgb-snakes" },
     { id: "luck", name: "Luck by Chance", url: "https://luck.corporatetambola.com/", badge: "cgb-luck" },
-    { id: "draw", name: "Lucky Draw", url: "https://home.corporatetambola.com/contact", badge: "cgb-draw", note: "Tell us you want it" }
+    { id: "draw", name: "Lucky Draw", url: "https://home.corporatetambola.com/contact", badge: "cgb-draw", note: "Coming soon" }
   ];
   var HOSTS = { housie: "tambola", "corporate-tambola": "tambola", bingo: "bingo", "corporate-bingo": "bingo", tictactoe: "tictactoe", "corporate-tic-tac-toe": "tictactoe",
     snakes: "snakes", "corporate-snakes-and-ladders": "snakes", luck: "luck", "corporate-luck-by-chance": "luck", luckydraw: "draw", home: "home", corporatetambola: "home" };
