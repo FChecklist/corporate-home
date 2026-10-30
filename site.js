@@ -1,4 +1,4 @@
-/* Menu on the phone design, the light/dark button, and the offline copy. Nothing here talks to any other website. */
+/* Menu on the phone design, the light/dark button, the look button (Retro or Modern), and the offline copy. Nothing here talks to any other website. */
 (function () {
   var d = document.documentElement;
   var btn = document.getElementById("menu"), nav = document.getElementById("nav");
@@ -20,6 +20,18 @@
     });
   });
   label();
+  /* the look: Retro (burgundy + gold) or Modern (night navy + neon). Saved as ctz-look, the same name the games use. */
+  function look() { return d.getAttribute("data-look") === "modern" ? "modern" : "retro"; }
+  function lookLabel() { var cur = look(), next = cur === "modern" ? "Retro" : "Modern"; document.querySelectorAll("[data-look-toggle]").forEach(function (b) { b.textContent = "Look: " + (cur === "modern" ? "Modern" : "Retro"); b.setAttribute("aria-label", "Look is " + cur + ". Switch to the " + next + " look"); }); }
+  document.querySelectorAll("[data-look-toggle]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var next = look() === "modern" ? "retro" : "modern";
+      d.setAttribute("data-look", next);
+      try { localStorage.setItem("ctz-look", next); } catch (e) { /* blocked: the choice lasts until the page is closed */ }
+      lookLabel();
+    });
+  });
+  lookLabel();
   if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1")) {
     navigator.serviceWorker.register("/sw.js").catch(function () { /* no offline copy: the site still works online */ });
   }
