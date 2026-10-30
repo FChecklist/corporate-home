@@ -471,3 +471,7 @@ html:not(.js) [data-theme-toggle]{display:none}
 .mkb-b-s{stroke:var(--mk-b)}
 .six .soon-tile{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:4px 14px 4px 5px;border-radius:999px;color:var(--ink);font-weight:600;font-size:15px;line-height:1.2;background:var(--paper);border:1.5px dashed var(--c)}
 @media (min-width:600px){.six .soon-tile{flex:1 1 auto;flex-direction:column;gap:8px;padding:14px 6px 12px;border-radius:18px;text-align:center;font-weight:650;line-height:1.25;background:var(--g-wash,var(--tint));border:0}}
+
+.faq h3{font-size:1.05rem;margin:1.3em 0 .3em}
+.faq h3:first-child{margin-top:0}
+.faq p{margin:0;max-width:44em}

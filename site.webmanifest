@@ -1,5 +1,6 @@
 {
   "name": "Corporate Games",
+  "lang": "en",
   "short_name": "Corp Games",
   "description": "Online games for company events, for the people you invite.",
   "start_url": "/",

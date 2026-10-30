@@ -1,22 +1,65 @@
+# Corporate Games home. Public pages are open to search engines and AI search.
+# Only the crawlers listed at the bottom are blocked.
+
 User-agent: *
 Allow: /
 
-# Not for AI training, as on the other Corporate Games sites.
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
 User-agent: GPTBot
+Allow: /
+
 User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
 User-agent: anthropic-ai
+Allow: /
+
 User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: GrokBot
+Allow: /
+
+User-agent: xAI-Bot
+Allow: /
+
+# Blocked: bulk scrapers that send no visitors.
 User-agent: CCBot
 User-agent: Bytespider
-User-agent: Amazonbot
-User-agent: Applebot-Extended
-User-agent: meta-externalagent
-User-agent: cohere-ai
 User-agent: Diffbot
 User-agent: omgili
-User-agent: Timpibot
-User-agent: PetalBot
 User-agent: img2dataset
+User-agent: PetalBot
+User-agent: Timpibot
 Disallow: /
 
 Sitemap: https://home.corporatetambola.com/sitemap.xml

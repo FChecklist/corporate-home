@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://home.corporatetambola.com/</loc></url>
-<url><loc>https://home.corporatetambola.com/games</loc></url>
-<url><loc>https://home.corporatetambola.com/how-it-works</loc></url>
-<url><loc>https://home.corporatetambola.com/for-hr</loc></url>
-<url><loc>https://home.corporatetambola.com/pricing</loc></url>
-<url><loc>https://home.corporatetambola.com/privacy</loc></url>
-<url><loc>https://home.corporatetambola.com/contact</loc></url>
+<url><loc>https://home.corporatetambola.com/</loc><lastmod>2026-10-30</lastmod></url>
+<url><loc>https://home.corporatetambola.com/contact</loc><lastmod>2026-10-30</lastmod></url>
+<url><loc>https://home.corporatetambola.com/for-hr</loc><lastmod>2026-10-30</lastmod></url>
+<url><loc>https://home.corporatetambola.com/games-for-hr-teams</loc><lastmod>2026-10-30</lastmod></url>
+<url><loc>https://home.corporatetambola.com/games</loc><lastmod>2026-10-30</lastmod></url>
+<url><loc>https://home.corporatetambola.com/how-it-works</loc><lastmod>2026-10-30</lastmod></url>
+<url><loc>https://home.corporatetambola.com/pricing</loc><lastmod>2026-10-30</lastmod></url>
+<url><loc>https://home.corporatetambola.com/privacy</loc><lastmod>2026-10-30</lastmod></url>
+<url><loc>https://home.corporatetambola.com/virtual-team-building-games</loc><lastmod>2026-10-30</lastmod></url>
 </urlset>

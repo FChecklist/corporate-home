@@ -1,0 +1,34 @@
+# Corporate Games
+
+> Online games for company events, for the people you invite. Corporate game software for HR teams: Tambola (Housie), Bingo, Tic Tac Toe, Snakes and Ladders and Luck by Chance. Players open a link on their phone, with no app. Players never pay. A free demo for 10 people is available. Run in India by IT Services by Rajat Agarwal.
+
+Corporate Games is the home page for a family of game sites. Each game has its own site. Lucky Draw is coming soon. The full text of the main pages is in https://home.corporatetambola.com/llms-full.txt.
+
+## Pages
+- [Home](https://home.corporatetambola.com/): online games for company events, with a short FAQ
+- [The games](https://home.corporatetambola.com/games): corporate game software, the six games
+- [Virtual team building games](https://home.corporatetambola.com/virtual-team-building-games): for remote and hybrid teams in India
+- [Games for HR teams](https://home.corporatetambola.com/games-for-hr-teams): how an HR team plans a game day
+- [For HR teams](https://home.corporatetambola.com/for-hr): employee engagement games, what you decide
+- [How it works](https://home.corporatetambola.com/how-it-works): choose a game, invite your people, play together
+- [Pricing](https://home.corporatetambola.com/pricing): you pay once for each game you run, through Razorpay
+- [Data and privacy](https://home.corporatetambola.com/privacy): what is erased and when
+- [Contact](https://home.corporatetambola.com/contact): e-mail and phone
+
+## The games
+- [Corporate Tambola](https://housie.corporatetambola.com/): The classic number game, also called Housie.
+- [Corporate Bingo](https://bingo.corporatetambola.com/): Numbers are called out loud and every player gets a card on their phone.
+- [Corporate Tic Tac Toe](https://tictactoe.corporatetambola.com/): A one-against-one tournament for your whole company.
+- [Corporate Snakes and Ladders](https://snakes.corporatetambola.com/): Everyone gets their own board and plays at the same time.
+- [Corporate Luck by Chance](https://luck.corporatetambola.com/): A dice game of pure luck with a clock on every round.
+
+## Facts
+- Players open a link in their phone browser. No app and no password.
+- Players never pay or stake money. The organizer gives the prizes.
+- Building a game is free. You pay once for each game you run, before it starts. No yearly plan.
+- The only payee is IT Services by Rajat Agarwal, through Razorpay.
+- Player details are erased within 24 hours after the game ends.
+
+## Contact
+- hello@corporatetambola.com
+- +91 96503 97480
