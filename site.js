@@ -22,7 +22,7 @@
   label();
   /* the look: Retro (burgundy + gold) or Modern (night navy + neon). Saved as ctz-look, the same name the games use. */
   function look() { return d.getAttribute("data-look") === "modern" ? "modern" : "retro"; }
-  function lookLabel() { var cur = look(), next = cur === "modern" ? "Retro" : "Modern"; document.querySelectorAll("[data-look-toggle]").forEach(function (b) { b.textContent = "Look: " + (cur === "modern" ? "Modern" : "Retro"); b.setAttribute("aria-label", "Look is " + cur + ". Switch to the " + next + " look"); }); }
+  function lookLabel() { var cur = look(), next = cur === "modern" ? "Retro" : "Modern"; document.querySelectorAll("[data-look-toggle]").forEach(function (b) { b.textContent = "Look: " + (cur === "modern" ? "Modern" : "Retro"); b.setAttribute("aria-label", "Look: " + (cur === "modern" ? "Modern" : "Retro") + ". Switch to the " + next + " look"); }); }
   document.querySelectorAll("[data-look-toggle]").forEach(function (b) {
     b.addEventListener("click", function () {
       var next = look() === "modern" ? "retro" : "modern";
