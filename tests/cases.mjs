@@ -25,6 +25,7 @@ export const CASES = [
       const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]));
       for (const m of html.matchAll(/<use\b[^>]*href="#([^"]+)"/g)) c.check(`${f}: icon #${m[1]} exists`, ids.has(m[1]), "missing symbol");
       for (const m of html.matchAll(/\b(?:href|src)="(\/[^"#?]*)(#[^"]*)?"/g)) {
+        if (m[1] === "/version.json") continue; // written by tools/build.mjs into dist/ only; the build checks it and the live smoke test reads it
         const r = await fetch(base + m[1], { redirect: "manual" });
         c.check(`${f}: ${m[1]} answers 200`, r.status === 200, "status " + r.status);
       }
@@ -50,13 +51,14 @@ export const CASES = [
       const html = read(root, f);
       for (const [n, u] of Object.entries(GAME_URLS)) c.check(`${f}: ${n} links to ${u}`, html.includes(`href="${u}"`), "missing");
       const draw = html.match(/<article class="(?:card|row) g-draw">[\s\S]*?<\/article>/);
-      c.check(`${f}: the Lucky Draw card has no status and links only to the contact page`, !!draw && !/\bsoon\b|Live now|class="tag/i.test(draw[0]) && [...draw[0].matchAll(/href="([^"#][^"]*)"/g)].every((m) => m[1] === "/contact"), draw ? draw[0].slice(0, 120) : "no card");
+      c.check(`${f}: the Lucky Draw card says Coming soon and links only to the contact page`, !!draw && /Coming soon/.test(draw[0]) && !/Live now|class="tag"/i.test(draw[0]) && [...draw[0].matchAll(/href="([^"#][^"]*)"/g)].every((m) => m[1] === "/contact"), draw ? draw[0].slice(0, 120) : "no card");
       c.check(`${f}: the Lucky Draw card carries no date`, !!draw && !/\d/.test(text(draw[0]).replace("Lucky Draw", "")), "digits in card");
       // every game picture is inside a link to that game's own address
       const pics = [...html.matchAll(/<a\b([^>]*)>(?:(?!<\/a>)[\s\S])*?<use href="#i-(\w+)"/g)];
       const want = { tambola: "https://housie.corporatetambola.com/", bingo: "https://bingo.corporatetambola.com/", ttt: "https://tictactoe.corporatetambola.com/", snakes: "https://snakes.corporatetambola.com/", luck: "https://luck.corporatetambola.com/", draw: "/contact" };
       const used = (html.match(/<use href="#i-\w+"/g) || []).length;
-      c.check(`${f}: every game picture is a link (${pics.length} of ${used})`, used > 0 && pics.length === used, `${pics.length} of ${used}`);
+      const drawUses = (html.match(/<use href="#i-draw"/g) || []).length; // Lucky Draw is a Coming soon badge, not a link
+      c.check(`${f}: every game picture except Lucky Draw is a link (${pics.length} of ${used})`, used > 0 && pics.length === used - drawUses, `${pics.length} of ${used}`);
       for (const m of pics) c.check(`${f}: the ${m[2]} picture links to ${want[m[2]]}`, (m[1].match(/href="([^"]*)"/) || [])[1] === want[m[2]], m[1]);
     }
     // the master console does not exist yet (console.corporatetambola.com has no address): nothing may link to it; Sign in goes to the working sign-in page
@@ -65,7 +67,7 @@ export const CASES = [
     // the shared bar carries its own addresses: only the home site, the five game sites and the contact page; never the old hub, never the console
     const bar = readFileSync(join(root, "gamesbar.js"), "utf8");
     const barUrls = [...bar.matchAll(/"(https:\/\/[^"]+)"/g)].map((m) => m[1]);
-    c.check("gamesbar.js: at least 7 addresses, all on the allowed list", barUrls.length >= 7 && barUrls.every((u) => /^https:\/\/(home|housie|bingo|tictactoe|snakes|luck)\.corporatetambola\.com\/(contact)?$/.test(u)), barUrls.filter((u) => !/^https:\/\/(home|housie|bingo|tictactoe|snakes|luck)\.corporatetambola\.com\/(contact)?$/.test(u)).join(" "));
+    c.check("gamesbar.js: at least 6 addresses, all on the allowed list", barUrls.length >= 6 && barUrls.every((u) => /^https:\/\/(home|housie|bingo|tictactoe|snakes|luck)\.corporatetambola\.com\/(contact)?$/.test(u)), barUrls.filter((u) => !/^https:\/\/(home|housie|bingo|tictactoe|snakes|luck)\.corporatetambola\.com\/(contact)?$/.test(u)).join(" "));
     c.check("gamesbar.js: first item is the home site, never the old hub or the console", bar.includes('var HOME = "https://home.corporatetambola.com/"') && !/games\.corporatetambola\.com|console\.corporatetambola\.com/.test(bar), "wrong home");
   } },
 

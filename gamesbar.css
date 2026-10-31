@@ -21,7 +21,7 @@
 .cgb .cgb-cur,.cgb .cgb-all,.cgb .cgb-sheet{display:none}
 /* laptop: the CORPORATE line is 12.5px (the smallest size we allow), so the row is kept compact and the strapline waits for a wide screen */
 @media (min-width:900px){.cgb-badge,.cgb-mark{width:24px;height:24px}}
-@media (min-width:900px) and (max-width:1279.98px){.cgb-home{padding:4px}.cgb-home .cgb-name{display:none}} /* the mark alone (its link says "Corporate Games, home") */
+@media (min-width:900px) and (max-width:1279.98px){.cgb-home{padding:4px;min-width:44px;justify-content:center}.cgb-home .cgb-name{display:none}} /* the mark alone (its link says "Corporate Games, home") */
 @media (min-width:900px) and (max-width:1099.98px){
   .cgb-in{gap:4px;padding:0 10px}.cgb-row{gap:0}.cgb-game{padding:4px 5px 4px 3px;gap:4px}
   .cgb-badge,.cgb-mark{width:20px;height:20px}.cgb-name{font-size:12.5px}.cgb-corp{letter-spacing:0}
@@ -49,7 +49,7 @@
   .cgb .cgb-close{display:flex;margin:14px auto 0;padding:0 22px;border-color:rgba(255,255,255,.55);justify-content:center}
 }
 @media (min-width:600px) and (max-width:899.98px){.cgb-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media (max-width:479.98px){.cgb-has-cur .cgb-home .cgb-name{display:none}.cgb-home{padding:4px}}
+@media (max-width:479.98px){.cgb-has-cur .cgb-home .cgb-name{display:none}.cgb-home{padding:4px;min-width:44px;justify-content:center}}
 @media (prefers-reduced-motion:reduce){.cgb *{transition:none!important}}
 @media print{.cgb,.cgb-sprite{display:none}}
 .cgb-soon{display:inline-flex;align-items:center;gap:6px;padding:4px 7px 4px 4px;color:inherit;cursor:default;opacity:.85}
