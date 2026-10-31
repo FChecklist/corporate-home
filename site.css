@@ -475,3 +475,6 @@ html:not(.js) [data-theme-toggle]{display:none}
 .faq h3{font-size:1.05rem;margin:1.3em 0 .3em}
 .faq h3:first-child{margin-top:0}
 .faq p{margin:0;max-width:44em}
+
+/* Tap targets: inline links in text get a >=44px-tall touch area without changing the line flow (padding on an inline box grows its hit area, not the line). */
+:where(main p, main li, main dd, main td, main h3, .hero-contact) a:not(.btn):not(.more):not(.badge-link),dl.contact a{padding-block:13px}
