@@ -16,7 +16,7 @@
     { id: "tictactoe", name: "Tic Tac Toe", url: "https://tictactoe.corporatetambola.com/", badge: "cgb-ttt" },
     { id: "snakes", name: "Snakes and Ladders", url: "https://snakes.corporatetambola.com/", badge: "cgb-snakes" },
     { id: "luck", name: "Luck by Chance", url: "https://luck.corporatetambola.com/", badge: "cgb-luck" },
-    { id: "draw", name: "Lucky Draw", url: "https://home.corporatetambola.com/contact", badge: "cgb-draw", note: "Coming soon" }
+    { id: "draw", name: "Lucky Draw", url: "", badge: "cgb-draw", note: "Coming soon", soon: true }
   ];
   var HOSTS = { housie: "tambola", "corporate-tambola": "tambola", bingo: "bingo", "corporate-bingo": "bingo", tictactoe: "tictactoe", "corporate-tic-tac-toe": "tictactoe",
     snakes: "snakes", "corporate-snakes-and-ladders": "snakes", luck: "luck", "corporate-luck-by-chance": "luck", luckydraw: "draw", home: "home", corporatetambola: "home" };
@@ -48,6 +48,11 @@
     return n;
   }
   function gameLink(g, cls) {
+    if (g.soon) { // not ready yet: a plain badge, not a link
+      var s = el("span", cls + " cgb-soon"); s.setAttribute("data-game", g.id); s.setAttribute("role", "text");
+      s.setAttribute("aria-label", "Corporate " + g.name + " - coming soon");
+      s.appendChild(badge(g.badge)); s.appendChild(name(g.name, g.note)); return s;
+    }
     var a = el("a", cls); a.href = g.url; a.setAttribute("data-game", g.id);
     if (g.id === CUR) markCurrent(a, g.url);
     if (g.note) a.setAttribute("aria-label", "Corporate " + g.name + ": " + g.note.toLowerCase());

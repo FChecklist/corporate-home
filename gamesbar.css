@@ -52,3 +52,6 @@
 @media (max-width:479.98px){.cgb-has-cur .cgb-home .cgb-name{display:none}.cgb-home{padding:4px}}
 @media (prefers-reduced-motion:reduce){.cgb *{transition:none!important}}
 @media print{.cgb,.cgb-sprite{display:none}}
+.cgb-soon{display:inline-flex;align-items:center;gap:6px;padding:4px 7px 4px 4px;color:inherit;cursor:default;opacity:.85}
+.cgb-soon .cgb-note{display:block}
+.cgb-tile.cgb-soon{flex-direction:column;align-items:center;text-align:center}
