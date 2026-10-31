@@ -10,6 +10,7 @@ import { execFileSync } from "node:child_process";
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync, statSync } from "node:fs";
 import { resolve, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { versionRefs } from "./cache-bust.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const out = join(root, "dist");
@@ -43,6 +44,8 @@ for (const f of pages) {
   if (/cdn-cgi\/l\/email-protection|data-cfemail/.test(s)) fail(f + " has an obfuscated e-mail");
   writeFileSync(join(out, f), s);
 }
+// every local script and stylesheet address carries ?v=<commit> (tools/cache-bust.mjs): a returning visitor never runs an old script on a new page, whatever cache time the zone adds (the zone setting Browser Cache TTL replaces a no-cache header on the custom domain, so the address itself must change)
+if (/^[0-9a-f]{7,40}$/.test(commit)) versionRefs(out, commit.slice(0, 12));
 for (const f of ["gamesbar.js", "gamesbar.css"]) if (!existsSync(join(out, f))) fail(f + " is missing from the output");
 
 // 5. checks
