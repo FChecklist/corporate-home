@@ -12,7 +12,7 @@ Corporate Games is the home page for a family of game sites. Each game has its o
 - [For HR teams](https://home.corporatetambola.com/for-hr): employee engagement games, what you decide
 - [How it works](https://home.corporatetambola.com/how-it-works): choose a game, invite your people, play together
 - [Pricing](https://home.corporatetambola.com/pricing): you pay once for each game you run, through Razorpay
-- [Data and privacy](https://home.corporatetambola.com/privacy): what is erased and when
+- [Privacy and Data](https://home.corporatetambola.com/privacy): what is auto-deleted and when
 - [Contact](https://home.corporatetambola.com/contact): e-mail and phone
 
 ## The games

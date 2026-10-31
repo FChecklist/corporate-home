@@ -18,6 +18,7 @@ const ALLOWED_EXTERNAL = [
 const text = (html) => html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<svg[\s\S]*?<\/svg>/g, " ").replace(/<[^>]+>/g, " ").replace(/&middot;/g, "·").replace(/&rarr;/g, "→").replace(/&amp;/g, "&").replace(/&nbsp;/g, " ").replace(/&copy;/g, "©").replace(/\s+/g, " ").trim();
 const hrefs = (html) => [...html.matchAll(/<a\b[^>]*\bhref="([^"]*)"/g)].map((m) => m[1]);
 
+const OWNER_RETENTION = "No personal details needed. All participant information is deleted within 24 hours of the game.";
 export const CASES = [
   { id: "T01", name: "Every link on every page works (pages, #anchors, icons, files)", async run({ base, root, c }) {
     for (const f of listFiles(root)) {
@@ -236,6 +237,22 @@ export const CASES = [
     c.check("games page names all six games", ["Tambola", "Bingo", "Tic Tac Toe", "Snakes and Ladders", "Luck by Chance", "Lucky Draw"].every((n) => gm.includes(n)), "missing");
     c.check("the privacy page names the Grievance Officer and 7 days", /Grievance Officer/.test(text(read(root, "privacy.html"))) && /within 7 days/.test(text(read(root, "privacy.html"))), "missing");
     c.check("the privacy page says billing records are kept", /Billing records/.test(text(read(root, "privacy.html"))), "missing");
+    // owner wording 31 Oct 2026: the privacy page speaks about the organizer and the participants in the third person, calmly, and uses 'auto-deleted' or 'deleted', never 'erased'
+    const pv = text(read(root, "privacy.html"));
+    const pm = text(read(root, "privacy.html").replace(/^[\s\S]*?<main/, "<main").replace(/<\/main>[\s\S]*$/, "")); // the page body only (the footer says "trade name")
+    c.check("privacy page: no 'we', 'our' or 'us' anywhere (third person only)", !/\b(we|our|ours|us|we're|we'll|we've)\b/i.test(pv), (pv.match(/\b(we|our|ours|us)\b/i) || [""])[0]);
+    c.check("privacy page: heading is 'Privacy and Data' and it opens with the employee ID or e-mail line", /^Your data, in plain words Privacy and Data Players can join with just an employee ID or an e-mail\. /.test(pv.replace(/^.*?(?=Your data, in plain words)/, "")), pv.slice(0, 160));
+    c.check("privacy page: the approved retention line is there exactly", pv.includes(OWNER_RETENTION), "missing");
+    c.check("privacy page: Smaller records, exactly as the owner wrote them", pv.includes("Smaller records An audit log of what happened in each game (without any personal details), kept to keep play fair: 365 days. All personal data of participants (if any) is auto-deleted within 24 hours. Speed and error reports: 90 days. The mail log: 3 days. Navigation data is collected to improve the games. In all the games the organizer can also delete all player data at any time from the console, once the game is over or if it was never published."), "different");
+    c.check("privacy page: 'Who is responsible', exactly as the owner wrote it", pv.includes("Who is responsible The organizer who sets up a game decides why and how players' details are used in that game. The software is provided as a service under the brand name \"IT Services by Rajat Agarwal\"."), "different");
+    c.check("privacy page: the game report PDF facts (3 hours, 24/36/72 hours, no Co-hosts, no per-participant row)", /within 3 hours of the end of the game/.test(pv) && /sent again after 24, 36 and 72 hours/.test(pv) && /Co-hosts do not receive it/.test(pv) && /no row for any individual participant/.test(pv) && !/all data is e-mailed/i.test(pv), "missing");
+    c.check("privacy page: participant data is auto-deleted within 24 hours", /All participant data is auto-deleted within 24 hours of the game/.test(pv), "missing");
+    c.check("privacy page: it does not list name or mobile number, and says nothing about AI training or 'private'", !/\b(mobile|phone number|names?|nicknames?)\b/i.test(pm.replace(/Rajat Agarwal|IT Services by Rajat Agarwal|Grievance Officer|brand name/g, "")) && !/\bAI\b/.test(pv) && !/\bprivate\b/i.test(pv), (pv.match(/\b(mobile|phone number|names?|nicknames?|AI|private)\b/i) || [""])[0]);
+    c.check("privacy page: calm words only (no breach, liability, penalty, must, shall, strictly)", !/\b(breach|liability|liable|penalty|penalties|must|shall|strictly|warning)\b/i.test(pv), (pv.match(/\b(breach|liability|liable|penalty|penalties|must|shall|strictly|warning)\b/i) || [""])[0]);
+    for (const f of listFiles(root)) c.check(`${f}: the word 'erase' is not used (auto-deleted or deleted)`, !/\berase|\berasure|\berased/i.test(text(read(root, f))), "erase");
+    for (const f of ["llms.txt", "llms-full.txt"]) c.check(`${f}: no 'erase', no 'Data and privacy', no 'legal and IT'`, !/erase|erasure|Data and privacy|legal and IT/i.test(readFileSync(join(root, f), "utf8")), "old wording");
+    for (const f of listFiles(root)) c.check(`${f}: no 'For your legal and IT teams' and no 'Data and privacy' label`, !/legal and IT teams|Data and privacy/.test(read(root, f)), "old label");
+    c.check("home page: the data sentences are in the third person", !/We never sell data|We never e-mail players|ask what we hold|help us run/.test(read(root, "index.html")), "old sentence");
   } },
 
   { id: "T10", name: "Page structure for assistive tools: one h1, heading order, lang, titles, landmarks, labels, no duplicate ids", async run({ base, browser, root, c }) {
@@ -291,7 +308,7 @@ export const CASES = [
     c.check("offline: the saved-copy helper (service worker) is in charge of the page", await p.evaluate(() => !!navigator.serviceWorker.controller), "no controller");
     c.check("offline: a visited page opens", (await p.textContent("h1")).includes("Six games for your people"), await p.title());
     await p.goto(base + "/privacy", { waitUntil: "load" });
-    c.check("offline: a page that was saved at install opens", (await p.textContent("h1")).includes("What we keep"), await p.title());
+    c.check("offline: a page that was saved at install opens", (await p.textContent("h1")).includes("Privacy and Data"), await p.title());
     await p.goto(base + "/never-opened-page", { waitUntil: "load" }).catch(() => {});
     c.check("offline: an unknown page shows the offline page", (await p.textContent("h1")).includes("You are offline"), await p.title());
     await o.ctx.setOffline(false);
