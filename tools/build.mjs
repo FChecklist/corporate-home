@@ -14,7 +14,7 @@ import { versionRefs } from "./cache-bust.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const out = join(root, "dist");
-const SKIP = new Set([".git", ".gitignore", ".github", "node_modules", "dist", "tests", "tools", "docs", "package.json", "package-lock.json", "README.md"]);
+const SKIP = new Set([".git", ".gitignore", ".github", "node_modules", "functions", "dist", "tests", "tools", "docs", "package.json", "package-lock.json", "README.md"]);
 const fail = (m) => { console.error("BUILD FAILED: " + m); process.exit(1); };
 const git = (...a) => { try { return execFileSync("git", a, { cwd: root, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim(); } catch { return null; } };
 
