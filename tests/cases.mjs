@@ -5,13 +5,14 @@ import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { WIDTHS, PAGES, pageUrl, openPage, checker, contrastRatio, COLOR_PROBE, LAYOUT_PROBE, listFiles, read, heightFor } from "./lib.mjs";
 
-const OWNER_LINE = "We work closely with HR teams in organizing online events and games.";
-const GAME_URLS = { Tambola: "https://housie.corporatetambola.com/", Bingo: "https://bingo.corporatetambola.com/", "Tic Tac Toe": "https://tictactoe.corporatetambola.com/", "Snakes and Ladders": "https://snakes.corporatetambola.com/", "Luck by Chance": "https://luck.corporatetambola.com/" };
+// The owner's HR sentence was "We work closely with HR teams in organizing online events and games." The owner's later rule (checklist row 70, 31 Oct 2026: third person always, never we/our/us; enforced by tests/wording-links.mjs)
+// made the pages say it in the third person (commit 7395d45), so this is the sentence the pages must carry.
+const OWNER_LINE = "Corporate Games works closely with HR teams in organizing online events and games.";
+// Owner order 1 Nov 2026 (home variant): home links to no game site. The ONE master console is the single way to sign in and to create a game.
+const GAME_NAME = { tambola: "Tambola", bingo: "Bingo", ttt: "Tic Tac Toe", snakes: "Snakes and Ladders", luck: "Luck by Chance", draw: "Lucky Draw" };
+const CONSOLE_SIGNIN = "https://console.corporatetambola.com/signin.html", CONSOLE_CREATE = "https://console.corporatetambola.com/#/create";
 const ALLOWED_EXTERNAL = [
-  /^https:\/\/(housie\.)?corporatetambola\.com\/(terms|privacy|subprocessors|dpa|refund-policy|demo)?$/,
-  /^https:\/\/(bingo|tictactoe|snakes|luck)\.corporatetambola\.com\/(privacy|demo)?$/,
-  /^https:\/\/housie\.corporatetambola\.com\/zc(\?demo=1)?$/,
-  /^https:\/\/bingo\.corporatetambola\.com\/zc\?demo=1$/,
+  /^https:\/\/console\.corporatetambola\.com\/(signin\.html|#\/create)$/,
   /^mailto:hello@corporatetambola\.com(\?subject=Grievance)?$/,
   /^tel:\+919650397480$/,
 ];
@@ -38,38 +39,42 @@ export const CASES = [
         }
       }
     }
-    const r = await fetch(base + "/no-such-page"); c.check("unknown page gives the 404 page with status 404", r.status === 404 && (await r.text()).includes("We cannot find that page"), "status " + r.status);
+    // the 404 page heading is "That page could not be found." since the third-person rewording (7395d45); the old first-person heading "We cannot find that page" is gone
+    const r = await fetch(base + "/no-such-page"); const body404 = await r.text(); c.check("unknown page gives the 404 page with status 404", r.status === 404 && body404.includes("That page could not be found"), `status ${r.status}, 404 page heading ${body404.includes("That page could not be found") ? "found" : "missing"}`);
   } },
 
-  { id: "T02", name: "Outside links go only where they should; every game picture links to its game; Lucky Draw only to the contact page", async run({ root, c }) {
+  { id: "T02", name: "Outside links go only where they should; every game picture links to the console create page; Sign in goes to the console", async run({ root, c }) {
     for (const f of listFiles(root)) {
       const html = read(root, f);
       for (const h of hrefs(html)) if (/^(https?:|mailto:|tel:)/.test(h)) c.check(`${f}: ${h} is on the allowed list`, ALLOWED_EXTERNAL.some((re) => re.test(h)), "not allowed");
+      // Lucky Draw is a normal entry (owner order 1 Nov 2026): every link that carries its name or picture goes to the console create page (inside the one legal document: or to its own section)
       const drawLinks = [...html.matchAll(/<a\b[^>]*>(?:(?!<\/a>)[\s\S])*?<\/a>/g)].map((m) => m[0]).filter((a) => /Lucky Draw|#i-draw/.test(a));
-      c.check(`${f}: Lucky Draw links only to the contact page`, drawLinks.every((a) => /href="\/contact"/.test(a)) && !/luckydraw|lucky\./i.test(html.replace(/Lucky Draw/g, "")), drawLinks.find((a) => !/href="\/contact"/.test(a)) || "lucky draw address");
+      const drawBad = drawLinks.find((a) => { const h = (a.match(/href="([^"]*)"/) || [])[1] || ""; return !(h === CONSOLE_CREATE || h.startsWith("#")); });
+      c.check(`${f}: Lucky Draw links only to the console create page`, !drawBad && !/\/\/lucky(draw)?\./i.test(html), drawBad || "lucky draw address");
+      // the one master console is the way to sign in and to create a game: every page carries both links, and every Sign in goes to the sign-in page
+      const signIns = [...html.matchAll(/<a\b([^>]*)>\s*Sign in\s*<\/a>/g)].map((m) => (m[1].match(/href="([^"]*)"/) || [])[1]);
+      c.check(`${f}: there is a Sign in and every Sign in goes to ${CONSOLE_SIGNIN}`, signIns.length >= 1 && signIns.every((h) => h === CONSOLE_SIGNIN), signIns.join(" ") || "no Sign in");
+      c.check(`${f}: carries the console create link`, html.includes(`href="${CONSOLE_CREATE}"`), "missing");
     }
     for (const f of ["index.html", "games.html"]) {
       const html = read(root, f);
-      for (const [n, u] of Object.entries(GAME_URLS)) c.check(`${f}: ${n} links to ${u}`, html.includes(`href="${u}"`), "missing");
       const draw = html.match(/<article class="(?:card|row) g-draw">[\s\S]*?<\/article>/);
-      c.check(`${f}: the Lucky Draw card says Coming soon and links only to the contact page`, !!draw && /Coming soon/.test(draw[0]) && !/Live now|class="tag"/i.test(draw[0]) && [...draw[0].matchAll(/href="([^"#][^"]*)"/g)].every((m) => m[1] === "/contact"), draw ? draw[0].slice(0, 120) : "no card");
+      const drawHrefs = draw ? [...draw[0].matchAll(/href="([^"#][^"]*)"/g)].map((m) => m[1]) : [];
+      c.check(`${f}: the Lucky Draw card is a normal entry (no status tag) and links only to the console create page`, !!draw && !/Coming soon|Live now|class="tag"/i.test(draw[0]) && drawHrefs.length > 0 && drawHrefs.every((h) => h === CONSOLE_CREATE), draw ? draw[0].slice(0, 120) : "no card");
       c.check(`${f}: the Lucky Draw card carries no date`, !!draw && !/\d/.test(text(draw[0]).replace("Lucky Draw", "")), "digits in card");
-      // every game picture is inside a link to that game's own address
+      // every game picture is inside a link to the console create page, and the link's spoken name (aria-label) names the picture's own game
       const pics = [...html.matchAll(/<a\b([^>]*)>(?:(?!<\/a>)[\s\S])*?<use href="#i-(\w+)"/g)];
-      const want = { tambola: "https://housie.corporatetambola.com/", bingo: "https://bingo.corporatetambola.com/", ttt: "https://tictactoe.corporatetambola.com/", snakes: "https://snakes.corporatetambola.com/", luck: "https://luck.corporatetambola.com/", draw: "/contact" };
       const used = (html.match(/<use href="#i-\w+"/g) || []).length;
-      const drawUses = (html.match(/<use href="#i-draw"/g) || []).length; // Lucky Draw is a Coming soon badge, not a link
-      c.check(`${f}: every game picture except Lucky Draw is a link (${pics.length} of ${used})`, used > 0 && pics.length === used - drawUses, `${pics.length} of ${used}`);
-      for (const m of pics) c.check(`${f}: the ${m[2]} picture links to ${want[m[2]]}`, (m[1].match(/href="([^"]*)"/) || [])[1] === want[m[2]], m[1]);
+      c.check(`${f}: every game picture is a link (${pics.length} of ${used})`, used > 0 && pics.length === used, `${pics.length} of ${used}`);
+      for (const m of pics) c.check(`${f}: the ${m[2]} picture links to the console create page and names its own game`, (m[1].match(/href="([^"]*)"/) || [])[1] === CONSOLE_CREATE && (m[1].match(/aria-label="([^"]*)"/) || [])[1]?.includes(GAME_NAME[m[2]]), m[1]);
+      for (const g of Object.keys(GAME_NAME)) c.check(`${f}: the ${g} game has a picture link`, pics.some((m) => m[2] === g), "missing");
     }
-    // the master console does not exist yet (console.corporatetambola.com has no address): nothing may link to it; Sign in goes to the working sign-in page
-    c.check("every Sign in goes to the working sign-in page https://housie.corporatetambola.com/zc", (read(root, "index.html").match(/href="https:\/\/housie\.corporatetambola\.com\/zc"/g) || []).length >= 3, "too few");
-    for (const f of listFiles(root)) c.check(`${f}: no link to console.corporatetambola.com (it does not exist yet)`, !/console\.corporatetambola\.com/.test(read(root, f)), "console link");
-    // the shared bar carries its own addresses: only the home site, the five game sites and the contact page; never the old hub, never the console
+    // the shared bar carries its own addresses: only the home site and the console create page (one per game); never the old hub, never a game site
     const bar = readFileSync(join(root, "gamesbar.js"), "utf8");
     const barUrls = [...bar.matchAll(/"(https:\/\/[^"]+)"/g)].map((m) => m[1]);
-    c.check("gamesbar.js: at least 6 addresses, all on the allowed list", barUrls.length >= 6 && barUrls.every((u) => /^https:\/\/(home|housie|bingo|tictactoe|snakes|luck)\.corporatetambola\.com\/(contact)?$/.test(u)), barUrls.filter((u) => !/^https:\/\/(home|housie|bingo|tictactoe|snakes|luck)\.corporatetambola\.com\/(contact)?$/.test(u)).join(" "));
-    c.check("gamesbar.js: first item is the home site, never the old hub or the console", bar.includes('var HOME = "https://home.corporatetambola.com/"') && !/games\.corporatetambola\.com|console\.corporatetambola\.com/.test(bar), "wrong home");
+    const barOk = (u) => u === "https://home.corporatetambola.com/" || u === CONSOLE_CREATE;
+    c.check("gamesbar.js: at least 7 addresses (the home site and one console create address per game), all on the allowed list", barUrls.length >= 7 && barUrls.every(barOk), barUrls.filter((u) => !barOk(u)).join(" "));
+    c.check("gamesbar.js: first item is the home site, never the old hub or a game site", bar.includes('var HOME = "https://home.corporatetambola.com/"') && !/\/\/(games|housie|bingo|tictactoe|snakes|luck|luckydraw)\.corporatetambola\.com/.test(bar), "wrong home");
   } },
 
   { id: "T03", name: "No errors in the console, no failed or missing files (all pages, light and dark, phone and laptop)", async run({ base, browser, c }) {
@@ -215,20 +220,28 @@ export const CASES = [
 
   { id: "T09", name: "The words: required lines are there; no price, no big claim, no emoji, no customer names; short", async run({ root, c }) {
     const home = text(read(root, "index.html"));
-    c.check("the owner's HR sentence is on the home page", home.includes(OWNER_LINE), "missing");
+    c.check("the owner's HR sentence (third-person form) is on the home page", home.includes(OWNER_LINE), "missing");
     c.check("the headline says what we do", home.includes("Which game will you use to engage your various teams this week?"), "missing");
     c.check("data deletion: the owner-approved retention line, exactly", home.includes("No personal details needed. All participant information is deleted within 24 hours of the game."), "missing");
     c.check("compliance: 'Designed to follow' DPDP, GDPR, CCPA", /Designed to follow India's DPDP Act, the EU GDPR and US privacy laws such as the CCPA/.test(home), "missing");
-    c.check("close group: 'Your game is for the people you invite.'", home.includes("Your game is for the people you invite.") && home.includes("You decide who joins"), "missing");
+    // "You decide who joins, and whether adult family members can come." was removed on 1 Nov 2026 on the owner's order (no who-plays, age or consent lines: tests/no-address.mjs, commit 5d6cbad); the lead now reads "The organizer chooses and invites the people."
+    c.check("close group: 'Your game is for the people you invite.' and 'The organizer chooses and invites the people.'", home.includes("Your game is for the people you invite.") && home.includes("The organizer chooses and invites the people."), "missing");
     for (const n of ["Tambola", "Bingo", "Tic Tac Toe", "Snakes and Ladders", "Luck by Chance", "Lucky Draw"]) c.check(`home names ${n}`, home.includes(n), "missing");
     // the first screen carries the game picker twice (.choose on laptops, .six on phones; only one shows): count the page with the phone one, the longer, once
     const words = text(read(root, "index.html").replace(/<div class="choose">[\s\S]*?<\/ul><\/div>/, "")).split(/\s+/).length;
-    // index.html alone is over 850 (1305 words on 31 Oct 2026): about 390 of them are the FAQ (mirrored in the JSON-LD for search) and the use-case links, which Home v2 added on purpose; no owner-approved fact was cut. Limit for this page: 1350. Every other page stays under 850.
-    c.check("home page is short (limit 1350 words: FAQ and use-case links are deliberate search content)", words <= 1350, words + " words");
-    for (const f of listFiles(root).filter((x) => x !== "index.html")) { const w = text(read(root, f)).split(/\s+/).length; c.check(`${f}: page is short (limit 850 words)`, w <= 850, w + " words"); }
+    // index.html alone is over 850 (1305 words on 31 Oct 2026): about 390 of them are the FAQ (mirrored in the JSON-LD for search) and the use-case links, which Home v2 added on purpose; no owner-approved fact was cut.
+    // 1 Nov 2026: the owner-approved Who can play section, its collapsed Questions from HR, IT and Legal and the Private by design band brought the home page to 1697 words (the CTA branch a3adccd, before the legal merge; 1693 after it); limit 1700, the real count rounded up. Every other page stays under 850, except the one legal document.
+    c.check("home page is short (limit 1700 words: FAQ, Who can play and use-case links are deliberate content)", words <= 1700, words + " words");
+    // terms.html is the ONE legal document (generated from corporate-game-core by tools/make-terms.mjs, 3003 words on 1 Nov 2026): its own limit, 3100 (the real count rounded up)
+    const PAGE_LIMIT = { "terms.html": 3100 };
+    for (const f of listFiles(root).filter((x) => x !== "index.html")) { const lim = PAGE_LIMIT[f] || 850; const w = text(read(root, f)).split(/\s+/).length; c.check(`${f}: page is short (limit ${lim} words)`, w <= lim, w + " words"); }
     const FORBID = [[/100\s?%/, "100%"], [/\bcompliant\b/i, "compliant"], [/\bcertified\b/i, "certified"], [/\bguarantee/i, "guarantee"], [/\bISO\b/, "ISO"], [/SOC ?2/i, "SOC 2"], [/bank-grade|military/i, "bank-grade"], [/\bsecure[ds]?\b|\bsecurely\b/i, "secure"], [/AI-powered|revolution|cutting-edge|seamless|world-class|best-in-class/i, "hype"], [/testimonial|trusted by|our customers include|case stud/i, "customers"], [/\bprivate\b/i, "the word private"], [/Live now|Coming soon/i, "status tag"], [/₹|\bRs\.? ?\d|US\$|\$ ?\d|\bUSD\b|\bINR\b/, "price"], [/(?![©®™])\p{Extended_Pictographic}/u, "emoji"], [/\bsoon in\b|\bby (Q[1-4]|\w+ 20\d\d)\b|\blaunching\b/i, "date promise"], [/we are (fully )?(GDPR|DPDP|CCPA)[- ]compliant/i, "compliance claim"]];
     // the one allowed status tag: the owner-approved "Coming soon" badge on Lucky Draw (its card tag, its menu tile, its one sentence); any other status tag still fails
-    for (const f of listFiles(root)) { const t = text(read(root, f).replace(/<span class="tag-soon">Coming soon<\/span>/g, "")).replace(/Lucky Draw(?::| is)? [Cc]oming soon/g, "Lucky Draw"); for (const [re, label] of FORBID) c.check(`${f}: no ${label}`, !re.test(t), (t.match(re) || [""])[0]); c.check(`${f}: no test or old addresses in the source`, !/pages\.dev|corporate-home/.test(read(root, f)), "old address"); }
+    // the owner-approved uses of two otherwise forbidden words, each the exact phrase on its own page (anything else with the word still fails):
+    //   index.html: the band heading "Closed group and private by design" (commit a3adccd) and the Who can play answer "The link is private to this game." (ef3f6d6)
+    //   terms.html: the legal document's sentence "...contracts that keep the data confidential and secure." (generated text, a16601f)
+    const ALLOWED_PHRASES = { "index.html": ["Closed group and private by design", "The link is private to this game."], "terms.html": ["keep the data confidential and secure"] };
+    for (const f of listFiles(root)) { let t = text(read(root, f).replace(/<span class="tag-soon">Coming soon<\/span>/g, "")).replace(/Lucky Draw(?::| is)? [Cc]oming soon/g, "Lucky Draw"); for (const ph of ALLOWED_PHRASES[f] || []) t = t.split(ph).join(" "); for (const [re, label] of FORBID) c.check(`${f}: no ${label}`, !re.test(t), (t.match(re) || [""])[0]); c.check(`${f}: no test or old addresses in the source`, !/pages\.dev|corporate-home/.test(read(root, f)), "old address"); }
     c.check("the first screen shows the phone number and e-mail", /class="hero-contact"[^]*?tel:\+919650397480[^]*?mailto:hello@corporatetambola\.com/.test(read(root, "index.html")), "missing");
     const hr = text(read(root, "for-hr.html")), how = text(read(root, "how-it-works.html")), ct = text(read(root, "contact.html")), gm = text(read(root, "games.html"));
     c.check("for-hr page carries the owner's sentence", hr.includes(OWNER_LINE), "missing");

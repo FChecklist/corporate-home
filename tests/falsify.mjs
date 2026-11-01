@@ -12,10 +12,13 @@ import { runCases } from "./run.mjs";
 const HERE = dirname(fileURLToPath(import.meta.url)), SITE = resolve(HERE, "..");
 
 export const MUTATIONS = {
-  T01: [{ file: "index.html", find: 'href="/for-hr"', replace: 'href="/for-hr-gone"', why: "a menu link points at a page that does not exist" }],
-  T02: [{ file: "index.html", find: '<article class="card g-draw">', replace: '<article class="card g-draw"><a href="https://luckydraw.corporatetambola.com/">x</a>', why: "Lucky Draw gets a link before it exists" },
-         { file: "index.html", find: '<li><a class="g-bingo" href="https://bingo.corporatetambola.com/" aria-label="Corporate Bingo">', replace: '<li><a class="g-bingo" aria-label="Corporate Bingo">', why: "a game picture is no longer a link" },
-         { file: "index.html", find: '<a class="btn main" href="https://housie.corporatetambola.com/zc">Sign in</a>', replace: '<a class="btn main" href="https://console.corporatetambola.com/">Sign in</a>', why: "Sign in points at the console, which does not exist yet" },
+  T01: [{ file: "index.html", find: 'href="/for-hr"', replace: 'href="/for-hr-gone"', why: "a menu link points at a page that does not exist" },
+         { file: "404.html", find: "That page could not be found.", replace: "Nothing here.", why: "the 404 page loses its heading" }],
+  T02: [{ file: "index.html", find: '<article class="card g-draw">', replace: '<article class="card g-draw"><a href="https://luckydraw.corporatetambola.com/">x</a>', why: "Lucky Draw gets a link to a game site of its own" },
+         { file: "index.html", find: '<a class="g-bingo" href="https://console.corporatetambola.com/#/create" data-game="bingo" aria-label="Corporate Bingo">', replace: '<a class="g-bingo" aria-label="Corporate Bingo">', why: "a game picture is no longer a link" },
+         { file: "index.html", find: '<a class="g-bingo" href="https://console.corporatetambola.com/#/create" data-game="bingo" aria-label="Corporate Bingo">', replace: '<a class="g-bingo" href="https://bingo.corporatetambola.com/" data-game="bingo" aria-label="Corporate Bingo">', why: "a game picture points at a game site again" },
+         { file: "index.html", find: '<a class="signin-small" href="https://console.corporatetambola.com/signin.html">Sign in', replace: '<a class="signin-small" href="https://housie.corporatetambola.com/zc">Sign in', why: "Sign in points at a game site instead of the console" },
+         { file: "index.html", find: '<a class="signin-small" href="https://console.corporatetambola.com/signin.html">Sign in', replace: '<a class="signin-small" href="https://console.corporatetambola.com/elsewhere.html">Sign in', why: "Sign in points at some other console page" },
          { file: "gamesbar.js", find: 'var HOME = "https://home.corporatetambola.com/";', replace: 'var HOME = "https://games.corporatetambola.com/";', why: "the bar's first item goes to the old hub" }],
   T03: [{ file: "index.html", find: '<script src="/theme.js?v=5"></script>', replace: '<script src="/theme.js?v=5"></script><script src="/missing-file.js"></script>', why: "a script file is missing" }],
   T04: [{ file: "site.css", find: "--muted:#C9C3EA", replace: "--muted:#3A4660", all: true, why: "dark mode grey text becomes unreadable" }],
@@ -31,6 +34,10 @@ export const MUTATIONS = {
   T09: [{ file: "index.html", find: "<h2>Ready to start?</h2>", replace: "<h2>100% secure, bank-grade, Rs 999 only</h2>", why: "a big claim and a price appear" },
          { file: "games.html", find: "<i>Corporate</i> Bingo</span></h2>", replace: "<i>Corporate</i> Bingo</span></h2><span class=\"tag\">Live now</span>", why: "a status tag comes back" },
          { file: "index.html", find: "<h2>Ready to start?</h2>", replace: "<h2>Ready to start? Our team is private.</h2>", why: "the word the owner does not want appears" },
+         { file: "terms.html", find: "keep the data confidential and secure", replace: "keep the data confidential and highly secure", why: "the legal text says more than the one approved sentence with the word secure" },
+         { file: "for-hr.html", find: '<p class="lead">Corporate Games works closely with HR teams in organizing online events and games.</p>', replace: '<p class="lead">Corporate Games helps HR teams.</p>', why: "the HR page loses the owner's sentence" },
+         { file: "index.html", find: "<p class=\"lead\">The organizer chooses and invites the people.", replace: "<p class=\"lead\">Players open one link.", why: "the close-group lead loses its sentence" },
+         { file: "terms.html", find: "<h1", replace: "<p>" + "Many more words that are not needed in the legal document. ".repeat(80) + "</p><h1", why: "the legal document grows by hundreds of words" },
          { file: "index.html", find: "<h2>Ready to start?</h2>", replace: "<h2>Ready to start? " + "Many more words that are not needed on this page. ".repeat(40) + "</h2>", why: "the home page grows by hundreds of words" }],
   T10: [{ file: "index.html", find: "<h2>Ready to start?</h2>", replace: "<h1>Ready to start?</h1>", why: "a second h1" },
          { file: "gamesbar.js", find: 'a.setAttribute("aria-current", here(url) ? "page" : "true");', replace: 'a.setAttribute("aria-current", "page");', why: "the bar marks the front page as the current page on every page, next to the menu's own mark" }],
