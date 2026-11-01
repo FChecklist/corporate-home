@@ -106,7 +106,9 @@ export const LAYOUT_PROBE = (W) => {
   const iw = W || window.innerWidth, ih = window.innerHeight, de = document.documentElement;
   const bad = [];
   const vis = (e) => { const r = e.getBoundingClientRect(); const cs = getComputedStyle(e); return r.width > 0 && r.height > 0 && cs.visibility !== "hidden" && cs.display !== "none"; };
-  const skip = (e) => e.closest(".skip, .sprite, thead, [hidden]");
+  // A closed <details> keeps layout boxes for its content but paints nothing and takes no space on the page, so they can overlap what comes after it without anyone seeing it: not checked. The <summary> itself is always on screen and is checked.
+  const inClosedDetails = (e) => { for (let d = e.closest("details:not([open])"); d; d = d.parentElement && d.parentElement.closest("details:not([open])")) { const sm = d.querySelector(":scope > summary"); if (!(sm && sm.contains(e))) return true; } return false; };
+  const skip = (e) => e.closest(".skip, .sprite, thead, [hidden]") || inClosedDetails(e);
   const name = (e) => e.tagName.toLowerCase() + (e.id ? "#" + e.id : "") + (e.className && typeof e.className === "string" ? "." + e.className.split(" ")[0] : "") + " '" + (e.textContent || "").trim().slice(0, 22) + "'";
   if (de.scrollWidth > iw + 1) bad.push(`sideways scroll: page ${de.scrollWidth} wide, screen ${iw}`);
   if (document.body.scrollWidth > iw + 1) bad.push(`sideways scroll: body ${document.body.scrollWidth} wide, screen ${iw}`);
