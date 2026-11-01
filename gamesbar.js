@@ -1,4 +1,4 @@
-/*! Corporate Games bar v4 - one shared navigation for every Corporate Games site. Canonical copy: C:\ct\test-sites\corporate-games-bar (do not edit a site's copy; edit here and copy). */
+/*! HOME VARIANT (owner order 1 Nov 2026: home links to no game site; every game goes to the console create page, Lucky Draw is live). The canonical copy still has the game-site addresses and needs the same change (v5) before other sites follow. Corporate Games bar v4 - one shared navigation for every Corporate Games site. Canonical copy: C:\ct\test-sites\corporate-games-bar (do not edit a site's copy; edit here and copy). */
 /* What it does: puts a slim bar at the very top of the page with every Corporate game, each shown by its own badge (ticket or board art)
    and its proper name under a small CORPORATE line. The game of the current site is marked (aria-current="page").
    Laptop (900px and wider): one row, everything visible, no scrollbar. Phone: the Corporate Games mark, the current game, and an
@@ -8,15 +8,15 @@
 (function () {
   "use strict";
   if (document.querySelector(".cgb")) return;
-  var VERSION = "4";
+  var VERSION = "4-home";
   var HOME = "https://home.corporatetambola.com/";
   var GAMES = [
-    { id: "tambola", name: "Corporate Tambola", url: "https://housie.corporatetambola.com/", badge: "cgb-tambola" },
-    { id: "bingo", name: "Corporate Bingo", url: "https://bingo.corporatetambola.com/", badge: "cgb-bingo" },
-    { id: "tictactoe", name: "Corporate Tic Tac Toe", url: "https://tictactoe.corporatetambola.com/", badge: "cgb-ttt" },
-    { id: "snakes", name: "Corporate Snakes and Ladders", url: "https://snakes.corporatetambola.com/", badge: "cgb-snakes" },
-    { id: "luck", name: "Corporate Luck by Chance", url: "https://luck.corporatetambola.com/", badge: "cgb-luck" },
-    { id: "draw", name: "Corporate Lucky Draw", url: "", badge: "cgb-draw", note: "Coming soon", soon: true }
+    { id: "tambola", name: "Corporate Tambola", url: "https://console.corporatetambola.com/#/create", badge: "cgb-tambola" },
+    { id: "bingo", name: "Corporate Bingo", url: "https://console.corporatetambola.com/#/create", badge: "cgb-bingo" },
+    { id: "tictactoe", name: "Corporate Tic Tac Toe", url: "https://console.corporatetambola.com/#/create", badge: "cgb-ttt" },
+    { id: "snakes", name: "Corporate Snakes and Ladders", url: "https://console.corporatetambola.com/#/create", badge: "cgb-snakes" },
+    { id: "luck", name: "Corporate Luck by Chance", url: "https://console.corporatetambola.com/#/create", badge: "cgb-luck" },
+    { id: "draw", name: "Corporate Lucky Draw", url: "https://console.corporatetambola.com/#/create", badge: "cgb-draw" }
   ];
   var HOSTS = { housie: "tambola", "corporate-tambola": "tambola", bingo: "bingo", "corporate-bingo": "bingo", tictactoe: "tictactoe", "corporate-tic-tac-toe": "tictactoe",
     snakes: "snakes", "corporate-snakes-and-ladders": "snakes", luck: "luck", "corporate-luck-by-chance": "luck", luckydraw: "draw", home: "home", corporatetambola: "home" };

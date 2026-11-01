@@ -43,5 +43,14 @@ const FACTS = ["Nothing to install, no app to download.", "Players need no accou
   check("llms-full: the count-on sentence carries the same eight claims", FACTS.every((x) => ll.toLowerCase().includes(x.replace(/\.$/, "").toLowerCase())));
   check("the old count-on lines are gone from the block", !/extended families|Close group online engagement|Designed to follow the EU GDPR/.test(block));
 }
+
+// the shared bar's home copy (menu and tiles on every page) links to no game site either, and Lucky Draw is live
+{
+  const bar = readFileSync(join(ROOT, "gamesbar.js"), "utf8");
+  const hosts = [...bar.matchAll(GAMEHOST)].map((m) => m[0]);
+  check("gamesbar.js: no game-site address", hosts.length === 0, hosts.slice(0, 3).join(" "));
+  check("gamesbar.js: every game goes to the console create page", (bar.match(/url: "https:\/\/console\.corporatetambola\.com\/#\/create"/g) || []).length === 6);
+  check("gamesbar.js: Lucky Draw is not 'coming soon'", !/soon: true|note: "Coming soon"/.test(bar));
+}
 console.log(`wording-links: ${checks} checks, ${failed} failed`);
 process.exit(failed ? 1 : 0);
