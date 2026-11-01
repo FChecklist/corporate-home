@@ -33,7 +33,7 @@ for (const f of files) {
 }
 
 // the "What you can count on" block is exactly the owner's list (1 Nov 2026), in this order
-const FACTS = ["Nothing to install, no app to download.", "Players need no account and no personal details.", "Participant data is auto-deleted within 24 hours.", "The organizer pays per game, with no recurring charges.", "The organizer has complete control over who plays and who does not.", "Closed-group engagement for team activities.", "Invite employees, their friends and their families.", "Include vendors, customers and other guests."];
+const FACTS = ["Nothing to install, no app to download.", "Players need no account. No e-mail address and no mobile number is asked for.", "Participant data is auto-deleted within 24 hours.", "The organizer pays per game, with no recurring charges.", "The organizer has complete control over who plays and who does not.", "Closed-group engagement for team activities.", "Invite employees, their friends and their families.", "Include vendors, customers and other guests."];
 {
   const t = readFileSync(join(ROOT, "index.html"), "utf8");
   const block = (t.match(/<ul class="facts">([\s\S]*?)<\/ul>/) || [, ""])[1];

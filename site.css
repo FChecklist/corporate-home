@@ -497,3 +497,10 @@ html:not(.js) [data-theme-toggle]{display:none}
 .who-faq dt{font-weight:600;font-size:14px;margin-top:10px;color:var(--ink)}
 .who-faq dd{margin:2px 0 0}
 @media (min-width:768px){.who-grid{grid-template-columns:repeat(3,1fr)}}
+
+/* ---------- privacy band (calm teal, readable) ---------- */
+.privband{background:var(--wash-teal);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0}
+.privband h2{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin:0 0 6px}
+.privband .pb-big{font-family:var(--serif);font-weight:700;font-size:clamp(1.25rem,4.6vw,1.9rem);line-height:1.25;color:var(--ink);margin:0 0 8px;max-width:30em}
+.privband .pb-sub{font-size:16px;color:var(--ink);margin:0 0 8px;max-width:40em}
+.privband .pb-note{font-size:13.5px;color:var(--muted);margin:0;max-width:44em}
