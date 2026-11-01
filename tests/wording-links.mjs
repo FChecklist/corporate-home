@@ -31,5 +31,17 @@ for (const f of files) {
   check(`${f}: Lucky Draw is not "coming soon"`, !/coming soon/i.test(t));
   check(`${f}: no "tick two boxes"`, !/tick two boxes/i.test(t));
 }
+
+// the "What you can count on" block is exactly the owner's list (1 Nov 2026), in this order
+const FACTS = ["Nothing to install, no app to download.", "Players need no account and no personal details.", "Participant data is auto-deleted within 24 hours.", "The organizer pays per game, with no recurring charges.", "The organizer has complete control over who plays and who does not.", "Closed-group engagement for team activities.", "Invite employees, their friends and their families.", "Include vendors, customers and other guests."];
+{
+  const t = readFileSync(join(ROOT, "index.html"), "utf8");
+  const block = (t.match(/<ul class="facts">([\s\S]*?)<\/ul>/) || [, ""])[1];
+  const items = [...block.matchAll(/<li><b>([^<]*)<\/b><\/li>/g)].map((m) => m[1]);
+  check("index: the count-on block is the owner's list, in order", JSON.stringify(items) === JSON.stringify(FACTS), items.join(" | ").slice(0, 200));
+  const ll = readFileSync(join(ROOT, "llms-full.txt"), "utf8");
+  check("llms-full: the count-on sentence carries the same eight claims", FACTS.every((x) => ll.toLowerCase().includes(x.replace(/\.$/, "").toLowerCase())));
+  check("the old count-on lines are gone from the block", !/extended families|Close group online engagement|Designed to follow the EU GDPR/.test(block));
+}
 console.log(`wording-links: ${checks} checks, ${failed} failed`);
 process.exit(failed ? 1 : 0);
