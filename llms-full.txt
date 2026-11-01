@@ -4,18 +4,18 @@ Source: https://home.corporatetambola.com/ . Online games for company events, fo
 
 ## Home (https://home.corporatetambola.com/)
 
-You plan the day. The software makes the game run smoothly. Pick a game, share one link, and your people play together. We work closely with HR teams in organizing online events and games. Good for annual days, town halls, festive days, welcome days, team events and recognition evenings.
+You plan the day. The software makes the game run smoothly. Pick a game, share one link, and your people play together. Corporate Games works closely with HR teams in organizing online events and games. Good for annual days, town halls, festive days, welcome days, team events and recognition evenings.
 
 You can count on: designed for the engagement of company employees and their extended families; close group online engagement and fun; players never pay; only the people you invite can join; no app to install; no personal details needed, and all participant information is deleted within 24 hours of the game; a free Tambola or Bingo demo for 10 people.
 
 ## The games (https://home.corporatetambola.com/games)
 
-- Corporate Tambola (https://housie.corporatetambola.com/): The classic number game, also called Housie.
-- Corporate Bingo (https://bingo.corporatetambola.com/): Numbers are called out loud and every player gets a card on their phone.
-- Corporate Tic Tac Toe (https://tictactoe.corporatetambola.com/): A one-against-one tournament for your whole company.
-- Corporate Snakes and Ladders (https://snakes.corporatetambola.com/): Everyone gets their own board and plays at the same time.
-- Corporate Luck by Chance (https://luck.corporatetambola.com/): A dice game of pure luck with a clock on every round.
-- Corporate Lucky Draw: a live draw that picks the winners in front of everyone. Coming soon.
+- Corporate Tambola (https://console.corporatetambola.com/#/create): The classic number game, also called Housie.
+- Corporate Bingo (https://console.corporatetambola.com/#/create): Numbers are called out loud and every player gets a card on their phone.
+- Corporate Tic Tac Toe (https://console.corporatetambola.com/#/create): A one-against-one tournament for your whole company.
+- Corporate Snakes and Ladders (https://console.corporatetambola.com/#/create): Everyone gets their own board and plays at the same time.
+- Corporate Luck by Chance (https://console.corporatetambola.com/#/create): A dice game of pure luck with a clock on every round.
+- Corporate Lucky Draw: a live draw that picks the winners in front of everyone.
 
 ## Virtual team building games (https://home.corporatetambola.com/virtual-team-building-games)
 
@@ -30,7 +30,7 @@ Yes. People in the office and people at home join the same game from the same li
 ### Do people need to install an app?
 No. The game opens in the phone browser. There is no app and no password to remember.
 
-### How do we start?
+### How does a team start?
 Pick a game, choose the day and time, and share one link with the people you invite. Building a game is free. You pay once for each game you run, before it starts.
 
 ### Can colleagues in different cities join?
@@ -47,15 +47,15 @@ A game, a day and time, and the list of people to invite. You share one link. Th
 Only the people you invite. You also decide whether adult family members can come.
 
 ### Do employees have to pay?
-No. Players never pay or stake money. The organizer gives the prizes. We provide software only.
+No. Players never pay or stake money. The organizer gives the prizes. Corporate Games provides software only.
 
 ### Which game suits an annual day or a welcome day?
-That is your choice. Tambola and Bingo suit a whole group playing together. Tic Tac Toe suits a tournament. Tell us the occasion and the number of people, and we will help you choose.
+That is your choice. Tambola and Bingo suit a whole group playing together. Tic Tac Toe suits a tournament. Share the occasion and the number of people, and the team will help you choose.
 
 ### What happens to employee details after the game?
 No personal details needed. All participant information is deleted within 24 hours of the game. See the Privacy and Data page for exactly what is kept and for how long.
 
-### Can we talk to a person first?
+### Can a team talk to a person first?
 Yes. Write to hello@corporatetambola.com or call (+91) 96503 97480.
 
 ## How it works (https://home.corporatetambola.com/how-it-works)
@@ -76,7 +76,7 @@ Building a game is free. You pay once for each game you run, before it starts. P
 It depends on your group. Tambola and Bingo work when everyone plays together on one call. Tic Tac Toe is a one-against-one tournament. Snakes and Ladders lets everyone play at the same time. Luck by Chance is a quick dice game. All of them open in the phone browser, with no app to install.
 
 ### How to run housie for 200 employees?
-Housie is another name for Tambola. Choose the day and time, share one link with the people you invite, and everyone opens it on their phone. The software gives out the tickets and finds every winner. Tell us your head count when you plan, and we will help you set it up.
+Housie is another name for Tambola. Choose the day and time, share one link with the people you invite, and everyone opens it on their phone. The software gives out the tickets and finds every winner. Share the head count when you plan, and the team will help you set it up.
 
 ### Is there an online tambola for corporate events in India?
 Yes. Corporate Tambola is made for company events. Players join from a link on their phone, with no app, and they never pay. You pay once for each game you run, to IT Services by Rajat Agarwal, through Razorpay. A free demo for 10 people is available.

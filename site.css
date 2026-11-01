@@ -154,6 +154,7 @@ nav.main a.btn:hover{background:var(--action)}
 .hero-contact{margin:22px 0 0;font-size:15.5px;color:var(--ink)}
 .hero-contact a{color:var(--link);font-weight:600}
 .hero-try{margin:10px 0 0;font-size:14px;line-height:1.4}.hero-try a{color:var(--link);text-decoration:underline;text-underline-offset:3px;display:inline-block;padding:6px 0}
+.hero-fine{margin:4px 0 0;font-size:12px;line-height:1.5;color:var(--ink)}.hero-fine a{color:var(--link);text-decoration:underline;text-underline-offset:2px;display:inline-block;padding:6px 2px}
 nav.main a.signin-small{font-size:14px;font-weight:500;color:var(--link);text-decoration:underline;text-underline-offset:3px}
 .six{position:relative;min-width:0}
 .six-title{margin:0 0 10px;color:var(--ink);font:700 15.5px/1.3 var(--sans)}

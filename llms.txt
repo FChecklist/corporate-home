@@ -2,7 +2,7 @@
 
 > Online games for company events, for the people you invite. Corporate game software for HR teams: Tambola (Housie), Bingo, Tic Tac Toe, Snakes and Ladders and Luck by Chance. Players open a link on their phone, with no app. Players never pay. A free demo for 10 people is available. Run in India by IT Services by Rajat Agarwal.
 
-Corporate Games is the home page for a family of game sites. Each game has its own site. Lucky Draw is coming soon. The full text of the main pages is in https://home.corporatetambola.com/llms-full.txt.
+Corporate Games is the home page for a family of game sites. All six games start from one console, and Lucky Draw is available now. The full text of the main pages is in https://home.corporatetambola.com/llms-full.txt.
 
 ## Pages
 - [Home](https://home.corporatetambola.com/): online games for company events, with a short FAQ
@@ -16,11 +16,11 @@ Corporate Games is the home page for a family of game sites. Each game has its o
 - [Contact](https://home.corporatetambola.com/contact): e-mail and phone
 
 ## The games
-- [Corporate Tambola](https://housie.corporatetambola.com/): The classic number game, also called Housie.
-- [Corporate Bingo](https://bingo.corporatetambola.com/): Numbers are called out loud and every player gets a card on their phone.
-- [Corporate Tic Tac Toe](https://tictactoe.corporatetambola.com/): A one-against-one tournament for your whole company.
-- [Corporate Snakes and Ladders](https://snakes.corporatetambola.com/): Everyone gets their own board and plays at the same time.
-- [Corporate Luck by Chance](https://luck.corporatetambola.com/): A dice game of pure luck with a clock on every round.
+- [Corporate Tambola](https://console.corporatetambola.com/#/create): The classic number game, also called Housie.
+- [Corporate Bingo](https://console.corporatetambola.com/#/create): Numbers are called out loud and every player gets a card on their phone.
+- [Corporate Tic Tac Toe](https://console.corporatetambola.com/#/create): A one-against-one tournament for your whole company.
+- [Corporate Snakes and Ladders](https://console.corporatetambola.com/#/create): Everyone gets their own board and plays at the same time.
+- [Corporate Luck by Chance](https://console.corporatetambola.com/#/create): A dice game of pure luck with a clock on every round.
 
 ## Facts
 - Players open a link in their phone browser. No app and no password.

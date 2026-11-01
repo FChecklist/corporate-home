@@ -1,0 +1,35 @@
+// Written from the owner's rules (1 Nov 2026), not from the page code:
+//   1. Third person only: the words we, our, us never appear on the home pages (text, meta, Open Graph, JSON-LD) or in llms.txt / llms-full.txt.
+//   2. Home links to no game site: every game address (housie, bingo, tictactoe, snakes, luck, luckydraw) is absent from the pages, except the shared
+//      legal and rules pages that live on the Tambola address (terms, privacy, subprocessors, dpa, refund-policy, fair).
+//   3. Lucky Draw is a normal entry (no "Coming soon"), and no sentence says players tick boxes before they join.
+// Run: node tests/wording-links.mjs   (exit code 1 on any failure)
+import { readdirSync, readFileSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+let failed = 0, checks = 0;
+const check = (name, ok, detail = "") => { checks++; if (!ok) { failed++; console.log("FAIL " + name + (detail ? ": " + detail : "")); } };
+const files = readdirSync(ROOT).filter((f) => f.endsWith(".html") || f === "llms.txt" || f === "llms-full.txt");
+check("the check looked at the pages", files.length >= 12, String(files.length));
+
+const WORD = /(?<![\w-])(we|We|our|Our|us|Us|ours|Ours)(?![\w-])|\b[Ww]e[’'](?:ll|re|ve|d)\b/g;
+const GAMEHOST = /https:\/\/(?:housie|bingo|tictactoe|snakes|luck|luckydraw)\.corporatetambola\.com([^"'\s<)]*)/g;
+const LEGAL_OK = new Set(["terms", "privacy", "subprocessors", "dpa", "refund-policy", "fair"]);
+
+// the checkers themselves must catch a bad case, or a pass means nothing
+check("checker: catches 'write to us'", /(?<![\w-])us(?![\w-])/.test("write to us"));
+check("checker: ignores 'focus' and 'US$'", !new RegExp(WORD.source).test("focus on US$ 5"));
+
+for (const f of files) {
+  const t = readFileSync(join(ROOT, f), "utf8");
+  const bad = [...t.matchAll(WORD)].map((m) => t.slice(Math.max(0, m.index - 40), m.index + 30).replace(/\s+/g, " "));
+  check(`${f}: no we/our/us`, bad.length === 0, bad.slice(0, 3).join(" || "));
+  const sites = [...t.matchAll(GAMEHOST)].filter((m) => !LEGAL_OK.has(m[1].replace(/^\//, "").split(/[?#/]/)[0]));
+  check(`${f}: no link to a game site`, sites.length === 0, sites.slice(0, 3).map((m) => m[0]).join(" "));
+  check(`${f}: Lucky Draw is not "coming soon"`, !/coming soon/i.test(t));
+  check(`${f}: no "tick two boxes"`, !/tick two boxes/i.test(t));
+}
+console.log(`wording-links: ${checks} checks, ${failed} failed`);
+process.exit(failed ? 1 : 0);
