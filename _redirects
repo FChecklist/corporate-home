@@ -1,3 +1,20 @@
 # Cloudflare Pages redirects for home.corporatetambola.com.
 # There are none on purpose. In particular /version.json must be answered by this site, never sent to another host.
 # tools/build.mjs fails the build if a rule here mentions /version.json or points a page at another host.
+
+# The old separate legal pages are one document at /terms (owner order, 1 Nov 2026): each old address answers 301 to its section.
+# /privacy is NOT redirected: home keeps its own Privacy and Data page.
+/legal /terms#terms 301
+/legal-position /terms#acceptable-use 301
+/disclaimer /terms#acceptable-use 301
+/privacy-policy /terms#privacy 301
+/refund-policy /terms#payments 301
+/refund /terms#payments 301
+/policy /terms#payments 301
+/cookies /terms#cookies 301
+/retention /terms#retention 301
+/dpa /terms#processors 301
+/data-processing /terms#processors 301
+/sub-processors /terms#processors 301
+/trust /terms#terms 301
+/partner-terms /terms#terms 301

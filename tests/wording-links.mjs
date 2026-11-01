@@ -16,7 +16,7 @@ check("the check looked at the pages", files.length >= 12, String(files.length))
 
 const WORD = /(?<![\w-])(we|We|our|Our|us|Us|ours|Ours)(?![\w-])|\b[Ww]e[’'](?:ll|re|ve|d)\b/g;
 const GAMEHOST = /https:\/\/(?:housie|bingo|tictactoe|snakes|luck|luckydraw)\.corporatetambola\.com([^"'\s<)]*)/g;
-const LEGAL_OK = new Set(["terms", "privacy", "subprocessors", "dpa", "refund-policy", "fair"]);
+const LEGAL_OK = new Set([]); // none: the legal pages are one document on home (/terms), no game site is linked
 
 // the checkers themselves must catch a bad case, or a pass means nothing
 check("checker: catches 'write to us'", /(?<![\w-])us(?![\w-])/.test("write to us"));
@@ -51,6 +51,18 @@ const FACTS = ["Nothing to install, no app to download.", "Players need no accou
   check("gamesbar.js: no game-site address", hosts.length === 0, hosts.slice(0, 3).join(" "));
   check("gamesbar.js: every game goes to the console create page", (bar.match(/url: "https:\/\/console\.corporatetambola\.com\/#\/create"/g) || []).length === 6);
   check("gamesbar.js: Lucky Draw is not 'coming soon'", !/soon: true|note: "Coming soon"/.test(bar));
+}
+
+// the one legal document lives on home at /terms with the three anchors the small links open, and the old addresses answer 301 to it
+{
+  const t = readFileSync(join(ROOT, "terms.html"), "utf8");
+  for (const id of ["terms", "privacy", "game-rules", "payments", "processors"]) check(`terms.html has the section #${id}`, new RegExp(`id="${id}"`).test(t));
+  check("terms.html says it is the document with a version", /Terms, Policies and Game Rules/.test(t) && /Version \d{4}-\d{2}-\d{2}/.test(t));
+  const red = readFileSync(join(ROOT, "_redirects"), "utf8");
+  for (const p of ["/legal", "/legal-position", "/refund-policy", "/dpa", "/sub-processors", "/trust", "/partner-terms"]) check(`_redirects: ${p} answers 301 to /terms#...`, new RegExp(`^${p} /terms#[a-z-]+ 301$`, "m").test(red));
+  const idx = readFileSync(join(ROOT, "index.html"), "utf8");
+  check("index: the three small links open the document anchors", ["#terms", "#privacy", "#game-rules"].every((a) => idx.includes(`href="/terms${a}"`)));
+  check("sitemap lists /terms", /<loc>https:\/\/home\.corporatetambola\.com\/terms<\/loc>/.test(readFileSync(join(ROOT, "sitemap.xml"), "utf8")));
 }
 console.log(`wording-links: ${checks} checks, ${failed} failed`);
 process.exit(failed ? 1 : 0);
