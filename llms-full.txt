@@ -6,6 +6,7 @@ Source: https://home.corporatetambola.com/ . Online games for company events, fo
 
 You plan the day. The software makes the game run smoothly. Pick a game, share one link, and your people play together. Corporate Games works closely with HR teams in organizing online events and games. Good for annual days, town halls, festive days, welcome days, team events and recognition evenings.
 
+Who can play: only the people the organizer invites. Each game has its own unique link, which works for that game only. The organizer can add the Employee, Associate, Vendor or Member IDs of the people invited (optional; the link works either way). A person not on the list gives a name and a location, and joins when the organizer or a host says yes. Family members join under the ID of the person who brought them. No mobile numbers or e-mail addresses are asked for. All participant information is deleted within 24 hours after the game; only the winners' results, game logs, organizer and host details and tax invoices are kept.
 You can count on: nothing to install, no app to download; players need no account and no personal details; participant data is auto-deleted within 24 hours; the organizer pays per game, with no recurring charges; the organizer has complete control over who plays and who does not; closed-group engagement for team activities; invite employees, their friends and their families; include vendors, customers and other guests.
 
 ## The games (https://home.corporatetambola.com/games)
