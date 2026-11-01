@@ -24,7 +24,7 @@ Corporate Games is the home page for a family of game sites. All six games start
 
 ## Facts
 - Players open a link in their phone browser. No app and no password.
-- Players never pay or stake money. The organizer gives the prizes.
+- Players never pay. The organizer gives the prizes.
 - Building a game is free. You pay once for each game you run, before it starts. No yearly plan.
 - The only payee is IT Services by Rajat Agarwal, through Razorpay.
 - No personal details needed. All participant information is deleted within 24 hours of the game.

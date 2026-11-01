@@ -1,6 +1,6 @@
 # Corporate Games: full text
 
-Source: https://home.corporatetambola.com/ . Online games for company events, for the people you invite. A product of IT Services by Rajat Agarwal, B-1105, Shipra Krishna Vista, Indirapuram, Ghaziabad, Uttar Pradesh 201014, India. E-mail hello@corporatetambola.com. Phone +91 96503 97480.
+Source: https://home.corporatetambola.com/ . Online games for company events, for the people you invite. A product of IT Services by Rajat Agarwal, India. E-mail hello@corporatetambola.com. Phone +91 96503 97480.
 
 ## Home (https://home.corporatetambola.com/)
 
@@ -38,16 +38,16 @@ Yes. All they need is the link and a phone with internet.
 
 ## Games for HR teams (https://home.corporatetambola.com/games-for-hr-teams)
 
-You choose the game, the day and the time. You decide who joins. You give the prizes. The software makes the game run smoothly and finds every winner.
+You choose the game, the day and the time. The organizer chooses and invites the people. You give the prizes. The software makes the game run smoothly and finds every winner.
 
 ### What does an HR team need to run a game?
 A game, a day and time, and the list of people to invite. You share one link. The software makes the game run smoothly and finds every winner.
 
 ### Who can join?
-Only the people you invite. You also decide whether adult family members can come.
+Only the people the organizer invites.
 
 ### Do employees have to pay?
-No. Players never pay or stake money. The organizer gives the prizes. Corporate Games provides software only.
+No. Players never pay. The organizer gives the prizes. Corporate Games provides software only.
 
 ### Which game suits an annual day or a welcome day?
 That is your choice. Tambola and Bingo suit a whole group playing together. Tic Tac Toe suits a tournament. Share the occasion and the number of people, and the team will help you choose.
@@ -68,7 +68,7 @@ You get a report by e-mail a few minutes after the game ends. You pay once for e
 
 ## Pricing (https://home.corporatetambola.com/pricing)
 
-Building a game is free. You pay once for each game you run, before it starts. Players never pay or stake money. The price is shown on each game's own page. The only payee is IT Services by Rajat Agarwal, the trade name of Rajat Agarwal, an individual running a sole proprietorship in India. The only way to pay is Razorpay. GST is not charged.
+Building a game is free. You pay once for each game you run, before it starts. Players never pay. The price is shown on each game's own page. The only payee is IT Services by Rajat Agarwal, the trade name of Rajat Agarwal, an individual running a sole proprietorship in India. The only way to pay is Razorpay. GST is not charged.
 
 ## Questions and answers
 
@@ -85,7 +85,7 @@ Yes. Corporate Tambola is made for company events. Players join from a link on t
 Yes. Everyone opens the same link on their own phone, in the office or at home. You can run the game alongside your usual video call.
 
 ### Do players need to install an app or pay?
-No. Players open a link in their phone browser. They never pay or stake money. The organizer gives the prizes.
+No. Players open a link in their phone browser. They never pay. The organizer gives the prizes.
 
 ### How much does it cost?
 Building a game is free. You pay once for each game you run, before it starts. There is no yearly plan. The price is shown on each game's own page before you pay.
