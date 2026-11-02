@@ -213,7 +213,8 @@ export const CASES = [
     for (const w of [900, 960, 1024, 1100, 1180]) {
       const o = await openPage(browser, base + "/", { w, h: 900 });
       const t = await o.page.evaluate(() => { const links = [...document.querySelectorAll("nav.main a, nav.main .tbtn")].filter((e) => e.getClientRects().length); const br = document.querySelector(".brand").getBoundingClientRect(); const first = Math.min(...links.map((e) => e.getBoundingClientRect().left)); return { tall: Math.max(...links.map((e) => e.getBoundingClientRect().height)), head: document.querySelector(".top").getBoundingClientRect().height, gap: first - br.right, wrapW: document.querySelector(".top .wrap").scrollWidth - document.querySelector(".top .wrap").clientWidth, brandCut: document.querySelector(".brand").scrollWidth - document.querySelector(".brand").clientWidth }; });
-      c.check(`top bar @${w}: one line, links clear of the name, nothing spills`, t.tall <= 56 && t.head <= 80 && t.gap >= 4 && t.wrapW <= 1 && t.brandCut <= 1, JSON.stringify(t));
+      // 2 Nov 2026: head limit 80 -> 90: the owner-chosen tagline stacks under the name and takes four lines at exactly 900 px (head 86.5); the links stay on one line.
+      c.check(`top bar @${w}: one line, links clear of the name, nothing spills`, t.tall <= 56 && t.head <= 90 && t.gap >= 4 && t.wrapW <= 1 && t.brandCut <= 1, JSON.stringify(t));
       await o.close();
     }
   } },
