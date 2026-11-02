@@ -10,9 +10,9 @@ import { WIDTHS, PAGES, pageUrl, openPage, checker, contrastRatio, COLOR_PROBE, 
 const OWNER_LINE = "Corporate Games works closely with HR teams in organizing online events and games.";
 // Owner order 1 Nov 2026 (home variant): home links to no game site. The ONE master console is the single way to sign in and to create a game.
 const GAME_NAME = { tambola: "Tambola", bingo: "Bingo", ttt: "Tic Tac Toe", snakes: "Snakes and Ladders", luck: "Luck by Chance", draw: "Lucky Draw" };
-const CONSOLE_SIGNIN = "https://console.corporatetambola.com/signin.html", CONSOLE_CREATE = "https://console.corporatetambola.com/#/create";
+const CONSOLE_SIGNIN = "https://console.corporatetambola.com/", CONSOLE_CREATE = "https://console.corporatetambola.com/#/create";
 const ALLOWED_EXTERNAL = [
-  /^https:\/\/console\.corporatetambola\.com\/(signin\.html|#\/create)$/,
+  /^https:\/\/console\.corporatetambola\.com\/(#\/create)?$/,
   /^mailto:hello@corporatetambola\.com(\?subject=Grievance)?$/,
   /^tel:\+919650397480$/,
 ];
