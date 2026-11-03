@@ -437,6 +437,8 @@ html:not(.js) [data-theme-toggle]{display:none}
 .foot .legal-note{font-size:14.5px;color:var(--muted);margin:10px 0 0;max-width:22em}
 .buildline{margin:8px 0 0;font-size:13.5px;color:var(--muted)}
 .buildline a{display:inline;min-height:0;min-width:0;color:var(--muted)}
+.moreline{margin:8px 0 0;font-size:13.5px;color:var(--muted)}
+.moreline a{display:inline;min-height:0;min-width:0;color:var(--muted);text-decoration:underline}
 .tbtn.lookbtn{white-space:nowrap}
 .card .go .mk{margin-right:8px}
 .card .go.sub{font-weight:600}
