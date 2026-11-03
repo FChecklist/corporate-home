@@ -17,6 +17,8 @@
   Cache-Control: no-cache
 /gamesbar.js
   Cache-Control: no-cache
+/a.js
+  Cache-Control: no-cache
 /gamesbar.css
   Cache-Control: no-cache
 /version.json

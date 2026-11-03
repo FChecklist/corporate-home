@@ -41,12 +41,14 @@ for (const f of pages) {
   if (!/<link[^>]+href="\/gamesbar\.css[^"]*"/.test(s)) s = s.replace("</head>", '<link rel="stylesheet" href="/gamesbar.css">\n</head>');
   if (!/<script[^>]+src="\/gamesbar\.js[^"]*"[^>]*data-game="home"/.test(s)) s = s.replace("</body>", '<script src="/gamesbar.js" data-game="home" defer></script>\n</body>');
   if ((s.match(/src="\/gamesbar\.js/g) || []).length !== 1) fail(f + " must load gamesbar.js exactly once");
+  if (f !== "404.html" && f !== "offline.html" && !/<script[^>]+src="\/a\.js[^"]*"/.test(s)) s = s.replace("</body>", '<script src="/a.js" data-cv-hosts="console.corporatetambola.com" defer></script>\n</body>');
+  if ((s.match(/src="\/a\.js/g) || []).length > 1) fail(f + " must load a.js at most once");
   if (/cdn-cgi\/l\/email-protection|data-cfemail/.test(s)) fail(f + " has an obfuscated e-mail");
   writeFileSync(join(out, f), s);
 }
 // every local script and stylesheet address carries ?v=<commit> (tools/cache-bust.mjs): a returning visitor never runs an old script on a new page, whatever cache time the zone adds (the zone setting Browser Cache TTL replaces a no-cache header on the custom domain, so the address itself must change)
 if (/^[0-9a-f]{7,40}$/.test(commit)) versionRefs(out, commit.slice(0, 12));
-for (const f of ["gamesbar.js", "gamesbar.css"]) if (!existsSync(join(out, f))) fail(f + " is missing from the output");
+for (const f of ["gamesbar.js", "gamesbar.css", "a.js"]) if (!existsSync(join(out, f))) fail(f + " is missing from the output");
 
 // 5. checks
 const redirects = existsSync(join(root, "_redirects")) ? readFileSync(join(root, "_redirects"), "utf8") : "";

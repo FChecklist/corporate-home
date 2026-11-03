@@ -22,7 +22,11 @@ export function startServer(root, port = 0) {
     const block = readFileSync(hf, "utf8").split(/\r?\n(?=\S)/)[0];
     for (const l of block.split(/\r?\n/).slice(1)) { const m = l.match(/^\s+([A-Za-z-]+):\s*(.*)$/); if (m) extra[m[1]] = m[2]; }
   }
+  const beacons = [];
   const srv = createServer((req, res) => {
+    if (req.method === "POST" && new URL(req.url, "http://x").pathname === "/api/t") { // stands in for functions/api/t.ts (the real one answers 204 too); keeps what the page sent
+      const chunks = []; req.on("data", (d) => chunks.push(d)); req.on("end", () => { beacons.push(Buffer.concat(chunks).toString("utf8")); res.writeHead(204); res.end(); }); return;
+    }
     let p = decodeURIComponent(new URL(req.url, "http://x").pathname);
     if (p.endsWith("/")) p += "index.html";
     let f = join(root, p);
@@ -33,7 +37,7 @@ export function startServer(root, port = 0) {
     res.writeHead(status, { "Content-Type": MIME[extname(f)] || "application/octet-stream", "Cache-Control": "no-store", ...extra });
     res.end(readFileSync(f));
   });
-  return new Promise((ok) => srv.listen(port, "127.0.0.1", () => ok({ base: "http://127.0.0.1:" + srv.address().port, close: () => new Promise((r) => srv.close(r)), headers: extra })));
+  return new Promise((ok) => srv.listen(port, "127.0.0.1", () => ok({ base: "http://127.0.0.1:" + srv.address().port, close: () => new Promise((r) => srv.close(r)), headers: extra, beacons })));
 }
 
 // ---- one Chrome at a time ----

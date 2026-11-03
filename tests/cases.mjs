@@ -340,7 +340,7 @@ export const CASES = [
     await o.close();
   } },
 
-  { id: "T13", name: "No tracking: every request stays on this site, no cookies, a strict content policy", async run({ base, browser, root, headers, c }) {
+  { id: "T13", name: "No outside tracking: every request stays on this site, no cookies, only the visit tracker's own codes stored (nothing with Global Privacy Control), a strict content policy", async run({ base, browser, root, headers, c }) {
     for (const f of listFiles(root)) {
       const html = read(root, f);
       const ext = [...html.matchAll(/<(?:script|img|iframe|link|source|video|audio)\b[^>]*(?:src|href)="(https?:)?\/\/[^"]*"/g)].filter((m) => !/rel="canonical"/.test(m[0]) && !/<link[^>]*rel="(?:canonical)"/.test(m[0]));
@@ -354,9 +354,11 @@ export const CASES = [
       const off = o.events.requests.filter((u) => !u.startsWith(base) && !u.startsWith("data:"));
       c.check(`${p}: every request is to this site`, off.length === 0, off.join(" | "));
       c.check(`${p}: no cookie`, (await o.ctx.cookies()).length === 0 && (await o.page.evaluate(() => document.cookie)) === "", "cookie set");
-      c.check(`${p}: nothing stored before you choose`, (await o.page.evaluate(() => localStorage.length + sessionStorage.length)) === 0, "storage used");
+      c.check(`${p}: nothing stored except the visit tracker's own codes (ca_vid, ca_sid, ca_t, ca_sent)`, (await o.page.evaluate(() => Object.keys(localStorage).concat(Object.keys(sessionStorage)).filter((k) => !/^ca_(vid|sid|t|sent)$/.test(k)).length)) === 0, "other storage used");
       await o.close();
     }
+    { const o = await openPage(browser, pageUrl(base, PAGES[0]), { w: 1280, extraInit: "Object.defineProperty(navigator, 'globalPrivacyControl', { value: true })" }); await o.page.waitForTimeout(150);
+      c.check("with Global Privacy Control on: nothing stored at all and no cookie", (await o.page.evaluate(() => localStorage.length + sessionStorage.length)) === 0 && (await o.ctx.cookies()).length === 0, "stored something"); await o.close(); }
     const csp = headers["Content-Security-Policy"] || "";
     c.check("the content policy is strict (self only, no unsafe, no wildcard, no frames)", /default-src 'self'/.test(csp) && /script-src 'self'(;|$)/.test(csp) && !/unsafe-/.test(csp) && !/\*/.test(csp) && /frame-ancestors 'none'/.test(csp), csp);
   } },
