@@ -26,3 +26,6 @@ Playwright and axe-core are read from `C:\ct\ct\dpdp-app` and `C:\ct\tambola` (s
 
 ## Deploy (free plan only; not done yet)
 Cloudflare Pages project `corporate-home`, no build command, output folder = this folder, custom domain `home.corporatetambola.com`. Keep Cloudflare Web Analytics OFF for this project (the privacy page says there are no trackers).
+
+
+See [KNOWLEDGE-MAP.md](KNOWLEDGE-MAP.md) for what this repository is for and what the other repositories are for (updated 14 Nov 2026).
