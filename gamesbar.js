@@ -1,4 +1,4 @@
-/*! Corporate Games bar v2 - one shared navigation for every Corporate Games site. Canonical copy: C:\ct\test-sites\corporate-games-bar (do not edit a site's copy; edit here and copy). */
+/*! Corporate Games bar v2 - one shared navigation for every Corporate Games site. Canonical copy: the corporate-games-bar source (do not edit a site's copy; edit there and copy). */
 /* What it does: puts a slim bar at the very top of the page with every Corporate game, each shown by its own badge (ticket or board art)
    and its proper name under a small CORPORATE line. The game of the current site is marked (aria-current="page").
    Laptop (900px and wider): one row, everything visible, no scrollbar. Phone: the Corporate Games mark, the current game, and an

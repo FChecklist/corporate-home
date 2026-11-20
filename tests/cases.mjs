@@ -39,7 +39,7 @@ export const CASES_OLD = [
         }
       }
     }
-    const r = await fetch(base + "/no-such-page"); c.check("unknown page gives the 404 page with status 404", r.status === 404 && (await r.text()).includes("We cannot find that page"), "status " + r.status);
+    const r = await fetch(base + "/no-such-page"); c.check("unknown page gives the 404 page with status 404", r.status === 404 && (await r.text()).includes("That page has wandered off"), "status " + r.status);
   } },
 
   { id: "T02", name: "Outside links go only where they should; every game picture links to its game; Lucky Draw only to the contact page", async run({ root, c }) {
@@ -289,7 +289,12 @@ export const CASES_OLD = [
   } },
 
   { id: "T12", name: "Works offline: pages open again without internet; unknown page shows the offline page", async run({ base, browser, root, c }) {
-    const o = await openPage(browser, base + "/", { w: 1280 });
+    // a "No" (or no answer yet) keeps no offline copy: no service worker, no saved files
+    const n = await openPage(browser, base + "/", { w: 1280 });
+    await n.page.waitForTimeout(1500);
+    c.check("no offline copy before a Yes: no service worker and no saved files", await n.page.evaluate(async () => (await navigator.serviceWorker.getRegistrations()).length === 0 && (await caches.keys()).length === 0), "offline copy stored without a Yes");
+    await n.close();
+    const o = await openPage(browser, base + "/", { w: 1280, extraInit: () => { try { localStorage.setItem("ctz-consent", JSON.stringify({ v: 1, comfort: true, on: "2026-11-20" })); } catch (e) { /* blocked */ } } });
     const p = o.page;
     await p.evaluate(() => navigator.serviceWorker.ready.then(() => true));
     const cacheName = (read(root, "sw.js").match(/const V = "([^"]+)"/) || [])[1];
