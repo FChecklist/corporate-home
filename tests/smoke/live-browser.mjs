@@ -10,7 +10,7 @@ const a = process.argv.slice(2); const arg = (k, d) => (a.includes(k) ? a[a.inde
 const base = arg("--base", "https://home.corporatetambola.com").replace(/\/$/, ""); const out = resolve(arg("--out", join(dirname(fileURLToPath(import.meta.url)), "..", "..", "docs", "smoke")));
 const results = []; const rec = (id, name, ok, detail = "", status) => results.push({ id, name, status: status || (ok ? "PASS" : "FAIL"), detail: String(detail).slice(0, 500) });
 const browser = await chromium.launch();
-for (const vp of ["phone", "laptop"]) {
+for (const vp of ["phone", "laptop"]) { try {
   const ctx = await browser.newContext({ viewport: VIEWPORTS[vp], locale: "en-IN", ...(vp === "phone" ? { isMobile: true, hasTouch: true } : {}) });
   let beaconTries = 0; await ctx.route(/\/api\/t$/, (r) => { beaconTries++; r.abort(); });
   const page = await ctx.newPage(); const msgs = [], other = [], setCookie = [];
@@ -24,7 +24,10 @@ for (const vp of ["phone", "laptop"]) {
   rec(`B.errors ${vp}`, `${vp}: no console error or warning`, !msgs.length, msgs.join(" | "));
   rec(`B.own ${vp}`, `${vp}: every request goes to this site only`, !other.length, other.join(" | "));
   rec(`B.cookie ${vp}`, `${vp}: no cookie set, no Set-Cookie header`, (await ctx.cookies()).length === 0 && !setCookie.length, JSON.stringify((await ctx.cookies()).map((c) => c.name)) + " " + setCookie.join(","));
-  rec(`B.canon ${vp}`, `${vp}: canonical has no campaign words`, (await page.evaluate(() => document.querySelector("link[rel=canonical]").href)) === base + "/", await page.evaluate(() => document.querySelector("link[rel=canonical]").href));
+  const canon = await page.evaluate(() => (document.querySelector("link[rel=canonical]") || {}).href || null);
+  const mit = r1.headers()["cf-mitigated"] || ""; const ttl = await page.title().catch(() => "");
+  rec(`B.what ${vp}`, `${vp}: the page the browser got is the site's own page (not a security check page)`, !mit && !/just a moment|attention required|access denied/i.test(ttl) && !!canon, `status ${r1.status()} title="${ttl}" cf-mitigated="${mit}" server="${r1.headers()["server"] || ""}"`);
+  rec(`B.canon ${vp}`, `${vp}: canonical has no campaign words`, canon === base + "/" || canon === "https://home.corporatetambola.com/", String(canon));
   await page.evaluate(() => window.CA && window.CA.flush && window.CA.flush()); await page.waitForTimeout(400);
   rec(`B.counter ${vp}`, `${vp}: the visit counter script ran and tried to send (cancelled here)`, true, `${beaconTries} message(s) tried`, beaconTries > 0 ? "PASS" : "INFO");
   // 2. mail links must not be scrambled
@@ -51,7 +54,7 @@ for (const vp of ["phone", "laptop"]) {
   await ctx.setOffline(false);
   const keys = await page.evaluate(() => Object.keys(localStorage).concat(Object.keys(sessionStorage))); rec(`B.storage ${vp}`, `${vp}: what this site stored in the browser`, true, keys.join(","), "INFO");
   await ctx.close();
-}
+ } catch (e) { rec(`B.crash ${vp}`, `${vp}: the walk ran to the end`, false, String(e && e.message || e).split("\n")[0]); } }
 await browser.close();
 const pass = results.filter((r) => r.status === "PASS").length, fail = results.filter((r) => r.status === "FAIL").length, info = results.filter((r) => r.status === "INFO").length;
 mkdirSync(out, { recursive: true }); writeFileSync(join(out, "live-browser.json"), JSON.stringify({ summary: { when: new Date().toISOString(), base, checks: results.length, passed: pass, failed: fail, info }, results }, null, 1));

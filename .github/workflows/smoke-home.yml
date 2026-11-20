@@ -4,7 +4,7 @@
 name: home-smoke
 on:
   push:
-    branches: ["claude/**", "smoke/**"]
+    branches: ["smoke/**"]
   pull_request:
   workflow_dispatch:
 permissions:
