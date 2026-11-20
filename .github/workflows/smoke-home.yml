@@ -1,0 +1,57 @@
+# Smoke test for home.corporatetambola.com (owner steps 1 and 3). Tests only: it never deploys, never merges, never changes a setting.
+#  - "matrix": builds the site, runs the repo's own browser suite and the smoke matrix (tests/smoke/matrix.mjs) in real Chromium.
+#  - "live-probe": read-only HTTP checks (GET/HEAD only) against the public site, from the runner's network.
+name: home-smoke
+on:
+  push:
+    branches: ["smoke/**"]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  matrix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Install test tools (Playwright, axe-core). The site itself has no packages.
+        working-directory: tests/smoke
+        run: npm install --no-audit --no-fund && npx playwright install --with-deps chromium
+      - run: node tools/build.mjs
+      - name: Static checks
+        run: for t in wording-links no-address cache-versioning analytics-copy gamesbar-checksum; do echo "== $t"; node tests/$t.mjs || exit 1; done
+      - name: The repo's own browser suite
+        env: { NODE_PATH: "${{ github.workspace }}/tests/smoke/node_modules" }
+        run: node tests/run.mjs --root dist
+      - name: Regression tests for the smoke-test fixes, then break a copy 9 ways and check each test goes red
+        env: { NODE_PATH: "${{ github.workspace }}/tests/smoke/node_modules" }
+        run: node tests/smoke-regress.mjs && node tests/smoke-falsify.mjs
+      - name: Smoke matrix
+        env: { NODE_PATH: "${{ github.workspace }}/tests/smoke/node_modules" }
+        run: node tests/smoke/matrix.mjs --out smoke-out
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: smoke-matrix, path: smoke-out }
+  live-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Install Chromium for the browser walk (quiet)
+        working-directory: tests/smoke
+        run: npm install --no-audit --no-fund >/dev/null 2>&1 && npx playwright install --with-deps chromium >/dev/null 2>&1 && echo installed
+      - name: Read-only HTTP probe of the live site
+        run: node tests/smoke/live-probe.mjs --out smoke-out | cut -c1-420
+      - name: Real browser walk of the live site (first visit, hand-off to the console, repeat visit, offline)
+        if: always()
+        working-directory: tests/smoke
+        run: node live-browser.mjs --out ../../smoke-out | cut -c1-420
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: live-probe, path: smoke-out }

@@ -41,15 +41,17 @@ export function startServer(root, port = 0) {
 }
 
 // ---- one Chrome at a time ----
-const LOCK = "C:/ct/chrome-console.lock";
+// Portable (20 Nov 2026 smoke test): on a CI runner or Linux the Windows paths do not exist. LOCK, PW_FROM and CHROME_EXE can be set; the old Windows values stay the defaults when they exist.
+import { tmpdir } from "node:os";
+const LOCK = process.env.CT_CHROME_LOCK || (existsSync("C:/ct") ? "C:/ct/chrome-console.lock" : join(tmpdir(), "home-chrome-test.lock"));
 const alive = (pid) => { try { process.kill(pid, 0); return true; } catch (e) { return !!e && e.code === "EPERM"; } };
 export async function launchChrome() {
   if (existsSync(LOCK)) { const o = Number(readFileSync(LOCK, "utf8").trim()); if (o && o !== process.pid && alive(o)) throw new Error(`another Chrome test is running (pid ${o}): one at a time`); }
   writeFileSync(LOCK, String(process.pid));
   const release = () => { try { if (Number(readFileSync(LOCK, "utf8").trim()) === process.pid) rmSync(LOCK); } catch { /* gone */ } };
   try {
-    const pw = createRequire("C:/ct/ct/dpdp-app/package.json")("playwright");
-    const exe = "C:/Program Files/Google/Chrome/Application/chrome.exe";
+    const pw = (existsSync("C:/ct/ct/dpdp-app/package.json") ? createRequire("C:/ct/ct/dpdp-app/package.json") : createRequire(import.meta.url))("playwright");
+    const exe = process.env.CHROME_EXE || "C:/Program Files/Google/Chrome/Application/chrome.exe";
     const browser = await pw.chromium.launch({ headless: true, ...(existsSync(exe) ? { executablePath: exe } : {}), args: ["--no-sandbox", "--disable-gpu", "--disable-extensions", "--no-first-run"] });
     return { browser, close: async () => { try { await browser.close(); } finally { release(); } } };
   } catch (e) { release(); throw e; }

@@ -1,8 +1,9 @@
 /* Corporate Games home: pages you have opened open again without internet; anything else shows the offline page.
    Touches only this site's own files. Change V when the files change. */
-const V = "home-v12";
-const CORE = ["/", "/games", "/how-it-works", "/for-hr", "/virtual-team-building-games", "/games-for-hr-teams", "/privacy", "/contact", "/pricing", "/offline", "/site.css", "/theme.js", "/site.js", "/gamesbar.js", "/a.js", "/gamesbar.css", "/favicon.svg", "/fonts/Inter-normal-400.woff2", "/fonts/Fraunces-normal-500-700.woff2"];
-self.addEventListener("install", (e) => { e.waitUntil(caches.open(V).then((c) => c.addAll(CORE)).then(() => self.skipWaiting())); });
+const V = "home-v13";
+const CORE = ["/", "/games", "/how-it-works", "/for-hr", "/virtual-team-building-games", "/games-for-hr-teams", "/privacy", "/terms", "/contact", "/pricing", "/offline", "/site.css", "/theme.js", "/site.js", "/gamesbar.js", "/a.js", "/gamesbar.css", "/favicon.svg", "/fonts/Inter-normal-400.woff2", "/fonts/Fraunces-normal-500-700.woff2"];
+// The visit counter sends its last message of a page (/api/t) while the page is being left. A page that this worker controls loses that message in Chromium, so a returning visitor's click path was lost (18 of 24 page views in the 20 Nov 2026 smoke test). A static route sends /api/t straight to the network without waking this worker. Browsers without the route API keep the old behaviour.
+self.addEventListener("install", (e) => { try { if (e.addRoutes) e.addRoutes({ condition: { urlPattern: "/api/t" }, source: "network" }); } catch (x) { /* an older browser: no route */ } e.waitUntil(caches.open(V).then((c) => c.addAll(CORE)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== V).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });
 const save = (req, res) => { if (res && res.ok && res.type === "basic" && !res.redirected) { const copy = res.clone(); caches.open(V).then((c) => c.put(req, copy)); } return res; };
 const slow = (ms) => new Promise((_, no) => setTimeout(no, ms));

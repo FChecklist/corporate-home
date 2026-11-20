@@ -3,7 +3,7 @@
 // Heavy: run it under the shared lock:  node C:/ct/test-sites/console/tools/heavy-run.mjs -- node tests/run.mjs
 import { writeFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { startServer, launchChrome, checker } from "./lib.mjs";
 import { CASES } from "./cases.mjs";
 
@@ -33,7 +33,7 @@ export async function liveLinks(root) {
   return res;
 }
 
-if (import.meta.url === "file:///" + process.argv[1].replace(/\\/g, "/")) {
+if (pathToFileURL(resolve(process.argv[1])).href === import.meta.url) {
   const a = process.argv.slice(2);
   const only = a.includes("--only") ? a[a.indexOf("--only") + 1].split(",") : null;
   const root = resolve(a.includes("--root") ? a[a.indexOf("--root") + 1] : resolve(HERE, ".."));

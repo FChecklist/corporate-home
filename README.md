@@ -16,6 +16,18 @@ node tools/build.mjs        # writes dist/ (pages, assets, version.json)
 node tools/contrast-pairs.mjs   # text contrast of every look x light/dark, from site.css
 ```
 
+## Smoke test (steps 1 and 3: first visit, repeat visit, hand-off to the console)
+```
+npm install --prefix tests/smoke        # Playwright and axe-core, only for the tests
+node tools/build.mjs
+node tests/smoke/matrix.mjs             # 493 cells in real Chromium; writes docs/smoke/<out>/matrix-results.json
+node tests/smoke-regress.mjs            # one regression test per fix
+node tests/smoke-falsify.mjs            # breaks a copy of dist 9 ways; every break must turn a test red
+node tests/smoke/live-probe.mjs         # read-only HTTP checks of the live site (run it from a GitHub runner)
+node tests/smoke/live-browser.mjs       # read-only browser walk of the live site (first visit, hand-off, repeat, offline)
+```
+The workflow `.github/workflows/smoke-home.yml` runs all of it on a GitHub runner. Results and the failure map: `docs/SMOKE-20NOV-HOME.md`.
+
 ## Look at it
 ```
 node tests/serve.mjs 8788

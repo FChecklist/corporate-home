@@ -1,0 +1,6 @@
+{
+  "name": "home-smoke",
+  "private": true,
+  "description": "Smoke-test tools for home.corporatetambola.com. Only used by tests/smoke and the CI workflow; the site itself has no packages.",
+  "devDependencies": { "playwright": "1.63.0", "axe-core": "4.10.2" }
+}
