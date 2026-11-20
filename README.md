@@ -1,14 +1,20 @@
 # home.corporatetambola.com
 
-The one page that shows all Corporate Games products. Plain HTML, CSS and a little JavaScript. No build step, no framework, no outside request, no cookie. Design brief and the list of every claim with its source: `C:\ct\test-sites\docs-games\HOME_SITE_DESIGN.md`.
+The one page that shows all Corporate Games products. Plain HTML, CSS and a little JavaScript. One small build step (`tools/build.mjs`, plain Node, no packages) copies the site to `dist/` and writes `version.json`. No framework, no outside request, no cookie unless the visitor says yes (cookie choice, `consent.js`). Design brief and the list of every claim with its source: `C:\ct\test-sites\docs-games\HOME_SITE_DESIGN.md`.
 
 ## Files
-- `index.html`, `games.html`, `how-it-works.html`, `for-hr.html`, `privacy.html`, `contact.html`, `404.html`, `offline.html`
-- `site.css` (one stylesheet; the phone design below 900 px, the laptop design from 900 px), `theme.js` (runs first: light/dark), `site.js` (menu, light/dark button, offline copy), `sw.js` (offline copy)
+- `index.html`, `games.html`, `how-it-works.html`, `for-hr.html`, `pricing.html`, `privacy.html`, `contact.html`, `404.html`, `offline.html`
+- `site.css` (one stylesheet; two looks, Retro and Modern, each light and dark, as token sets at the top; phone design below 900 px with a tablet layer at 600-899 px, laptop design from 900 px), `theme.js` (runs first: look and light/dark), `site.js` (menu, light/dark button, look button, offline copy), `consent.js` (cookie choice), `gate.js` (Sign in / Start links to the one console), `version.json` (hand-kept version and what's new; `changes.html` is filled from it), `gamesbar.js/css` (the shared Corporate Games bar: never edit here, copy from the canonical folder), `sw.js` (offline copy)
 - `fonts/` Fraunces and Inter, the same files the other Corporate sites carry
-- `_headers` (strict content policy, same file Cloudflare Pages reads), `robots.txt`, `sitemap.xml`, `favicon.svg`
+- `_headers` (strict content policy, same file Cloudflare Pages reads), `robots.txt`, `sitemap.xml`, `favicon.svg`, `site.webmanifest`, `og-image.svg/png`, icons (`tools/make-assets.mjs` redraws the PNGs)
 
-The pages are written by hand; to change the top bar or the footer, change it in every page.
+The pages are written by hand; to change the top bar or the footer, change it in every page (the footer carries `<!--ver-->...<!--/ver-->`, which the build fills with the version).
+
+## Build
+```
+node tools/build.mjs        # writes dist/ (pages, assets, version.json)
+node tools/contrast-pairs.mjs   # text contrast of every look x light/dark, from site.css
+```
 
 ## Look at it
 ```
@@ -25,7 +31,33 @@ node tests/run.mjs --live                                                      #
 Playwright and axe-core are read from `C:\ct\ct\dpdp-app` and `C:\ct\tambola` (see `tests/lib.mjs`).
 
 ## Deploy (free plan only; not done yet)
-Cloudflare Pages project `corporate-home`, no build command, output folder = this folder, custom domain `home.corporatetambola.com`. Keep Cloudflare Web Analytics OFF for this project (the privacy page says there are no trackers).
-
+Cloudflare Pages project `corporate-home`, build command `node tools/build.mjs`, output folder `dist`, custom domain `home.corporatetambola.com`. Keep Cloudflare Web Analytics OFF for this project (the privacy page says there are no trackers). Also switch Email Address Obfuscation OFF (Security > Settings); the pages already carry `<!--email_off-->` around every address as a second guard. There must be no redirect for `/version.json` (`_redirects` has none; the build fails if one is added).
 
 See [KNOWLEDGE-MAP.md](KNOWLEDGE-MAP.md) for what this repository is for and what the other repositories are for (updated 14 Nov 2026).
+
+## Owner rules, 20 Nov 2026
+
+The owner's decisions for every Corporate Games product. Full text: `plans/ID-INVITE-AND-ARCHITECTURE-RULES-2026-11-20.md` in the private `marketing-ledger` repository (FChecklist/marketing-ledger). If this README and that file disagree, that file wins.
+
+- **One login.** home.corporatetambola.com is the only login gate. No game or page has its own login: if one exists it is hidden or redirects there. Players joining by game link are not "logged in".
+- **One console for all games.** console.corporatetambola.com, for organizers and hosts only: set up, invite, pay, approve, monitor. Settings flow console to game by API; the game keeps no copy of the rules.
+- **One credit and payment system, one chatbot.** Payment and credits through moneypenny.corporatetambola.com; chat through moneypennychat.corporatetambola.com. All systems are independent and joined by API. An AI helper uses only the limited AI key and never confirms an irreversible step itself.
+- **Console and game are separate.** The console is for set-up and running; the game is for playing, each game with its own website and rules.
+- **Invite by ID only.** The ID is ONE alphanumeric field (employee, associate, vendor or customer ID are the same thing, wording only), with no choice menu and no names or mobile numbers. The organizer pastes or uploads one ID per line; a person who opens the game link and enters a listed ID joins and plays; an unlisted ID waits for the organizer or host to approve or decline. "Anyone with the link" is not offered. Family invite is optional (each listed person may invite 1 to 10, default 4, with approval). Only the organizer and hosts see the list, the invite chain and the log of joins, approvals and declines.
+- **ID normalisation and deletion.** Every character that is not a letter or digit is removed and the rest is upper case, so A-1101, A 1101 and A/1101 are all A1101, at upload, join, approval and matching. The list and all IDs are deleted within 24 hours after the game ends.
+- **Console voice.** The organizer console speaks to the organizer as "you", never "I" or "my", in simple words. Start wording: "The game starts by itself" / "You start the game"; numbers (Tambola and Bingo only): "Numbers come by themselves" / "You call the numbers". Rules and examples: the console repo file docs/CONSOLE_VOICE.md. Ledger notes: `plans/ID-INVITE-AND-ARCHITECTURE-RULES-2026-11-20.md` in the private `marketing-ledger` repo.
+
+
+suiteRulesVersion: 1.1 (20 Nov 2026). Owner rules copy: docs/SUITE_RULES.md. Source: marketing-ledger plans/SUITE-RULES-VERSION-2026-11-20.md.
+
+## Checks (version 2.0.0)
+```
+npm ci && npx playwright install chromium
+npm run typecheck   # TypeScript checks the site's JavaScript
+npm run build       # refuses a wrong version, missing page, page missing from sitemap
+npm run contrast    # every text colour pair, every look and scheme
+npm run links       # every link, anchor and file; outside links only on the allowed list
+npm test            # T01-T21 in real Chromium, on dist/
+npm run falsify     # breaks each behaviour on purpose; each test must go red
+```
+CI: `.github/workflows/ci.yml`. Knowledge file for the next person: `docs/KNOWLEDGE.md`. Sign-in is on console.corporatetambola.com only; this site links there and has no login or payment.

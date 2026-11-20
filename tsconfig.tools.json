@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "allowJs": true, "checkJs": true, "noEmit": true, "strict": false, "noImplicitAny": false,
+    "target": "ES2022", "module": "NodeNext", "moduleResolution": "NodeNext",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"], "skipLibCheck": true, "types": ["node"]
+  },
+  "include": ["tools/*.mjs", "tests/*.mjs"]
+}

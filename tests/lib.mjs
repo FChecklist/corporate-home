@@ -1,3 +1,4 @@
+// @ts-nocheck (older file: browser probes and loose test helpers; the new cases in cases-v2.mjs are type-checked)
 // Helpers for the home site's real-browser tests: a tiny static server that sends the same headers as production,
 // one Chrome at a time (same lock file as the console's kit), and in-page checks.
 import { createServer } from "node:http";
@@ -7,7 +8,7 @@ import { join, extname, resolve } from "node:path";
 
 export const WIDTHS = [320, 360, 390, 414, 600, 768, 1024, 1280, 1440, 1920];
 export const heightFor = (w) => (w < 700 ? 800 : w < 1100 ? 900 : 1000);
-export const PAGES = ["index", "games", "how-it-works", "for-hr", "privacy", "contact", "404", "offline"];
+export const PAGES = ["index", "games", "how-it-works", "for-hr", "pricing", "privacy", "contact", "changes", "404", "offline"];
 export const pageUrl = (base, p) => base + (p === "index" ? "/" : "/" + p);
 
 const MIME = { ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".svg": "image/svg+xml", ".woff2": "font/woff2", ".xml": "application/xml", ".txt": "text/plain; charset=utf-8", ".json": "application/json" };
@@ -37,23 +38,27 @@ export function startServer(root, port = 0) {
 }
 
 // ---- one Chrome at a time ----
-const LOCK = "C:/ct/chrome-console.lock";
+// On the owner's laptop a lock file keeps two heavy jobs apart (C:/ct/HEAVY_JOB_PROTOCOL.md). Anywhere else (CI, a cloud box) there is no lock.
+const LOCK = process.env.CT_CHROME_LOCK || (existsSync("C:/ct") ? "C:/ct/chrome-console.lock" : "");
 const alive = (pid) => { try { process.kill(pid, 0); return true; } catch (e) { return !!e && e.code === "EPERM"; } };
 export async function launchChrome() {
-  if (existsSync(LOCK)) { const o = Number(readFileSync(LOCK, "utf8").trim()); if (o && o !== process.pid && alive(o)) throw new Error(`another Chrome test is running (pid ${o}): one at a time`); }
-  writeFileSync(LOCK, String(process.pid));
-  const release = () => { try { if (Number(readFileSync(LOCK, "utf8").trim()) === process.pid) rmSync(LOCK); } catch { /* gone */ } };
+  if (LOCK && existsSync(LOCK)) { const o = Number(readFileSync(LOCK, "utf8").trim()); if (o && o !== process.pid && alive(o)) throw new Error(`another Chrome test is running (pid ${o}): one at a time`); }
+  if (LOCK) writeFileSync(LOCK, String(process.pid));
+  const release = () => { if (!LOCK) return; try { if (Number(readFileSync(LOCK, "utf8").trim()) === process.pid) rmSync(LOCK); } catch { /* gone */ } };
   try {
-    const pw = createRequire("C:/ct/ct/dpdp-app/package.json")("playwright");
-    const exe = "C:/Program Files/Google/Chrome/Application/chrome.exe";
-    const browser = await pw.chromium.launch({ headless: true, ...(existsSync(exe) ? { executablePath: exe } : {}), args: ["--no-sandbox", "--disable-gpu", "--disable-extensions", "--no-first-run"] });
+    const pw = await import("playwright");
+    const exe = process.env.CT_CHROME_EXE || ["C:/Program Files/Google/Chrome/Application/chrome.exe"].find((x) => existsSync(x));
+    const browser = await pw.chromium.launch({ headless: true, ...(exe ? { executablePath: exe } : {}), args: ["--no-sandbox", "--disable-gpu", "--disable-extensions", "--no-first-run"] });
     return { browser, close: async () => { try { await browser.close(); } finally { release(); } } };
   } catch (e) { release(); throw e; }
 }
 
-export async function openPage(browser, url, { w, h, scheme = "light", extraInit, record } = {}) {
+/** consent: "answered" (default) = the cookie question is already answered No, so the banner does not sit on top of the layout checks; "ask" = a first visit, nothing stored. */
+/** @param {any} browser @param {string} url @param {{ w: number, h?: number, scheme?: any, extraInit?: any, record?: { allow404?: boolean }, consent?: "answered" | "ask" }} opts */
+export async function openPage(browser, url, { w, h, scheme = "light", extraInit, record, consent = "answered" }) {
   const mobile = w < 900;
   const ctx = await browser.newContext({ viewport: { width: w, height: h ?? heightFor(w) }, colorScheme: scheme, deviceScaleFactor: 1, ...(mobile ? { isMobile: true, hasTouch: true } : {}) });
+  if (consent === "answered") await ctx.addInitScript(() => { try { if (!localStorage.getItem("ctz-consent")) localStorage.setItem("ctz-consent", JSON.stringify({ v: 1, comfort: false, on: "2026-11-20" })); } catch (e) { /* blocked */ } });
   if (extraInit) await ctx.addInitScript(extraInit);
   const page = await ctx.newPage();
   const events = { console: [], requests: [], failed: [], bad: [] };
@@ -152,3 +157,6 @@ export const LAYOUT_PROBE = (W) => {
 
 export function listFiles(root) { return readdirSync(root).filter((f) => f.endsWith(".html")); }
 export const read = (root, f) => readFileSync(join(root, f), "utf8");
+
+/** true when this file was started directly (works on Windows paths and on Linux) */
+export const isMain = (metaUrl) => { try { return process.argv[1] && resolve(process.argv[1]) === resolve(new URL(metaUrl).pathname.replace(/^\/([A-Za-z]:)/, "$1")); } catch { return false; } };

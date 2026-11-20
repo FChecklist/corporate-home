@@ -1,3 +1,4 @@
+// @ts-nocheck (older file: browser probes and loose test helpers; the new cases in cases-v2.mjs are type-checked)
 // Screenshots of the home site (with the shared bar) at 5 widths, light + dark, plus bar probes. Run under the heavy lock.
 import { mkdirSync } from "node:fs";
 import { startServer, launchChrome, openPage, LAYOUT_PROBE } from "./lib.mjs";

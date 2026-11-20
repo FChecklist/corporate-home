@@ -1,0 +1,17 @@
+{
+  "product": "corporate-games-home",
+  "version": "2.0.0",
+  "commit": "filled in by tools/build.mjs",
+  "builtAt": "filled in by tools/build.mjs",
+  "changes": [
+    { "id": "2.0.0-01", "what": "Signing in now happens in one place: your console. This website only links you there, and never asks for a password.", "where": "all pages (links), gate.js", "pr": "#1" },
+    { "id": "2.0.0-02", "what": "A clear cookie choice. Nothing is stored on your device until you answer, and No, thanks is always fine.", "where": "consent.js, privacy page", "pr": "#1" },
+    { "id": "2.0.0-03", "what": "A pricing page with the real credit packs, in rupees and in US dollars. No GST is added.", "where": "pricing.html", "pr": "#1" },
+    { "id": "2.0.0-04", "what": "Clearer promises: fair play, everything about your players erased within 24 hours, and you give the prizes directly to the winners.", "where": "index, how-it-works, for-hr, privacy", "pr": "#1" },
+    { "id": "2.0.0-05", "what": "Two looks, Retro and Modern, each with light and dark colours.", "where": "site.css, theme.js, site.js", "pr": "#1" },
+    { "id": "2.0.0-06", "what": "Better search results and link previews when pages are shared.", "where": "page heads, sitemap.xml, robots.txt", "pr": "#1" },
+    { "id": "2.0.0-07", "what": "This What's new page, and the version number at the bottom of every page.", "where": "changes.html, footer", "pr": "#1" },
+    { "id": "2.0.0-08", "what": "Lucky Draw is shown as coming soon.", "where": "index, games, contact", "pr": "#1" },
+    { "id": "2.0.0-09", "what": "Kinder, truer privacy words. The offline copy of the pages is kept only after you say Yes.", "where": "consent.js, site.js, privacy page", "pr": "#1" }
+  ]
+}
