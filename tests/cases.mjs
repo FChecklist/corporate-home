@@ -1,3 +1,4 @@
+// @ts-nocheck (older file: browser probes and loose test helpers; the new cases in cases-v2.mjs are type-checked)
 // The test cases for the home site. Every case is run against the real pages in real Chrome, and tests/falsify.mjs
 // proves each one goes RED when the site is broken in the way the case is meant to catch.
 import { createRequire } from "node:module";
@@ -18,7 +19,9 @@ const ALLOWED_EXTERNAL = [
 const text = (html) => html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<svg[\s\S]*?<\/svg>/g, " ").replace(/<[^>]+>/g, " ").replace(/&middot;/g, "·").replace(/&rarr;/g, "→").replace(/&amp;/g, "&").replace(/&rsquo;/g, "\u2019").replace(/&ldquo;|&rdquo;/g, "\"").replace(/&#8377;/g, "\u20B9").replace(/&nbsp;/g, " ").replace(/&copy;/g, "©").replace(/\s+/g, " ").trim();
 const hrefs = (html) => [...html.matchAll(/<a\b[^>]*\bhref="([^"]*)"/g)].map((m) => m[1]);
 
-export const CASES = [
+import { CASES_V2 } from "./cases-v2.mjs";
+
+export const CASES_OLD = [
   { id: "T01", name: "Every link on every page works (pages, #anchors, icons, files)", async run({ base, root, c }) {
     for (const f of listFiles(root)) {
       const html = read(root, f);
@@ -275,6 +278,11 @@ export const CASES = [
       await o.page.evaluate(axeSrc);
       const res = await o.page.evaluate(async () => (await window.axe.run(document, { resultTypes: ["violations"] })).violations.filter((v) => v.impact === "serious" || v.impact === "critical").map((v) => v.id + " x" + v.nodes.length + " " + (v.nodes[0] && v.nodes[0].target.join(" "))));
       c.check(`${p} ${scheme} ${w}: axe serious/critical = 0`, res.length === 0, res.join(" | "));
+      if (scheme === "light" && w === 1280) {
+        // "label in name" (WCAG 2.5.3): a link or button whose spoken name does not contain its visible words breaks voice control. axe only runs this rule when asked.
+        const bad = await o.page.evaluate(() => [...document.querySelectorAll("a[aria-label], button[aria-label]")].filter((e) => !e.closest(".cgb")).filter((e) => { const strip = (t) => t.replace(/\s+/g, "").toLowerCase(); const v = strip((e.textContent || "").replace(/\u2192$/, "")); return v && !strip(e.getAttribute("aria-label") || "").includes(v); }).map((e) => e.getAttribute("aria-label") + " vs " + e.textContent.trim().slice(0, 30)));
+        c.check(`${p}: every spoken name contains the visible words`, bad.length === 0, bad.join(" | "));
+      }
       await o.close();
     }
   } },
@@ -352,3 +360,5 @@ export const CASES = [
     }
   } },
 ];
+
+export const CASES = [...CASES_OLD, ...CASES_V2];

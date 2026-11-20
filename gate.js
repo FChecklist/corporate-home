@@ -6,6 +6,7 @@
    It never sends you anywhere by itself, never reads or passes a password, token or ID, and stores one word ("1") only after a yes. */
 (function () {
   var VISIT = "ctz-visited";
+  /** @type {Record<string, string>} */
   var REPEAT_TEXT = { "Sign in": "Your console", "Sign in or start": "Go to your console" };
   function ok() { return !!(window.ctzConsent && window.ctzConsent.allows("comfort")); }
   function isRepeat() { try { return ok() && localStorage.getItem(VISIT) === "1"; } catch (e) { return false; } }
@@ -16,12 +17,12 @@
       a.setAttribute("href", (a.getAttribute("href") || "").replace(/visit=(first|repeat)/, "visit=" + (rep ? "repeat" : "first")));
       if (a.hasAttribute("data-demo")) return;
       if (!a.hasAttribute("data-first-text")) a.setAttribute("data-first-text", a.textContent || "");
-      var first = a.getAttribute("data-first-text");
+      var first = a.getAttribute("data-first-text") || "";
       a.textContent = rep && REPEAT_TEXT[first] ? REPEAT_TEXT[first] : first;
     });
   }
   document.addEventListener("click", function (e) {
-    var a = e.target && e.target.closest && e.target.closest("a[data-gate]");
+    var a = /** @type {Element} */ (e.target).closest("a[data-gate]");
     if (a && ok()) { try { localStorage.setItem(VISIT, "1"); } catch (err) { /* blocked: nothing is remembered */ } }
   }, true);
   document.addEventListener("ctz-consent", apply);

@@ -1,10 +1,10 @@
 # home.corporatetambola.com
 
-The one page that shows all Corporate Games products. Plain HTML, CSS and a little JavaScript. One small build step (`tools/build.mjs`, plain Node, no packages) copies the site to `dist/` and writes `version.json`. No framework, no outside request, no cookie. Design brief and the list of every claim with its source: `C:\ct\test-sites\docs-games\HOME_SITE_DESIGN.md`.
+The one page that shows all Corporate Games products. Plain HTML, CSS and a little JavaScript. One small build step (`tools/build.mjs`, plain Node, no packages) copies the site to `dist/` and writes `version.json`. No framework, no outside request, no cookie unless the visitor says yes (cookie choice, `consent.js`). Design brief and the list of every claim with its source: `C:\ct\test-sites\docs-games\HOME_SITE_DESIGN.md`.
 
 ## Files
 - `index.html`, `games.html`, `how-it-works.html`, `for-hr.html`, `pricing.html`, `privacy.html`, `contact.html`, `404.html`, `offline.html`
-- `site.css` (one stylesheet; two looks, Retro and Modern, each light and dark, as token sets at the top; phone design below 900 px with a tablet layer at 600-899 px, laptop design from 900 px), `theme.js` (runs first: look and light/dark), `site.js` (menu, light/dark button, look button, offline copy), `gamesbar.js/css` (the shared Corporate Games bar: never edit here, copy from the canonical folder), `sw.js` (offline copy)
+- `site.css` (one stylesheet; two looks, Retro and Modern, each light and dark, as token sets at the top; phone design below 900 px with a tablet layer at 600-899 px, laptop design from 900 px), `theme.js` (runs first: look and light/dark), `site.js` (menu, light/dark button, look button, offline copy), `consent.js` (cookie choice), `gate.js` (Sign in / Start links to the one console), `version.json` (hand-kept version and what's new; `changes.html` is filled from it), `gamesbar.js/css` (the shared Corporate Games bar: never edit here, copy from the canonical folder), `sw.js` (offline copy)
 - `fonts/` Fraunces and Inter, the same files the other Corporate sites carry
 - `_headers` (strict content policy, same file Cloudflare Pages reads), `robots.txt`, `sitemap.xml`, `favicon.svg`, `site.webmanifest`, `og-image.svg/png`, icons (`tools/make-assets.mjs` redraws the PNGs)
 
@@ -49,3 +49,15 @@ The owner's decisions for every Corporate Games product. Full text: `plans/ID-IN
 
 
 suiteRulesVersion: 1.1 (20 Nov 2026). Owner rules copy: docs/SUITE_RULES.md. Source: marketing-ledger plans/SUITE-RULES-VERSION-2026-11-20.md.
+
+## Checks (version 2.0.0)
+```
+npm ci && npx playwright install chromium
+npm run typecheck   # TypeScript checks the site's JavaScript
+npm run build       # refuses a wrong version, missing page, page missing from sitemap
+npm run contrast    # every text colour pair, every look and scheme
+npm run links       # every link, anchor and file; outside links only on the allowed list
+npm test            # T01-T21 in real Chromium, on dist/
+npm run falsify     # breaks each behaviour on purpose; each test must go red
+```
+CI: `.github/workflows/ci.yml`. Knowledge file for the next person: `docs/KNOWLEDGE.md`. Sign-in is on console.corporatetambola.com only; this site links there and has no login or payment.

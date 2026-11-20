@@ -1,3 +1,4 @@
+// @ts-nocheck (older file: browser probes and loose test helpers; the new cases in cases-v2.mjs are type-checked)
 // Helpers for the home site's real-browser tests: a tiny static server that sends the same headers as production,
 // one Chrome at a time (same lock file as the console's kit), and in-page checks.
 import { createServer } from "node:http";
@@ -53,7 +54,8 @@ export async function launchChrome() {
 }
 
 /** consent: "answered" (default) = the cookie question is already answered No, so the banner does not sit on top of the layout checks; "ask" = a first visit, nothing stored. */
-export async function openPage(browser, url, { w, h, scheme = "light", extraInit, record, consent = "answered" } = {}) {
+/** @param {any} browser @param {string} url @param {{ w: number, h?: number, scheme?: any, extraInit?: any, record?: { allow404?: boolean }, consent?: "answered" | "ask" }} opts */
+export async function openPage(browser, url, { w, h, scheme = "light", extraInit, record, consent = "answered" }) {
   const mobile = w < 900;
   const ctx = await browser.newContext({ viewport: { width: w, height: h ?? heightFor(w) }, colorScheme: scheme, deviceScaleFactor: 1, ...(mobile ? { isMobile: true, hasTouch: true } : {}) });
   if (consent === "answered") await ctx.addInitScript(() => { try { if (!localStorage.getItem("ctz-consent")) localStorage.setItem("ctz-consent", JSON.stringify({ v: 1, comfort: false, on: "2026-11-20" })); } catch (e) { /* blocked */ } });

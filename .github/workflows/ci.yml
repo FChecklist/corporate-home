@@ -1,0 +1,63 @@
+# CI for the Corporate Games home site (PR #1 and every later change).
+# Nothing here deploys or publishes. It only checks. Cloudflare Pages does the deploy, by the owner's decision.
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [home-bar-qa, "feat/**"]
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  checks:
+    name: typecheck, build, link check, tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Typecheck (the site's JavaScript, checked with TypeScript)
+        run: npm run typecheck
+      - name: Build (refuses a wrong version, a missing page, a page not in the sitemap, an obfuscated e-mail)
+        run: npm run build
+      - name: Shared Corporate Games bar is unchanged from the approved copy
+        run: node tests/gamesbar-checksum.mjs
+      - name: Colour contrast of every text pair, in every look and scheme
+        run: npm run contrast
+      - name: Link check (every link, #anchor, icon and file on every page; outside links only on the allowed list)
+        run: npm run links
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Tests in a real browser (cookie choice, one sign-in, SEO, pricing, wording, version, layout 320 to 1920, keyboard, axe)
+        run: npm test
+  break-it:
+    name: break it and see red
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Break each behaviour on purpose and check its test goes red
+        run: npm run falsify
+  outside-links:
+    name: outside links answer (information only)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node tests/live-links.mjs

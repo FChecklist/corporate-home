@@ -1,7 +1,8 @@
+// @ts-nocheck (older file: browser probes and loose test helpers; the new cases in cases-v2.mjs are type-checked)
 // node tests/run.mjs [--only T01,T05] [--root <folder>] [--live]
 // One Chrome, one server. Prints every case and the number of checks that ran. Exit code 1 if anything failed.
 // Heavy: run it under the shared lock:  node C:/ct/test-sites/console/tools/heavy-run.mjs -- node tests/run.mjs
-import { writeFileSync } from "node:fs";
+import { writeFileSync, existsSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { startServer, launchChrome, checker, isMain } from "./lib.mjs";
@@ -36,7 +37,8 @@ export async function liveLinks(root) {
 if (isMain(import.meta.url)) {
   const a = process.argv.slice(2);
   const only = a.includes("--only") ? a[a.indexOf("--only") + 1].split(",") : null;
-  const root = resolve(a.includes("--root") ? a[a.indexOf("--root") + 1] : resolve(HERE, ".."));
+  const root = resolve(a.includes("--root") ? a[a.indexOf("--root") + 1] : resolve(HERE, "..", "dist")); // the BUILT site (it has version.json): run `npm run build` first
+  if (!existsSync(resolve(root, "index.html"))) { console.error("No built site at " + root + ". Run: npm run build"); process.exit(2); }
   const chrome = await launchChrome();
   let code = 0;
   try {

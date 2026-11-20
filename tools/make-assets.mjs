@@ -1,3 +1,4 @@
+// @ts-nocheck (older file: browser probes and loose test helpers; the new cases in cases-v2.mjs are type-checked)
 // Draws og-image.png (1200x630), apple-touch-icon.png (180), icon-192.png, icon-512.png and icon-maskable-512.png from the SVG files in this folder.
 // Run once after the artwork changes: node tools/make-assets.mjs   (needs Playwright with Chromium; not part of the site build)
 import { createRequire } from "node:module";
