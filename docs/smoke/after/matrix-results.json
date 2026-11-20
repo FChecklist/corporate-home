@@ -1,13 +1,13 @@
 {
  "summary": {
-  "when": "2026-11-20T13:13:23.057Z",
+  "when": "2026-11-20T13:33:52.401Z",
   "root": "/home/user/corporate-home/dist",
   "cells": 493,
   "passed": 460,
   "failed": 33,
   "checks": 5808,
   "failedChecks": 35,
-  "seconds": 235,
+  "seconds": 234,
   "emulated": [
    "/x.html -> 308 /x",
    "/index.html -> 308 /",
@@ -3881,7 +3881,7 @@
    "status": "PASS",
    "checks": 3,
    "failed": [],
-   "note": "h1 at 4.2s, load at 5.9s, 269 KB"
+   "note": "h1 at 4.3s, load at 5.9s, 269 KB"
   },
   {
    "id": "5.SN.02",
@@ -3892,7 +3892,7 @@
    "status": "PASS",
    "checks": 3,
    "failed": [],
-   "note": "h1 at 3.8s, load at 5.3s, 239 KB"
+   "note": "h1 at 3.7s, load at 5.3s, 239 KB"
   },
   {
    "id": "5.SN.03",
@@ -3903,7 +3903,7 @@
    "status": "PASS",
    "checks": 3,
    "failed": [],
-   "note": "h1 at 3.2s, load at 5.0s, 217 KB"
+   "note": "h1 at 3.3s, load at 5.0s, 217 KB"
   },
   {
    "id": "5.SN.04",
@@ -3914,7 +3914,7 @@
    "status": "PASS",
    "checks": 3,
    "failed": [],
-   "note": "h1 at 3.3s, load at 5.0s, 221 KB"
+   "note": "h1 at 3.2s, load at 5.0s, 221 KB"
   },
   {
    "id": "5.SN.05",
@@ -4048,7 +4048,7 @@
    "failed": [
     {
      "name": "decline: nothing about the navigation is sent (the privacy page says no navigation data is collected)",
-     "detail": "9 events sent, e.g. [{\"k\":\"pv\",\"p\":\"/\"},{\"k\":\"exit\",\"n\":\"\",\"m\":106,\"x\":5,\"p\":\"/\"},{\"k\":\"pv\",\"p\":\"/games\"}]"
+     "detail": "9 events sent, e.g. [{\"k\":\"pv\",\"p\":\"/\"},{\"k\":\"exit\",\"n\":\"\",\"m\":90,\"x\":5,\"p\":\"/\"},{\"k\":\"pv\",\"p\":\"/games\"}]"
     }
    ],
    "note": ""
@@ -4064,7 +4064,7 @@
    "failed": [
     {
      "name": "decline: nothing about the navigation is sent (the privacy page says no navigation data is collected)",
-     "detail": "9 events sent, e.g. [{\"k\":\"pv\",\"p\":\"/\"},{\"k\":\"exit\",\"n\":\"\",\"m\":183,\"x\":8,\"p\":\"/\"},{\"k\":\"pv\",\"p\":\"/games\"}]"
+     "detail": "9 events sent, e.g. [{\"k\":\"pv\",\"p\":\"/\"},{\"k\":\"exit\",\"n\":\"\",\"m\":174,\"x\":8,\"p\":\"/\"},{\"k\":\"pv\",\"p\":\"/games\"}]"
     }
    ],
    "note": ""
@@ -4080,7 +4080,7 @@
    "failed": [
     {
      "name": "decline: nothing about the navigation is sent (the privacy page says no navigation data is collected)",
-     "detail": "9 events sent, e.g. [{\"k\":\"pv\",\"p\":\"/\"},{\"k\":\"exit\",\"n\":\"\",\"m\":114,\"x\":5,\"p\":\"/\"},{\"k\":\"pv\",\"p\":\"/games\"}]"
+     "detail": "9 events sent, e.g. [{\"k\":\"pv\",\"p\":\"/\"},{\"k\":\"exit\",\"n\":\"\",\"m\":93,\"x\":5,\"p\":\"/\"},{\"k\":\"pv\",\"p\":\"/games\"}]"
     }
    ],
    "note": ""
@@ -4096,7 +4096,7 @@
    "failed": [
     {
      "name": "decline: nothing about the navigation is sent (the privacy page says no navigation data is collected)",
-     "detail": "9 events sent, e.g. [{\"k\":\"pv\",\"p\":\"/\"},{\"k\":\"exit\",\"n\":\"\",\"m\":201,\"x\":8,\"p\":\"/\"},{\"k\":\"pv\",\"p\":\"/games\"}]"
+     "detail": "9 events sent, e.g. [{\"k\":\"pv\",\"p\":\"/\"},{\"k\":\"exit\",\"n\":\"\",\"m\":184,\"x\":8,\"p\":\"/\"},{\"k\":\"pv\",\"p\":\"/games\"}]"
     }
    ],
    "note": ""

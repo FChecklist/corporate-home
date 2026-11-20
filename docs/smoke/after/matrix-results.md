@@ -1,6 +1,6 @@
 # Smoke matrix results
 
-Run 2026-11-20T13:13:23.057Z. 493 cells, 460 passed, 33 failed (5808 checks, 35 failed).
+Run 2026-11-20T13:33:52.401Z. 493 cells, 460 passed, 33 failed (5808 checks, 35 failed).
 
 | Group | Cells | Pass | Fail |
 |---|---:|---:|---:|
@@ -87,12 +87,12 @@ Run 2026-11-20T13:13:23.057Z. 493 cells, 460 passed, 33 failed (5808 checks, 35 
 - **7.AR.078** (Arrival source; from google | query: utm with e-mail inside | page /pricing)
   - no e-mail address or phone number leaves the browser: e-mail address in [{"s":"raajat.agarwal@gmail.com","m":"email","c":""}]
 - **11.CP.03** (Cookies and click path; decline signal (GPC) | phone)
-  - decline: nothing about the navigation is sent (the privacy page says no navigation data is collected): 9 events sent, e.g. [{"k":"pv","p":"/"},{"k":"exit","n":"","m":106,"x":5,"p":"/"},{"k":"pv","p":"/games"}]
+  - decline: nothing about the navigation is sent (the privacy page says no navigation data is collected): 9 events sent, e.g. [{"k":"pv","p":"/"},{"k":"exit","n":"","m":90,"x":5,"p":"/"},{"k":"pv","p":"/games"}]
 - **11.CP.04** (Cookies and click path; decline signal (GPC) | laptop)
-  - decline: nothing about the navigation is sent (the privacy page says no navigation data is collected): 9 events sent, e.g. [{"k":"pv","p":"/"},{"k":"exit","n":"","m":183,"x":8,"p":"/"},{"k":"pv","p":"/games"}]
+  - decline: nothing about the navigation is sent (the privacy page says no navigation data is collected): 9 events sent, e.g. [{"k":"pv","p":"/"},{"k":"exit","n":"","m":174,"x":8,"p":"/"},{"k":"pv","p":"/games"}]
 - **11.CP.05** (Cookies and click path; do not track | phone)
-  - decline: nothing about the navigation is sent (the privacy page says no navigation data is collected): 9 events sent, e.g. [{"k":"pv","p":"/"},{"k":"exit","n":"","m":114,"x":5,"p":"/"},{"k":"pv","p":"/games"}]
+  - decline: nothing about the navigation is sent (the privacy page says no navigation data is collected): 9 events sent, e.g. [{"k":"pv","p":"/"},{"k":"exit","n":"","m":93,"x":5,"p":"/"},{"k":"pv","p":"/games"}]
 - **11.CP.06** (Cookies and click path; do not track | laptop)
-  - decline: nothing about the navigation is sent (the privacy page says no navigation data is collected): 9 events sent, e.g. [{"k":"pv","p":"/"},{"k":"exit","n":"","m":201,"x":8,"p":"/"},{"k":"pv","p":"/games"}]
+  - decline: nothing about the navigation is sent (the privacy page says no navigation data is collected): 9 events sent, e.g. [{"k":"pv","p":"/"},{"k":"exit","n":"","m":184,"x":8,"p":"/"},{"k":"pv","p":"/games"}]
 - **17.PR.01** (Prices; all pages + llms + JSON-LD)
   - the six game links on the pricing page go to six different game pages (they are said to be each game's own page): 6 links, 1 different address(es): https://console.corporatetambola.com/#/create

@@ -1,7 +1,7 @@
 // The smoke matrix for home.corporatetambola.com (owner steps 1 and 3). Run:
 //   node tools/build.mjs && node tests/smoke/matrix.mjs [--root dist] [--only FV,AR] [--out docs/smoke]
 // Writes <out>/matrix-results.json and <out>/matrix-results.md. Exit code 1 if any cell failed.
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { resolve, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium, makeRecorder, pageList } from "./harness.mjs";
@@ -14,6 +14,8 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const a = process.argv.slice(2); const arg = (k, d) => (a.includes(k) ? a[a.indexOf(k) + 1] : d);
 const root = resolve(arg("--root", join(HERE, "..", "..", "dist"))); const out = resolve(arg("--out", join(HERE, "..", "..", "docs", "smoke")));
 const only = arg("--only", "") ? arg("--only", "").split(",") : null;
+const knownFile = arg("--known", a.includes("--strict") ? "" : join(HERE, "known-open.json"));
+let known = {}; try { if (knownFile) known = JSON.parse(readFileSync(knownFile, "utf8")).cells || {}; } catch { /* no list: every failure counts */ }
 
 const GROUPS = [
   ["FV", visit.firstVisit], ["RL", visit.repeatLooks], ["RC", visit.repeatCode], ["NG", visit.repeatNoGate],
@@ -47,5 +49,8 @@ for (const [g, cs] of Object.entries(by)) md += `| ${g} | ${cs.length} | ${cs.fi
 md += "\n## Failing cells\n\n";
 for (const c of cells.filter((c) => c.status === "FAIL")) { md += `- **${c.id}** (${c.group}; ${c.perm})\n`; for (const f of c.failed.slice(0, 6)) md += `  - ${f.name}${f.detail ? ": " + f.detail.replace(/\n/g, " ").slice(0, 220) : ""}\n`; if (c.failed.length > 6) md += `  - ...and ${c.failed.length - 6} more\n`; }
 writeFileSync(join(out, "matrix-results.md"), md);
+const newFails = cells.filter((c) => c.status === "FAIL" && !(c.id in known)), nowPass = Object.keys(known).filter((id) => cells.some((c) => c.id === id && c.status === "PASS"));
 console.log(`\n${summary.cells} cells, ${summary.passed} passed, ${summary.failed} failed; ${summary.checks} checks, ${summary.failedChecks} failed  (${summary.seconds}s)\n-> ${join(out, "matrix-results.json")}`);
-process.exit(fail ? 1 : 0);
+if (Object.keys(known).length) console.log(`known open (waiting for the owner or another repo): ${cells.filter((c) => c.status === "FAIL" && c.id in known).length}; NEW failures: ${newFails.length}; known cells that now pass (remove from known-open.json): ${nowPass.length}`);
+for (const c of newFails.slice(0, 20)) console.log(`NEW FAIL ${c.id} (${c.group}; ${c.perm}): ${c.failed.slice(0, 2).map((f) => f.name).join(" | ")}`);
+process.exit(newFails.length ? 1 : 0);

@@ -54,6 +54,9 @@ else {
   // version
   const v = await req(base + "/version.json"); let vj = {}; try { vj = JSON.parse(v.body); } catch { /* reported below */ }
   rec("L.version", "/version.json answers 200 JSON no-store with a commit", v.status === 200 && /json/.test(v.h.get("content-type") || "") && /no-store/.test(v.h.get("cache-control") || "") && /^[0-9a-f]{40}$/.test(vj.commit || ""), `${v.status} ${v.h && v.h.get("content-type")} ${v.h && v.h.get("cache-control")} ${vj.commit || ""}`);
+  rec("L.live.build", "which build is live (information)", true, `commit ${vj.commit || "?"} built ${vj.builtAt || "?"} dirty=${vj.dirty}`, "INFO");
+  { const sw = await req(base + "/sw.js"); const m = (sw.body || "").match(/const V = "([^"]+)"/); rec("L.live.sw", "which offline-copy version is live (information)", true, `${m ? m[1] : "?"}; /terms saved: ${/"\/terms"/.test(sw.body || "")}; static route for /api/t: ${/addRoutes/.test(sw.body || "")}`, "INFO"); }
+  { const i = pages["/"] && pages["/"].body || ""; rec("L.live.home", "what the live home page carries (information)", true, `console links: ${(i.match(/console\.corporatetambola\.com/g) || []).length}; visit counter script tag: ${/\/a\.js/.test(i)}; tabbar as nav: ${/<nav class="tabbar"/.test(i)}; ItemList games: ${(i.match(/"@type": "ListItem"/g) || []).length}`, "INFO"); }
   if (expect) rec("L.version.match", "the live commit is the one expected", vj.commit === expect, `live ${String(vj.commit).slice(0, 7)} expected ${expect.slice(0, 7)}`);
   // redirects
   const redir = async (id, from, wantStatus, wantLoc, name) => { const r = await req(base + from); rec(id, name || `${from} -> ${wantLoc}`, wantStatus.includes(r.status) && (wantLoc instanceof RegExp ? wantLoc.test(r.loc || "") : r.loc === wantLoc), `${r.status} ${r.loc || ""}`); };

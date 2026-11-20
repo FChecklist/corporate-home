@@ -20,13 +20,18 @@ for (const vp of ["phone", "laptop"]) { try {
   page.on("response", async (r) => { const h = await r.allHeaders().catch(() => ({})); if (h["set-cookie"]) setCookie.push(r.url()); });
   // 1. first visit
   const r1 = await page.goto(base + "/?utm_source=whatsapp&utm_medium=social&utm_campaign=smoke", { waitUntil: "load" });
+  const canon = await page.evaluate(() => (document.querySelector("link[rel=canonical]") || {}).href || null);
+  const mit = r1.headers()["cf-mitigated"] || ""; const ttl = await page.title().catch(() => "");
+  const challenged = !!mit || /just a moment|attention required|access denied/i.test(ttl) || !canon;
+  rec(`B.what ${vp}`, `${vp}: an automated Chromium from this runner is shown the site's own page, not a security check page`, !challenged, `status ${r1.status()} title="${ttl}" cf-mitigated="${mit}" server="${r1.headers()["server"] || ""}"`, challenged ? "INFO" : undefined);
+  if (challenged) { // Cloudflare answered with its own security check: nothing below would say anything about the site
+    rec(`B.blocked ${vp}`, `${vp}: the rest of the walk needs the site's real page (a security check page was shown to this automated browser, so it is skipped)`, false, `the real first visit by a person cannot be judged from here; ask the owner to look at Cloudflare Security Events for this site`, "BLOCKED");
+    await ctx.close(); continue;
+  }
   rec(`B.first ${vp}`, `${vp}: first visit opens (200) with one h1`, r1.status() === 200 && (await page.locator("h1:visible").count()) === 1, `${r1.status()}`);
   rec(`B.errors ${vp}`, `${vp}: no console error or warning`, !msgs.length, msgs.join(" | "));
   rec(`B.own ${vp}`, `${vp}: every request goes to this site only`, !other.length, other.join(" | "));
   rec(`B.cookie ${vp}`, `${vp}: no cookie set, no Set-Cookie header`, (await ctx.cookies()).length === 0 && !setCookie.length, JSON.stringify((await ctx.cookies()).map((c) => c.name)) + " " + setCookie.join(","));
-  const canon = await page.evaluate(() => (document.querySelector("link[rel=canonical]") || {}).href || null);
-  const mit = r1.headers()["cf-mitigated"] || ""; const ttl = await page.title().catch(() => "");
-  rec(`B.what ${vp}`, `${vp}: the page the browser got is the site's own page (not a security check page)`, !mit && !/just a moment|attention required|access denied/i.test(ttl) && !!canon, `status ${r1.status()} title="${ttl}" cf-mitigated="${mit}" server="${r1.headers()["server"] || ""}"`);
   rec(`B.canon ${vp}`, `${vp}: canonical has no campaign words`, canon === base + "/" || canon === "https://home.corporatetambola.com/", String(canon));
   await page.evaluate(() => window.CA && window.CA.flush && window.CA.flush()); await page.waitForTimeout(400);
   rec(`B.counter ${vp}`, `${vp}: the visit counter script ran and tried to send (cancelled here)`, true, `${beaconTries} message(s) tried`, beaconTries > 0 ? "PASS" : "INFO");
@@ -56,7 +61,7 @@ for (const vp of ["phone", "laptop"]) { try {
   await ctx.close();
  } catch (e) { rec(`B.crash ${vp}`, `${vp}: the walk ran to the end`, false, String(e && e.message || e).split("\n")[0]); } }
 await browser.close();
-const pass = results.filter((r) => r.status === "PASS").length, fail = results.filter((r) => r.status === "FAIL").length, info = results.filter((r) => r.status === "INFO").length;
+const pass = results.filter((r) => r.status === "PASS").length, fail = results.filter((r) => r.status === "FAIL").length, info = results.filter((r) => r.status === "INFO").length, blocked = results.filter((r) => r.status === "BLOCKED").length;
 mkdirSync(out, { recursive: true }); writeFileSync(join(out, "live-browser.json"), JSON.stringify({ summary: { when: new Date().toISOString(), base, checks: results.length, passed: pass, failed: fail, info }, results }, null, 1));
-let md = `# Live browser walk ${base}\n\n${results.length} checks, ${pass} passed, ${fail} failed, ${info} info.\n\n`; for (const r of results) md += `- **${r.status}** ${r.id}: ${r.name} (${r.detail})\n`;
+let md = `# Live browser walk ${base}\n\n${results.length} checks, ${pass} passed, ${fail} failed, ${blocked} blocked, ${info} info.\n\n`; for (const r of results) md += `- **${r.status}** ${r.id}: ${r.name} (${r.detail})\n`;
 writeFileSync(join(out, "live-browser.md"), md); console.log(md); process.exit(fail ? 1 : 0);
