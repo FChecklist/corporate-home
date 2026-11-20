@@ -27,7 +27,7 @@ export const MUTATIONS = {
          { file: "site.css", find: ".gn i{font-style:normal;font-size:12.5px;", replace: ".gn i{font-style:normal;font-size:.6em;", why: "the small CORPORATE line on the game badges is tiny again" },
          { file: "site.css", find: ".wrap{width:min(100% - 2*var(--gutter),var(--maxw));margin-inline:auto}", replace: ".wrap{width:min(100% - 2*var(--gutter),var(--maxw));margin-inline:auto;min-width:420px}", why: "one block that is too wide for a phone" }],
   T07: [{ file: "site.css", find: "@media (max-height:480px){\n  .tabbar{display:none}", replace: "@media (max-height:480px){", why: "the bottom bar stays on a phone on its side" }],
-  T08: [{ file: "site.css", find: "@media (min-width:900px){", replace: "@media (min-width:1000px){", all: true, why: "the laptop design starts at 1000 px, not 900" },
+  T08: [{ file: "site.css", find: "@media (max-width:899.98px){", replace: "@media (max-width:999.98px){", all: true, why: "the phone design runs up to 999 px, so 900 is still a phone" },
          { file: "site.css", find: "nav.main a,.top .tbtn{padding:0 9px;font-size:15px}", replace: "nav.main a,.top .tbtn{padding:0 24px;font-size:15px}", why: "top bar links too wide between 900 and 1100 px" }],
   T09: [{ file: "index.html", find: "<h2>Ready to start?</h2>", replace: "<h2>100% secure, bank-grade, Rs 999 only</h2>", why: "a big claim and a price appear" },
          { file: "games.html", find: "<i>Corporate</i> Bingo</span></h2>", replace: "<i>Corporate</i> Bingo</span></h2><span class=\"tag\">Live now</span>", why: "a status tag comes back" },
