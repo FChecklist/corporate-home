@@ -7,8 +7,8 @@ Tester: Claude Code session for BOSS. Nothing was deployed, merged or switched. 
 
 1. **493 cells run.** Before the fixes 397 passed and 96 failed. After the fixes 460 pass and 33 fail. So 63 cells are fixed and 33 are open.
 2. **Fixed in this repo (8):** returning visitors' page views were being lost; Terms did not open offline; the games list in the search data had 5 of 6 games; the phone bottom bar sat outside a landmark (48 cells); `/login` gave a 404; the HR description was too long; e-mail addresses on Terms and Contact came out scrambled on the live site; the repo's own test suite could not run outside the owner's Windows laptop.
-3. **Open (7), none can be fixed inside this repo alone:** the visitor code does not travel on "Create" links (12 cells); a campaign link with an e-mail address in it is sent to the counter (12); a decline signal still sends page counts (6); one login at home is not built (1); Sign in takes two taps on a phone (1); the pricing page wording points to pages that do not exist (1); `ca_sent` is stored under a decline signal (2, shared with the decline-signal cells).
-4. **Live site:** probed read-only from a GitHub runner (this build sandbox cannot reach the site). Results in section 7.
+3. **Open (8), none can be fixed inside this repo alone:** the visitor code does not travel on "Create" links (12 cells); a campaign link with an e-mail address in it is sent to the counter (12); a decline signal still sends page counts (6); one login at home is not built (1); Sign in takes two taps on a phone (1); the pricing page wording points to pages that do not exist (1); `ca_sent` is stored under a decline signal (2, shared with the decline-signal cells); the live build is not in GitHub (O-08).
+4. **Live site** (read-only, from a GitHub runner): 427 checks, 422 pass. The live build is from 12 Nov and its commit `7711fb0` is **not in GitHub**; it still has the bugs fixed here; Cloudflare gave my automated browser a security check page, so the live first visit in a real browser was not observed. Section 7.
 5. **Tests:** repo's own browser suite 15 cases, 1,922 checks, 0 failed. Six regression tests (49 checks). Nine deliberate breaks, nine went red, `dist` untouched.
 6. **One thing BOSS must decide first:** PR #1 is not the release line. It has 0 links to the console and 168 links to game sites. The line that has the console links is `base/wa-home-2026-11-04`, which already contains PR #1's v2 commit. I tested that line with PR #1's head merged in.
 
@@ -21,7 +21,7 @@ Tester: Claude Code session for BOSS. Nothing was deployed, merged or switched. 
 | Browser | Real Chromium through Playwright 1.63 (the same Chromium as the CI runner). Not tested: Safari, Firefox, real phones, the console, Moneypenny, Razorpay. |
 | Server | `tests/smoke/pages-server.mjs`: a small stand-in for Cloudflare Pages that reads the site's own `_headers` and `_redirects`. What it guesses about Cloudflare is listed at the top of that file and is checked again by the live probe. The visit counter's database is replaced by a stub that keeps what the page sent. |
 | Runner | `.github/workflows/smoke-home.yml`: `matrix` job (build, static checks, repo suite, regression, falsification, matrix) and `live-probe` job (HTTP probe and browser walk of the live site). |
-| Rerun | `node tools/build.mjs && node tests/smoke/matrix.mjs` (about 4 minutes). Needs `npm install --prefix tests/smoke`. |
+| Rerun | `node tools/build.mjs && node tests/smoke/matrix.mjs` (about 4 minutes). Needs `npm install --prefix tests/smoke`. The 33 open cells are listed in `tests/smoke/known-open.json`; the run fails only on a failing cell that is not listed. The GitHub runner gave the same totals as this sandbox: 493 cells, 460 passed, 33 failed. |
 
 ## 3. The matrix
 
@@ -86,12 +86,13 @@ Each row: what was seen, what was expected, the cause (read in the code and prov
 | **O-05** | 3 | Returning organizer. Cell 3.NG.02 | No "Continue to console". Home has no sign-in and remembers nothing, so a returning organizer sees the same Sign in and Create links as a stranger. The 20 Nov rule says home is the single login gate; the 1 Nov rule and the code (`e5a30f0`) send every Sign in to the console. **No second login prompt exists anywhere on home (cells 3.NG.01 pass, 12 pages, first and repeat visit, phone and laptop).** | Design gap, not a bug: the two rules point to two different designs. | **Owner decision.** Either home builds a sign-in (large) or the rule is reworded to "console is the one sign-in, reached from home". |
 | **O-06** | 3 | Phone, returning organizer. Cell 3.NG.04 | "Sign in" is only inside the closed Menu: two taps. The bottom bar has "Create…" and "Contact". | `index.html:180` (`signin-small` inside `nav#nav`). The bottom bar wording was set by the owner (one main action plus a small Contact link). | Owner OK needed: add a small "Sign in" text link beside Contact in the bar (about 10 lines of HTML and CSS, 12 pages). |
 | **O-07** | 1 | Pricing page. Cell 17.PR.01 | Says "The price is shown on each game's own page", then lists six games that all go to the same console create page. | `pricing.html:57-60`. Game pages no longer exist on home; the six links share one address. | Owner wording. Suggested: "The price is shown in the console for each game, before you pay." |
+| **O-08** | audit | Live site | `/version.json` says commit `7711fb0…`, built 12 Nov. No such commit in the repository (all branches, tags, and GitHub's own lookup). | The live build was made outside GitHub. | **BOSS / owner:** find the source of that build before a deploy; then push it or replace it with the release line. |
 
 ### Facts that are not failures but the owner should know
 
 - The visit counter keeps a shortened network address, a keyed hash of the full address, city, network name, browser and a random code for up to one year, and shows no banner. `privacy.html` says so in plain words. Whether DPDP wants a choice box before that is a legal question for the owner, not a test result.
 - There is no on-page "decline" control. The only decline is the browser's Global Privacy Control or do-not-track, which the counter honours (no code is made).
-- `README.md` on the release line still says the visit counter is "NOT live". The live probe tells which is true (section 7).
+- `README.md` on the release line still says the visit counter is "NOT live". It is live (the live home page carries its script tag; section 7). The README line should be corrected.
 - The existing test T13 would not have caught O-03 or F-01. The new matrix does.
 
 ## 5. Fixes and their tests
@@ -116,7 +117,25 @@ First visit on all 12 pages at 360, 768 and 1280 px, both looks, light and dark:
 
 This build sandbox cannot reach `corporatetambola.com` (its proxy answers 403 for those hosts), so the live checks run on the GitHub runner: `.github/workflows/smoke-home.yml`, job `live-probe`. Only GET and HEAD; nothing is posted; the browser walk cancels the counter's own messages so no visit is added to the owner's numbers.
 
-LIVE_RESULTS_PLACEHOLDER
+**HTTP probe** (GitHub runner, 427 checks): 422 passed, 2 failed, 3 information.
+
+What the live site is:
+
+| Fact | Live value | Meaning |
+|---|---|---|
+| Build | commit `7711fb0…` (40 characters in `/version.json`), built 12 Nov 2026 15:15 UTC, `dirty=false` | **That commit is not in the GitHub repository** (looked for in every branch and tag, and asked GitHub for it: "No commit found"). So the live site cannot be compared with any branch here. It was probably built from the owner's laptop and never pushed. See O-08. |
+| Offline copy | `home-v12`, `/terms` not saved, no static route for `/api/t` | F-01 and F-02 are live today. The fixes need a deploy. |
+| Home page | 31 console links, visit counter script present, bottom bar not a landmark, 5 games in the search data | The live site has the console links and the visit counter (the README says "NOT live": it is). F-03 and F-04 are live today. |
+| Cloudflare | every probe passes the security headers, HSTS, strict content policy, no `Set-Cookie`, no `X-Robots-Tag`, compression, answers inside 3 s on every page probed, TLS and HTTP/2 fine, plain http redirects to https, the `*.pages.dev` copy is not served, `robots.txt`, `sitemap.xml`, `llms.txt`, `security.txt`, social image, icons and manifest all answer, sitemap addresses equal each page's canonical, every live page sends Sign in to the console and none to a game site or `/zc`, no price number on any page, the three outside links (veridian-aios.com, townhall-records.com, dpdp.veridian-aios.com) answer 2xx | |
+
+The 2 failures: `/contact` and `/terms` have scrambled e-mail addresses live (F-07, fixed in this PR, live after a deploy). The 3 "information" lines: `corporatetambola.com`, `www.corporatetambola.com` and `console.corporatetambola.com` answer a script with a Cloudflare security check page ("Just a moment…", `cf-mitigated: challenge`, 403). So from CI I could not confirm that the old addresses send a 301 to home (the code in `functions/_middleware.js` says they should), nor that the console front page answers.
+
+**Browser walk of the live site: blocked.** An automated Chromium from the runner was given the same Cloudflare security check page, also for `home.corporatetambola.com` itself (403, Turnstile). I did not try to get around it: it is the owner's protection, and getting past it would mean pretending not to be a robot. So the real first visit, the click to the console, and the live repeat visit were **not observed live**. What this means for the owner:
+
+- A person on a normal phone or laptop will most likely never see that page. But HR staff behind a company network, VPN or proxy sometimes do, and then the first thing a new organizer sees is "Just a moment…". Please look at Cloudflare, Security, Events, for `home.` and `console.` and check how often visitors are challenged.
+- If the owner wants the smoke walk to run on the live site from CI, add a Cloudflare skip rule for requests that carry a secret header, and I will add the header to `tests/smoke/live-browser.mjs`. Nothing was changed in Cloudflare.
+
+**O-08 (new, open, for BOSS):** the build that is live is not in the repository. Before any deploy, find where `7711fb0` came from, or the audit has nothing to compare against.
 
 ## 8. Limits of this test, plainly
 
