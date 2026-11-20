@@ -91,3 +91,23 @@ New files: `pricing.html`, `site.webmanifest`, `_redirects`, `og-image.svg/png`,
 - The old test suite is expected to need updates (new footer text, `.choose` gone, Lucky Draw wording, `data-look`, pricing page in the page list). I did not run or edit it.
 - Terms, Refund, Sub-processors remain on the Tambola host (item 5).
 - Pages are still hand-copied (header, footer, sprite in 9 files); only the version and the bar are checked by the build.
+
+
+---
+# Update 20 Nov 2026 (version 2.0.0): what was added on top of the coder's notes above
+
+Everything below is covered by tests that run in CI (`.github/workflows/ci.yml`) and locally (`npm ci && npx playwright install chromium && npm test`).
+
+| Behaviour | Where | Test | Break-it run (must go red) |
+|---|---|---|---|
+| Cookie choice: nothing stored before the answer, two equal buttons, No by default, keyboard, phone | `consent.js`, `site.css` (end), privacy `#this-website` | T16 | `tests/falsify.mjs` T16 (6 breaks) |
+| One sign-in on the console; no login or payment here; first / repeat visit; no auto redirect; plain link without JavaScript | all pages (`data-gate` links), `gate.js` | T17, T02 | T17 (6), T02 |
+| SEO: title, description, canonical, Open Graph, JSON-LD, one H1, sitemap, robots, images | page heads, `sitemap.xml`, `robots.txt` | T18 | T18 (7) |
+| Pricing: 8 packs, rupees and dollars, no GST, payee, JSON-LD equals the table | `pricing.html` | T19 | T19 (5) |
+| Owner wording (suite rules 1.1) | index, how-it-works, for-hr, pricing, privacy | T20, T09 | T20 (6), T09 |
+| Version, footer, /changes, CHANGELOG, KNOWLEDGE kept private | `version.json`, `tools/build.mjs`, `changes.html` | T21 | T21 (6; two are refused by the build itself) |
+| Accessibility and mobile | `site.css`; T05-T08, T10, T11, T15 (+ axe with the cookie question open in T16); spoken name contains the visible words (T11) | T05-T08, T10, T11, T15, T16 | T04-T08, T10, T11, T15 |
+
+Old tests changed because the product rules changed (not to hide failures): T02 (Sign in goes to the console; Lucky Draw says Coming soon), T08 (one game list is always shown), T09 (new wording; prices allowed only on /pricing; word limit 850 to 950), T10 (pages not in the top menu have no current mark; the shared bar marks its own two Corporate Games links), T13 (JSON-LD data blocks are not code), lib.mjs (no Windows paths, no lock outside the laptop).
+
+Real defects the tests found in the PR as it was: the look button's spoken name did not contain its visible words (fixed); the shared bar's home link was 32 px wide between 900 and 1279 px (fixed in `site.css`, not in the shared bar); the page said "tick two boxes" and a 365-day prize-contact line against the owner's rules (removed).

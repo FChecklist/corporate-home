@@ -73,10 +73,10 @@ export const CASES_V2 = [
     await blocked.close();
     // the open question passes the automatic accessibility scan (colours, names, roles), light and dark, phone and laptop
     const axeSrc = readFileSync(createRequire(import.meta.url).resolve("axe-core/axe.min.js"), "utf8");
-    for (const [scheme, w] of [["light", 360], ["dark", 360], ["light", 1280], ["dark", 1280]]) {
+    for (const [scheme, w] of /** @type {[string, number][]} */ ([["light", 360], ["dark", 360], ["light", 1280], ["dark", 1280]])) {
       const x = await openPage(browser, base + "/", { w, scheme, consent: "ask" });
       await x.page.evaluate(axeSrc);
-      const res = await x.page.evaluate(async () => (await window.axe.run(document, { resultTypes: ["violations"] })).violations.filter((v) => v.impact === "serious" || v.impact === "critical").map((v) => v.id + " x" + v.nodes.length + " " + (v.nodes[0] && v.nodes[0].target.join(" "))));
+      const res = await x.page.evaluate(async () => (await /** @type {any} */ (window).axe.run(document, { resultTypes: ["violations"] })).violations.filter((v) => v.impact === "serious" || v.impact === "critical").map((v) => v.id + " x" + v.nodes.length + " " + (v.nodes[0] && v.nodes[0].target.join(" "))));
       c.check(`question open, ${scheme} ${w}: axe serious/critical = 0`, res.length === 0, res.join(" | "));
       await x.close();
     }
@@ -239,7 +239,7 @@ export const CASES_V2 = [
     c.check("someone not on your list waits for you to approve or decline (for HR)", /approve or decline/.test(hr), "missing");
     for (const f of listFiles(root)) {
       const t = T(f);
-      for (const [re, what] of [[/100% secure|most secure|bank-grade|military/i, "an unproven security claim"], [/played by (major|leading|top)/i, "played by major companies"], [/never hold or pay prize money|never hold or pay prizes/i, "the old prize sentence"], [/\bforever\b/i, "the word forever"], [/tick two boxes|tick a box/i, "tick boxes before joining"], [/PDF of all details/i, "PDF by e-mail claim"], [/Moneypenny|moneypenny/i, "the backend's name"], [/\bAnyone with the link\b/i, "'Anyone with the link' audience"], [/365 days/i, "a 365-day line about players"]])
+      for (const [re, what] of /** @type {[RegExp, string][]} */ ([[/100% secure|most secure|bank-grade|military/i, "an unproven security claim"], [/played by (major|leading|top)/i, "played by major companies"], [/never hold or pay prize money|never hold or pay prizes/i, "the old prize sentence"], [/\bforever\b/i, "the word forever"], [/tick two boxes|tick a box/i, "tick boxes before joining"], [/PDF of all details/i, "PDF by e-mail claim"], [/Moneypenny|moneypenny/i, "the backend's name"], [/\bAnyone with the link\b/i, "'Anyone with the link' audience"], [/365 days/i, "a 365-day line about players"]]))
         c.check(`${f}: no ${what}`, !re.test(t) || (what === "a 365-day line about players" && f === "privacy.html"), (t.match(re) || [""])[0]);
     }
     c.check("privacy: the 365-day lines are only about the winners record by number, organizer settings and the fairness log", !/prize contact|Contact details a winner/i.test(priv), "winner contact details row is back");

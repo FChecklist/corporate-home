@@ -1,9 +1,9 @@
 # Versioning to do (Corporate Games home)
 
-Not done in the docs-only pass (no app code was changed). The game's own session does these inside its PR:
-1. Add `version.json` (source file, schema in the standard section 2.1: product, version, commit, builtAt, changes[last 20]: id, what, where, pr). Today home has no pages/version.mjs; the build writes /version.json (commit, dirty, builtAt, game); add version and changes to whatever writes it, or a hand-kept version.json.
-2. Pick the first version number and write it: no version yet; propose 1.0.0 for the current live build; /version.json today has commit, dirty, builtAt, game only.
-3. Show `vX.Y.Z` in the site footer and link it to `/changes`.
-4. Add the `/changes` page (plain-English "What's new", last 10 changes, user words only, NO security details, NO internal ids), reading from `/version.json`. Keep the X-Robots-Tag noai protection headers. Do not publish docs/KNOWLEDGE.md.
-5. From now on every deploy bumps the version and adds a CHANGELOG.md entry with two audit PASS ids and the previous deploy's rollback id.
-6. Fill the previous-deploy rollback id for the live deploy (unknown today).
+Done in PR #1 (20 Nov 2026), version 2.0.0, not yet merged or deployed:
+1. `version.json` source file (product, version, changes[last 20]: id, what, where, pr). The build (`tools/build.mjs`) adds commit, dirty and builtAt and writes `/version.json`. DONE.
+2. First version number: the live build 7711fb0 is 1.0.0 (in CHANGELOG only); this PR is 2.0.0. DONE.
+3. Footer shows `vX.Y.Z` linking to `/changes`. DONE (every page).
+4. `/changes` page ("What's new", last 10 changes, user words only, no ids, no file names), built from `version.json`; the X-Robots-Tag noai headers stay; `docs/` is never published (the build refuses). DONE.
+5. Every deploy bumps the version and adds a CHANGELOG entry: the build REFUSES if `version.json`, `package.json` and `CHANGELOG.md` disagree. DONE. Two audit PASS ids still to be written into the CHANGELOG entry after the audits.
+6. Rollback id of the previous (live) deploy: STILL UNKNOWN; the owner reads it in the Cloudflare dashboard.
