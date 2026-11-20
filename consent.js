@@ -1,4 +1,4 @@
-/* Cookie and storage choice. Plain words, two equal buttons, nothing stored before you answer.
+/* Cookie and storage choice. Plain words, two equal buttons, nothing stored before you answer (the offline copy of the pages waits for a Yes too).
    What this site keeps on your device:
      - always (it is the thing you asked for): your light/dark and Retro/Modern choice, only when you press those buttons;
      - your answer to this question (so we do not ask on every page);
@@ -48,7 +48,7 @@
     var b = el("section", "consent");
     b.id = "consent"; b.setAttribute("role", "region"); b.setAttribute("aria-label", "Your choice about cookies and storage");
     var t = el("p", "consent-title", "Your choice about cookies");
-    var p = el("p", "consent-text", "This site has no advertising, no tracking and no visit counting. It keeps only what it needs: your light or dark and Retro or Modern choice, and this answer. If you say yes, it also keeps a small note on your device that you have visited, so the Sign in button can take you straight to your console next time. Nothing is sent anywhere. ");
+    var p = el("p", "consent-text", "No advertising, no tracking, no visit counting. Say yes and your device keeps a small visit note and an offline copy of these pages. Say no and it keeps only this answer. ");
     var a = /** @type {HTMLAnchorElement} */ (el("a", "", "Read the details")); a.href = "/privacy#this-website"; p.appendChild(a); p.appendChild(document.createTextNode("."));
     var row = el("div", "consent-row");
     var no = /** @type {HTMLButtonElement} */ (el("button", "btn", "No, thanks")); no.type = "button"; no.setAttribute("data-consent", "no");

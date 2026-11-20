@@ -21,12 +21,12 @@ export const CASES_V2 = [
     c.check("first visit: the cookie choice is shown", await page.locator("#consent").isVisible(), "no banner");
     c.check("the banner is a labelled region", (await page.locator("#consent").getAttribute("role")) === "region" && !!(await page.locator("#consent").getAttribute("aria-label")), "no label");
     const txt = (await page.locator("#consent").innerText()).replace(/\s+/g, " ");
-    c.check("honest words: no advertising, no tracking, no visit counting, nothing sent", /no advertising, no tracking and no visit counting/.test(txt) && /Nothing is sent anywhere/.test(txt), txt);
+    c.check("honest words: no advertising, no tracking, no visit counting; says the offline copy needs a yes", /No advertising, no tracking, no visit counting/.test(txt) && /offline copy/.test(txt) && !/sends? nothing|Nothing is sent/i.test(txt), txt);
     const btn = await page.evaluate(() => [...document.querySelectorAll("#consent button")].map((b) => { const r = b.getBoundingClientRect(), s = getComputedStyle(b); return { t: b.textContent, w: Math.round(r.width), h: Math.round(r.height), bg: s.backgroundColor, color: s.color, fw: s.fontWeight, fs: s.fontSize, bd: s.borderColor }; }));
     c.check("exactly two buttons: No, thanks / Yes, remember me", btn.length === 2 && btn[0].t === "No, thanks" && btn[1].t === "Yes, remember me", JSON.stringify(btn));
     c.check("equal prominence: same size, colours and weight (no dark pattern)", btn.length === 2 && btn[0].w === btn[1].w && btn[0].h === btn[1].h && btn[0].bg === btn[1].bg && btn[0].color === btn[1].color && btn[0].fw === btn[1].fw && btn[0].fs === btn[1].fs && btn[0].bd === btn[1].bd, JSON.stringify(btn));
     c.check("a button is at least 44 px tall", btn.every((b) => b.h >= 44), JSON.stringify(btn));
-    c.check("no choice is pre-selected: nothing stored, no cookie, before the answer", (await page.evaluate(() => localStorage.length + sessionStorage.length)) === 0 && (await ctx.cookies()).length === 0 && (await page.evaluate(() => document.cookie)) === "", "stored before consent");
+    c.check("no choice is pre-selected: nothing stored, no cookie, before the answer", (await page.evaluate(() => localStorage.length + sessionStorage.length)) === 0 && (await ctx.cookies()).length === 0 && (await page.evaluate(() => document.cookie)) === "" && (await page.evaluate(async () => (await navigator.serviceWorker.getRegistrations()).length + (await caches.keys()).length)) === 0, "stored before consent");
     c.check("no request leaves this site before the answer", o.events.requests.every((u) => u.startsWith(base) || u.startsWith("data:")), o.events.requests.filter((u) => !u.startsWith(base)).join(" "));
     // the page still works while the question is open: nothing is blocked, the sign-in link is a plain link
     await stubConsole(ctx);

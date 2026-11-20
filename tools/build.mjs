@@ -13,7 +13,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const out = join(root, "dist");
-const SKIP = new Set([".git", ".gitignore", ".github", "node_modules", "dist", "tests", "tools", "docs", "package.json", "package-lock.json", "README.md", "KNOWLEDGE-MAP.md", "CHANGELOG.md", "tsconfig.json", "version.json"]);
+const SKIP = new Set([".git", ".gitignore", ".github", "node_modules", "dist", "tests", "tools", "docs", "package.json", "package-lock.json", "README.md", "KNOWLEDGE-MAP.md", "CHANGELOG.md", "tsconfig.json", "tsconfig.tools.json", "types.d.ts", "version.json"]);
 const fail = (m) => { console.error("BUILD FAILED: " + m); process.exit(1); };
 const git = (...a) => { try { return execFileSync("git", a, { cwd: root, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim(); } catch { return null; } };
 

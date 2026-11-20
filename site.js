@@ -1,4 +1,4 @@
-/* Menu on the phone design, the light/dark button, the look button (Retro or Modern), and the offline copy. Nothing here talks to any other website. */
+/* Menu on the phone design, the light/dark button, the look button (Retro or Modern), and the offline copy (only after a Yes). Nothing here talks to any other website. */
 (function () {
   var d = document.documentElement;
   var btn = /** @type {HTMLElement} */ (document.getElementById("menu")), nav = /** @type {HTMLElement} */ (document.getElementById("nav")); // used only when both exist (see the if below)
@@ -33,7 +33,14 @@
     });
   });
   lookLabel();
-  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1")) {
-    navigator.serviceWorker.register("/sw.js").catch(function () { /* no offline copy: the site still works online */ });
+  /* The offline copy of the pages is kept only after a "Yes" in the cookie choice. After a "No", any earlier copy is removed. */
+  function offline() {
+    if (!("serviceWorker" in navigator) || !(location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1")) return;
+    var yes = !!(window.ctzConsent && window.ctzConsent.allows("comfort"));
+    if (yes) { navigator.serviceWorker.register("/sw.js").catch(function () { /* no offline copy: the site still works online */ }); return; }
+    navigator.serviceWorker.getRegistrations().then(function (rs) { rs.forEach(function (r) { r.unregister(); }); }).catch(function () { /* nothing to remove */ });
+    if (window.caches) caches.keys().then(function (ks) { ks.forEach(function (k) { if (k.indexOf("home-") === 0) caches.delete(k); }); }).catch(function () { /* nothing to remove */ });
   }
+  document.addEventListener("ctz-consent", offline);
+  offline();
 })();
