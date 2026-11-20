@@ -114,8 +114,9 @@ export const CASES_OLD = [
       const o = await openPage(browser, pageUrl(base, "index"), { w });
       const p = o.page;
       await p.keyboard.press("Tab");
-      const first = await p.evaluate(() => ({ cls: document.activeElement.className, top: document.activeElement.getBoundingClientRect().top }));
+      const first = await p.evaluate(() => { const r = document.activeElement.getBoundingClientRect(); const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return { cls: document.activeElement.className, top: r.top, visible: !!hit && !!hit.closest(".skip") }; });
       c.check(`${w}: first Tab lands on the skip link, on screen`, first.cls.includes("skip") && first.top >= 0, JSON.stringify(first));
+      c.check(`${w}: the focused skip link is in front (nothing covers it)`, first.visible, JSON.stringify(first));
       await p.keyboard.press("Enter");
       const afterSkip = await p.evaluate(() => document.activeElement.id);
       c.check(`${w}: skip link moves focus to the main content`, afterSkip === "main", afterSkip);

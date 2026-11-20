@@ -27,7 +27,7 @@ export const MUTATIONS = {
          { file: "site.css", find: ".gn i{font-style:normal;font-size:12.5px;", replace: ".gn i{font-style:normal;font-size:.6em;", why: "the small CORPORATE line on the game badges is tiny again" },
          { file: "site.css", find: ".wrap{width:min(100% - 2*var(--gutter),var(--maxw));margin-inline:auto}", replace: ".wrap{width:min(100% - 2*var(--gutter),var(--maxw));margin-inline:auto;min-width:420px}", why: "one block that is too wide for a phone" }],
   T07: [{ file: "site.css", find: "@media (max-height:480px){\n  .tabbar{display:none}", replace: "@media (max-height:480px){", why: "the bottom bar stays on a phone on its side" }],
-  T08: [{ file: "site.css", find: "@media (min-width:900px){", replace: "@media (min-width:1000px){", why: "the laptop design starts at 1000 px, not 900" },
+  T08: [{ file: "site.css", find: "@media (min-width:900px){", replace: "@media (min-width:1000px){", all: true, why: "the laptop design starts at 1000 px, not 900" },
          { file: "site.css", find: "nav.main a,.top .tbtn{padding:0 9px;font-size:15px}", replace: "nav.main a,.top .tbtn{padding:0 24px;font-size:15px}", why: "top bar links too wide between 900 and 1100 px" }],
   T09: [{ file: "index.html", find: "<h2>Ready to start?</h2>", replace: "<h2>100% secure, bank-grade, Rs 999 only</h2>", why: "a big claim and a price appear" },
          { file: "games.html", find: "<i>Corporate</i> Bingo</span></h2>", replace: "<i>Corporate</i> Bingo</span></h2><span class=\"tag\">Live now</span>", why: "a status tag comes back" },
@@ -43,7 +43,7 @@ export const MUTATIONS = {
   T14: [{ file: "site.js", find: 'localStorage.setItem("cg-theme", next)', replace: "void next", why: "the choice is no longer remembered" }],
   // ---- Home v2.0.0 (T16 to T21) ----
   T16: [{ file: "consent.js", find: "if (!read()) open(false);", replace: "if (!read()) { write(true); open(false); }", why: "the site stores 'yes' before anyone has answered" },
-        { file: "consent.js", find: 'var yes = el("button", "btn", "Yes, remember me");', replace: 'var yes = el("button", "btn main", "Yes, remember me");', why: "the Yes button is made more eye-catching than No (dark pattern)" },
+        { file: "consent.js", find: 'el("button", "btn", "Yes, remember me")', replace: 'el("button", "btn main", "Yes, remember me")', why: "the Yes button is made more eye-catching than No (dark pattern)" },
         { file: "consent.js", find: "if (!comfort) { try { localStorage.removeItem(VISIT); } catch (e) { /* nothing to remove */ } }", replace: "", why: "saying No later does not forget the visit note" },
         { file: "consent.js", find: 'if (e.key === "Escape")', replace: 'if (e.key === "F24")', why: "Escape no longer closes the question" },
         { file: "site.css", find: ".consent-row{display:flex;flex-wrap:wrap;gap:10px}", replace: ".consent-row{display:flex;flex-wrap:wrap;gap:10px;padding-bottom:60vh}", why: "the question swallows the phone screen" },
