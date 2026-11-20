@@ -488,3 +488,7 @@ html:not(.js) [data-theme-toggle]{display:none}
 
 /* the shared bar's home link is only 32 px wide between 900 and 1279 px (the mark alone): give it a 44 px target without touching the shared bar files */
 .cgb a.cgb-home{min-width:44px;justify-content:center}
+
+.faq h3{font-size:1.05rem;margin:1.3em 0 .3em}
+.faq h3:first-child{margin-top:0}
+.faq p{margin:0;max-width:44em}
