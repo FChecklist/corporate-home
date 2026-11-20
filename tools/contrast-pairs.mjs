@@ -56,6 +56,7 @@ for (const [name, t] of Object.entries(sets)) {
   }
   shape(v("--focus"), v("--bg"), "focus ring on --bg"); shape(v("--focus"), v("--paper"), "focus ring on --paper"); shape(v("--focus"), v("--tint"), "focus ring on --tint");
   shape(v("--action"), v("--bg"), "button outline on --bg");
+  text(v("--ink"), v("--paper"), "cookie choice text on its panel (--paper)"); text(v("--link"), v("--paper"), "cookie choice buttons and link on its panel"); shape(v("--action"), v("--paper"), "cookie choice button outline and top edge on its panel");
   shape(v("--mk-b"), v("--mk-a"), "brand mark dots on brand tile"); shape(v("--mk-a"), v("--bg"), "brand tile on header");
   for (const [what, fg, bg, min] of P) {
     const r = ratio(fg, bg), ok = r >= min; if (!ok) bad++;

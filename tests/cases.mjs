@@ -18,7 +18,9 @@ const ALLOWED_EXTERNAL = [
 const text = (html) => html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<svg[\s\S]*?<\/svg>/g, " ").replace(/<[^>]+>/g, " ").replace(/&middot;/g, "·").replace(/&rarr;/g, "→").replace(/&amp;/g, "&").replace(/&rsquo;/g, "\u2019").replace(/&ldquo;|&rdquo;/g, "\"").replace(/&#8377;/g, "\u20B9").replace(/&nbsp;/g, " ").replace(/&copy;/g, "©").replace(/\s+/g, " ").trim();
 const hrefs = (html) => [...html.matchAll(/<a\b[^>]*\bhref="([^"]*)"/g)].map((m) => m[1]);
 
-export const CASES = [
+import { CASES_V2 } from "./cases-v2.mjs";
+
+export const CASES_OLD = [
   { id: "T01", name: "Every link on every page works (pages, #anchors, icons, files)", async run({ base, root, c }) {
     for (const f of listFiles(root)) {
       const html = read(root, f);
@@ -352,3 +354,5 @@ export const CASES = [
     }
   } },
 ];
+
+export const CASES = [...CASES_OLD, ...CASES_V2];
