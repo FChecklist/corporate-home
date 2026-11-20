@@ -313,7 +313,7 @@ export const CASES = [
   } },
 
   { id: "T11", name: "Automatic accessibility scan (axe-core): no serious or critical problem, light and dark, phone and laptop", async run({ base, browser, c }) {
-    const req = createRequire("C:/ct/tambola/package.json"); const axeSrc = readFileSync(req.resolve("axe-core/axe.min.js"), "utf8");
+    const req = createRequire(existsSync("C:/ct/tambola/package.json") ? "C:/ct/tambola/package.json" : import.meta.url); const axeSrc = readFileSync(req.resolve("axe-core/axe.min.js"), "utf8");
     for (const p of PAGES) for (const scheme of ["light", "dark"]) for (const w of [390, 1280]) {
       const o = await openPage(browser, pageUrl(base, p), { w, scheme, record: { allow404: p === "404" } });
       await o.page.evaluate(axeSrc);
