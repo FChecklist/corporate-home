@@ -4,7 +4,7 @@ Cut from `origin/feat/home-v2-2026-10-30`; on 20 Nov 2026 that branch was merged
 
 ## Changed files
 - All older pages (`index, games, how-it-works, for-hr, pricing, privacy, contact, changes, 404, offline`): new title (main phrase first, 60 chars or fewer with suffix), description (155 or fewer), `og:locale`, `twitter:image:alt`, robots meta with `max-image-preview:large`, `favicon.ico` link, `site.css?v=7`, two new footer links.
-- `index.html`: Organization + WebSite + ItemList (5 live games) + FAQPage as separate JSON-LD blocks; new "Ways to use it" section; visible FAQ (7 Q&As) before the final call-to-action.
+- `index.html`: Organization, WebSite and ItemList JSON-LD (one block each) and one short link line to the use-case pages and the FAQ. T09 caps the home page at 950 words and it had about 26 words of room, so the 7-question visible FAQ lives on its own page `/faq` (home is now 946 words).
 - Inner pages: BreadcrumbList JSON-LD (Home > page).
 - NEW `faq.html` (7 Q&As incl. the three owner questions), `virtual-team-building-games.html`, `games-for-hr-teams.html`: unique copy, own FAQ (5 and 6 Q&As, visible, with matching FAQPage), game links, breadcrumb.
 - `games.html`, `for-hr.html`: one link line each to the two new pages.
@@ -18,7 +18,7 @@ Cut from `origin/feat/home-v2-2026-10-30`; on 20 Nov 2026 that branch was merged
 ## What a tester checks
 1. `node tools/build.mjs` passes (it checks the sitemap lists every page). Serve `dist/`.
 2. Every indexable page: one H1, `lang="en"`, canonical = `https://home.corporatetambola.com/...` (no `.html`), title <= 60, description <= 155, OG and Twitter tags present, `og:image` is an absolute https PNG 1200x630 (74 KB), alt present.
-3. JSON-LD parses (Google Rich Results Test / schema validator): home has Organization, WebSite, ItemList, FAQPage; FAQ text equals the visible FAQ text. Inner pages have BreadcrumbList. Use-case pages also have FAQPage.
+3. JSON-LD parses (Google Rich Results Test / schema validator): home has Organization, WebSite, ItemList; `/faq` and the two use-case pages have FAQPage, and its text equals the visible FAQ text. Inner pages have BreadcrumbList.
 4. `/404` for a bad URL shows the friendly page with `noindex`. `/offline` is noindex.
 5. `/robots.txt`, `/sitemap.xml`, `/llms.txt`, `/llms-full.txt`, `/.well-known/security.txt`, `/397242f1fdcd3fb9374246c561915b7f.txt` all answer 200 as plain text or XML (this needs the Cloudflare deploy; the `_headers` file sets the types).
 6. Response headers no longer contain `X-Robots-Tag`.
