@@ -8,6 +8,7 @@ Corporate Games is the home page for a family of game sites. Each game has its o
 - [Home](https://home.corporatetambola.com/): online games for company events, with a short FAQ
 - [The games](https://home.corporatetambola.com/games): corporate game software, the six games
 - [Virtual team building games](https://home.corporatetambola.com/virtual-team-building-games): for remote and hybrid teams in India
+- [FAQ](https://home.corporatetambola.com/faq): short answers on team building, housie for 200 employees, cost and data
 - [Games for HR teams](https://home.corporatetambola.com/games-for-hr-teams): how an HR team plans a game day
 - [For HR teams](https://home.corporatetambola.com/for-hr): employee engagement games, what you decide
 - [How it works](https://home.corporatetambola.com/how-it-works): choose a game, invite your people, play together

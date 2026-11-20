@@ -6,7 +6,7 @@ Cut from `origin/feat/home-v2-2026-10-30`; on 20 Nov 2026 that branch was merged
 - All older pages (`index, games, how-it-works, for-hr, pricing, privacy, contact, changes, 404, offline`): new title (main phrase first, 60 chars or fewer with suffix), description (155 or fewer), `og:locale`, `twitter:image:alt`, robots meta with `max-image-preview:large`, `favicon.ico` link, `site.css?v=7`, two new footer links.
 - `index.html`: Organization + WebSite + ItemList (5 live games) + FAQPage as separate JSON-LD blocks; new "Ways to use it" section; visible FAQ (7 Q&As) before the final call-to-action.
 - Inner pages: BreadcrumbList JSON-LD (Home > page).
-- NEW `virtual-team-building-games.html`, `games-for-hr-teams.html`: unique copy, own FAQ (5 and 6 Q&As, visible, with matching FAQPage), game links, breadcrumb.
+- NEW `faq.html` (7 Q&As incl. the three owner questions), `virtual-team-building-games.html`, `games-for-hr-teams.html`: unique copy, own FAQ (5 and 6 Q&As, visible, with matching FAQPage), game links, breadcrumb.
 - `games.html`, `for-hr.html`: one link line each to the two new pages.
 - `robots.txt`: reversed. Allows Googlebot, Bingbot, Applebot, DuckDuckBot, OAI-SearchBot, ChatGPT-User, GPTBot, ClaudeBot, Claude-User, Claude-SearchBot, anthropic-ai, Google-Extended, PerplexityBot, Perplexity-User, GrokBot, xAI-Bot and `*`. Blocks only CCBot, Bytespider, Diffbot, omgili, img2dataset, PetalBot, Timpibot. No rule blocks .js or .css.
 - `_headers`: **removed `X-Robots-Tag: noai, noimageai`** (it told AI crawlers to stay away and contradicted robots.txt). Added content types and cache for llms, robots, sitemap, security.txt, IndexNow key.
@@ -35,6 +35,6 @@ Cut from `origin/feat/home-v2-2026-10-30`; on 20 Nov 2026 that branch was merged
 - Cost wording in FAQ, llms files and the pricing meta description follows the new credit-pack pricing page ("you pay only for the games you run", no subscription). No prices are repeated in the SEO text.
 
 ## Existing tests that need a tester's update (I did not touch tests)
-- `tests/cases-v2.mjs` T18: `INDEXED` (line 12) lists the 8 old pages; the sitemap now also has `virtual-team-building-games` and `games-for-hr-teams`, so "sitemap lists exactly the indexable pages" will fail until those two are added.
+- `tests/cases-v2.mjs` T18: `INDEXED` (line 12) lists the 8 old pages; the sitemap now also has `faq`, `virtual-team-building-games` and `games-for-hr-teams`, so "sitemap lists exactly the indexable pages" will fail until those two are added.
 - T18 `robots.txt` checks should still hold (`User-agent: *` then `Allow: /`, Sitemap line). If a check looks for blocked AI bots, it is out of date: the owner decision is to allow them.
 - JSON-LD is written as one block per item (each with `@context` and `@type`) so T18's parser accepts it.
