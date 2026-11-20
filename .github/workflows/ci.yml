@@ -30,7 +30,7 @@ jobs:
         run: node tests/gamesbar-checksum.mjs
       - name: Colour contrast of every text pair, in every look and scheme
         run: npm run contrast
-      - name: Install Chromium
+      - name: Install Chromium (the link check and the tests both open a real browser)
         run: npx playwright install --with-deps chromium
       - name: "Link check (every link, anchor, icon and file on every page; outside links only on the allowed list)"
         run: npm run links
