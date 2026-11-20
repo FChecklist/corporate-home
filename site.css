@@ -305,7 +305,8 @@ section{padding-block:clamp(52px,7.5vw,104px)}
 .tw{width:100%;border-collapse:collapse;font-size:16px;background:var(--paper);border:1px solid var(--line);border-radius:14px}
 .tw th,.tw td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
 .tw th{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
-.tw tr:last-child td{border-bottom:0}
+.tw tr:last-child td,.tw tr:last-child th{border-bottom:0}
+.tw tbody th{text-transform:none;letter-spacing:0;font-size:16px;color:var(--ink);font-weight:650}
 .tw td:first-child{font-weight:500}
 dl.contact{display:grid;gap:4px 24px;margin:0 0 1.4em}
 dl.contact dt{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-top:12px}
@@ -400,10 +401,10 @@ dl.contact dd{margin:0;font-size:19px;font-weight:600;overflow-wrap:anywhere}
 }
 @media (max-width:899.98px){
   .tw thead{position:absolute;left:-9999px}
-  .tw,.tw tbody,.tw tr,.tw td{display:block;width:100%}
+  .tw,.tw tbody,.tw tr,.tw td,.tw tbody th{display:block;width:100%}
   .tw tr{border-bottom:1px solid var(--line);padding:10px 0}
   .tw tr:last-child{border-bottom:0}
-  .tw td{border:0;padding:6px 16px}
+  .tw td,.tw tbody th{border:0;padding:6px 16px}
   .tw .lab{display:block;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
   .row .badge-link{margin-bottom:2px}
 }
@@ -471,3 +472,19 @@ html:not(.js) [data-theme-toggle]{display:none}
 .mkb-b-s{stroke:var(--mk-b)}
 .six .soon-tile{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:4px 14px 4px 5px;border-radius:999px;color:var(--ink);font-weight:600;font-size:15px;line-height:1.2;background:var(--paper);border:1.5px dashed var(--c)}
 @media (min-width:600px){.six .soon-tile{flex:1 1 auto;flex-direction:column;gap:8px;padding:14px 6px 12px;border-radius:18px;text-align:center;font-weight:650;line-height:1.25;background:var(--g-wash,var(--tint));border:0}}
+
+/* ---- cookie choice (consent.js) and the small text button in the footer ---- */
+.consent{position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--paper);color:var(--ink);border-top:3px solid var(--action);box-shadow:0 -8px 24px rgba(0,0,0,.18);padding:14px var(--gutter) calc(14px + env(safe-area-inset-bottom,0px));max-height:70vh;overflow:auto}
+.consent>*{max-width:var(--maxw);margin-inline:auto}
+.consent-title{font:700 17px/1.3 var(--sans);margin:0 auto 6px}
+.consent-text{margin:0 auto 12px;font-size:15.5px;line-height:1.5;color:var(--ink)}
+.consent-text a{color:var(--link);display:inline;min-height:0;min-width:0}
+.consent-row{display:flex;flex-wrap:wrap;gap:10px}
+.consent-row .btn{flex:1 1 170px;min-height:48px;padding:0 18px;font-size:16px}
+.linkbtn{background:none;border:0;padding:0;margin:0;font:inherit;color:var(--link);text-decoration:underline;cursor:pointer;min-height:24px}
+.buildline .linkbtn{color:var(--muted);display:inline-flex;align-items:center;min-height:44px;padding:0 10px}
+@media print{.consent{display:none}}
+@media (min-width:700px){.consent-row .btn{flex:0 0 auto;min-width:200px}}
+
+/* the shared bar's home link is only 32 px wide between 900 and 1279 px (the mark alone): give it a 44 px target without touching the shared bar files */
+.cgb a.cgb-home{min-width:44px;justify-content:center}
