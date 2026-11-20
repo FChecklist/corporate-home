@@ -31,7 +31,7 @@ Yes. People in the office and people at home join the same game from the same li
 No. The game opens in the phone browser. There is no app and no password to remember.
 
 ### How do we start?
-Pick a game, choose the day and time, and share one link with the people you invite. Building a game is free. You pay once for each game you run, before it starts.
+Pick a game, choose the day and time, and share one link with the people you invite. Building a game is free. You pay only for the games you run, using credits bought in packs.
 
 ### Can colleagues in different cities join?
 Yes. All they need is the link and a phone with internet.
@@ -64,11 +64,11 @@ Yes. Write to hello@corporatetambola.com or call (+91) 96503 97480.
 2. Invite your people. Share one link by WhatsApp, e-mail or your intranet.
 3. Play together. Players open the link on their own phone. The software finds every winner.
 
-You get a report by e-mail a few minutes after the game ends. You pay once for each game, before it starts. There is no yearly plan.
+You get a report by e-mail a few minutes after the game ends. You pay only for the games you run, using credits bought in packs. There is no subscription.
 
 ## Pricing (https://home.corporatetambola.com/pricing)
 
-Building a game is free. You pay once for each game you run, before it starts. Players never pay or stake money. The price is shown on each game's own page. The only payee is IT Services by Rajat Agarwal, the trade name of Rajat Agarwal, an individual running a sole proprietorship in India. The only way to pay is Razorpay. GST is not charged.
+Building a game is free. You pay only for the games you run, using credits bought in packs. Players never pay or stake money. The prices are on the Pricing page, in rupees and US dollars. The only payee is IT Services by Rajat Agarwal, the trade name of Rajat Agarwal, an individual running a sole proprietorship in India. The only way to pay is Razorpay. GST is not charged.
 
 ## Questions and answers
 
@@ -79,7 +79,7 @@ It depends on your group. Tambola and Bingo work when everyone plays together on
 Housie is another name for Tambola. Choose the day and time, share one link with the people you invite, and everyone opens it on their phone. The software gives out the tickets and finds every winner. Tell us your head count when you plan, and we will help you set it up.
 
 ### Is there an online tambola for corporate events in India?
-Yes. Corporate Tambola is made for company events. Players join from a link on their phone, with no app, and they never pay. You pay once for each game you run, to IT Services by Rajat Agarwal, through Razorpay. A free demo for 10 people is available.
+Yes. Corporate Tambola is made for company events. Players join from a link on their phone, with no app, and they never pay. You pay only for the games you run, to IT Services by Rajat Agarwal, through Razorpay. A free demo for 10 people is available.
 
 ### Can remote and hybrid teams play together?
 Yes. Everyone opens the same link on their own phone, in the office or at home. You can run the game alongside your usual video call.
@@ -88,7 +88,7 @@ Yes. Everyone opens the same link on their own phone, in the office or at home. 
 No. Players open a link in their phone browser. They never pay or stake money. The organizer gives the prizes.
 
 ### How much does it cost?
-Building a game is free. You pay once for each game you run, before it starts. There is no yearly plan. The price is shown on each game's own page before you pay.
+Building a game is free. You pay only for the games you run, using credits bought in packs. There is no subscription. See the Pricing page for the packs.
 
 ### What happens to player details?
-Player details are erased within 24 hours after the game ends. The winners record, and the contact details a winner confirms for a prize, are kept for 365 days, then deleted automatically.
+Player details and invited IDs are erased within 24 hours after the game ends. The Data and privacy page lists exactly what is kept and for how long.

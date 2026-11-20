@@ -6,7 +6,7 @@ import { tmpdir } from "node:os";
 import { join, resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
-import { launchChrome } from "./lib.mjs";
+import { launchChrome, isMain } from "./lib.mjs";
 import { runCases } from "./run.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url)), SITE = resolve(HERE, "..");
@@ -44,7 +44,7 @@ export const MUTATIONS = {
 
 const hashDir = (d) => { const h = createHash("sha256"); const walk = (p) => { for (const f of readdirSync(p).sort()) { if (f === ".git" || f === "last-run.json") continue; const q = join(p, f); if (statSync(q).isDirectory()) walk(q); else h.update(f).update(readFileSync(q)); } }; walk(d); return h.digest("hex"); };
 
-if (import.meta.url === "file:///" + process.argv[1].replace(/\\/g, "/")) {
+if (isMain(import.meta.url)) {
   const a = process.argv.slice(2);
   const only = a.includes("--only") ? a[a.indexOf("--only") + 1].split(",") : Object.keys(MUTATIONS);
   const before = hashDir(SITE);

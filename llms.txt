@@ -11,7 +11,7 @@ Corporate Games is the home page for a family of game sites. Each game has its o
 - [Games for HR teams](https://home.corporatetambola.com/games-for-hr-teams): how an HR team plans a game day
 - [For HR teams](https://home.corporatetambola.com/for-hr): employee engagement games, what you decide
 - [How it works](https://home.corporatetambola.com/how-it-works): choose a game, invite your people, play together
-- [Pricing](https://home.corporatetambola.com/pricing): you pay once for each game you run, through Razorpay
+- [Pricing](https://home.corporatetambola.com/pricing): you pay only for the games you run, through Razorpay
 - [Data and privacy](https://home.corporatetambola.com/privacy): what is erased and when
 - [Contact](https://home.corporatetambola.com/contact): e-mail and phone
 
@@ -25,7 +25,7 @@ Corporate Games is the home page for a family of game sites. Each game has its o
 ## Facts
 - Players open a link in their phone browser. No app and no password.
 - Players never pay or stake money. The organizer gives the prizes.
-- Building a game is free. You pay once for each game you run, before it starts. No yearly plan.
+- Building a game is free. You pay only for the games you run, using credits bought in packs. No subscription.
 - The only payee is IT Services by Rajat Agarwal, through Razorpay.
 - Player details are erased within 24 hours after the game ends.
 

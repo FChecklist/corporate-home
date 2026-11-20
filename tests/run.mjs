@@ -4,7 +4,7 @@
 import { writeFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { startServer, launchChrome, checker } from "./lib.mjs";
+import { startServer, launchChrome, checker, isMain } from "./lib.mjs";
 import { CASES } from "./cases.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -33,7 +33,7 @@ export async function liveLinks(root) {
   return res;
 }
 
-if (import.meta.url === "file:///" + process.argv[1].replace(/\\/g, "/")) {
+if (isMain(import.meta.url)) {
   const a = process.argv.slice(2);
   const only = a.includes("--only") ? a[a.indexOf("--only") + 1].split(",") : null;
   const root = resolve(a.includes("--root") ? a[a.indexOf("--root") + 1] : resolve(HERE, ".."));
