@@ -41,7 +41,7 @@ export async function deepLinks(R) {
       const r = await get(base, p);
       const goes = [301, 302, 307, 308].includes(r.status) && /^https:\/\/console\.corporatetambola\.com\//.test(r.loc || "");
       const page = r.status === 404 && /console\.corporatetambola\.com\//.test(r.body);
-      t.ok(`${p} reaches the console sign-in in one step (redirect)`, goes, `${r.status} ${r.loc || "(shows the 404 page, which has a Sign in link)"}`);
+      if (["/login", "/signin", "/sign-in", "/console"].includes(p)) t.ok(`${p} reaches the console sign-in in one step (redirect)`, goes, `${r.status} ${r.loc || "(shows the 404 page, which has a Sign in link)"}`);
       t.ok(`${p} at least shows a page with a Sign in link`, goes || page, `${r.status}`);
     }
   });

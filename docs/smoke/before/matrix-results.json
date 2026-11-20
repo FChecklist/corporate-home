@@ -1,0 +1,5951 @@
+{
+ "summary": {
+  "when": "2026-11-20T13:17:20.478Z",
+  "root": "/tmp/claude-0/-home-user-corporate-home/181572f1-eb25-561e-8d47-43827e6317f1/scratchpad/wt/dist",
+  "cells": 493,
+  "passed": 397,
+  "failed": 96,
+  "checks": 5804,
+  "failedChecks": 101,
+  "seconds": 232,
+  "emulated": [
+   "/x.html -> 308 /x",
+   "/index.html -> 308 /",
+   "a path with a trailing slash -> 308 without it",
+   "paths are case sensitive",
+   "default Cache-Control of a page"
+  ]
+ },
+ "cells": [
+  {
+   "id": "1.FV.001",
+   "step": 1,
+   "group": "First visit",
+   "perm": "404 | phone | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 10,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.002",
+   "step": 1,
+   "group": "First visit",
+   "perm": "404 | phone | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.003",
+   "step": 1,
+   "group": "First visit",
+   "perm": "404 | phone | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 10,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.004",
+   "step": 1,
+   "group": "First visit",
+   "perm": "404 | phone | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.005",
+   "step": 1,
+   "group": "First visit",
+   "perm": "404 | tablet | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 10,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.006",
+   "step": 1,
+   "group": "First visit",
+   "perm": "404 | tablet | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.007",
+   "step": 1,
+   "group": "First visit",
+   "perm": "404 | tablet | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 10,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.008",
+   "step": 1,
+   "group": "First visit",
+   "perm": "404 | tablet | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.009",
+   "step": 1,
+   "group": "First visit",
+   "perm": "404 | laptop | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 10,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.010",
+   "step": 1,
+   "group": "First visit",
+   "perm": "404 | laptop | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.011",
+   "step": 1,
+   "group": "First visit",
+   "perm": "404 | laptop | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 10,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.012",
+   "step": 1,
+   "group": "First visit",
+   "perm": "404 | laptop | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.013",
+   "step": 1,
+   "group": "First visit",
+   "perm": "contact | phone | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.014",
+   "step": 1,
+   "group": "First visit",
+   "perm": "contact | phone | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.015",
+   "step": 1,
+   "group": "First visit",
+   "perm": "contact | phone | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.016",
+   "step": 1,
+   "group": "First visit",
+   "perm": "contact | phone | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.017",
+   "step": 1,
+   "group": "First visit",
+   "perm": "contact | tablet | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.018",
+   "step": 1,
+   "group": "First visit",
+   "perm": "contact | tablet | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.019",
+   "step": 1,
+   "group": "First visit",
+   "perm": "contact | tablet | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.020",
+   "step": 1,
+   "group": "First visit",
+   "perm": "contact | tablet | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.021",
+   "step": 1,
+   "group": "First visit",
+   "perm": "contact | laptop | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.022",
+   "step": 1,
+   "group": "First visit",
+   "perm": "contact | laptop | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.023",
+   "step": 1,
+   "group": "First visit",
+   "perm": "contact | laptop | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.024",
+   "step": 1,
+   "group": "First visit",
+   "perm": "contact | laptop | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.025",
+   "step": 1,
+   "group": "First visit",
+   "perm": "for-hr | phone | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.026",
+   "step": 1,
+   "group": "First visit",
+   "perm": "for-hr | phone | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.027",
+   "step": 1,
+   "group": "First visit",
+   "perm": "for-hr | phone | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.028",
+   "step": 1,
+   "group": "First visit",
+   "perm": "for-hr | phone | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.029",
+   "step": 1,
+   "group": "First visit",
+   "perm": "for-hr | tablet | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.030",
+   "step": 1,
+   "group": "First visit",
+   "perm": "for-hr | tablet | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.031",
+   "step": 1,
+   "group": "First visit",
+   "perm": "for-hr | tablet | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.032",
+   "step": 1,
+   "group": "First visit",
+   "perm": "for-hr | tablet | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.033",
+   "step": 1,
+   "group": "First visit",
+   "perm": "for-hr | laptop | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.034",
+   "step": 1,
+   "group": "First visit",
+   "perm": "for-hr | laptop | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.035",
+   "step": 1,
+   "group": "First visit",
+   "perm": "for-hr | laptop | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.036",
+   "step": 1,
+   "group": "First visit",
+   "perm": "for-hr | laptop | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.037",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games | phone | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.038",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games | phone | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.039",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games | phone | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.040",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games | phone | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.041",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games | tablet | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.042",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games | tablet | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.043",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games | tablet | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.044",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games | tablet | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.045",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games | laptop | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.046",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games | laptop | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.047",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games | laptop | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.048",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games | laptop | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.049",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games-for-hr-teams | phone | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.050",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games-for-hr-teams | phone | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.051",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games-for-hr-teams | phone | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.052",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games-for-hr-teams | phone | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.053",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games-for-hr-teams | tablet | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.054",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games-for-hr-teams | tablet | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.055",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games-for-hr-teams | tablet | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.056",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games-for-hr-teams | tablet | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.057",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games-for-hr-teams | laptop | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.058",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games-for-hr-teams | laptop | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.059",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games-for-hr-teams | laptop | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.060",
+   "step": 1,
+   "group": "First visit",
+   "perm": "games-for-hr-teams | laptop | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.061",
+   "step": 1,
+   "group": "First visit",
+   "perm": "how-it-works | phone | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.062",
+   "step": 1,
+   "group": "First visit",
+   "perm": "how-it-works | phone | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.063",
+   "step": 1,
+   "group": "First visit",
+   "perm": "how-it-works | phone | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.064",
+   "step": 1,
+   "group": "First visit",
+   "perm": "how-it-works | phone | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.065",
+   "step": 1,
+   "group": "First visit",
+   "perm": "how-it-works | tablet | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.066",
+   "step": 1,
+   "group": "First visit",
+   "perm": "how-it-works | tablet | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.067",
+   "step": 1,
+   "group": "First visit",
+   "perm": "how-it-works | tablet | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.068",
+   "step": 1,
+   "group": "First visit",
+   "perm": "how-it-works | tablet | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.069",
+   "step": 1,
+   "group": "First visit",
+   "perm": "how-it-works | laptop | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.070",
+   "step": 1,
+   "group": "First visit",
+   "perm": "how-it-works | laptop | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.071",
+   "step": 1,
+   "group": "First visit",
+   "perm": "how-it-works | laptop | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.072",
+   "step": 1,
+   "group": "First visit",
+   "perm": "how-it-works | laptop | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.073",
+   "step": 1,
+   "group": "First visit",
+   "perm": "index | phone | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.074",
+   "step": 1,
+   "group": "First visit",
+   "perm": "index | phone | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.075",
+   "step": 1,
+   "group": "First visit",
+   "perm": "index | phone | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.076",
+   "step": 1,
+   "group": "First visit",
+   "perm": "index | phone | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.077",
+   "step": 1,
+   "group": "First visit",
+   "perm": "index | tablet | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.078",
+   "step": 1,
+   "group": "First visit",
+   "perm": "index | tablet | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.079",
+   "step": 1,
+   "group": "First visit",
+   "perm": "index | tablet | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.080",
+   "step": 1,
+   "group": "First visit",
+   "perm": "index | tablet | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.081",
+   "step": 1,
+   "group": "First visit",
+   "perm": "index | laptop | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.082",
+   "step": 1,
+   "group": "First visit",
+   "perm": "index | laptop | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.083",
+   "step": 1,
+   "group": "First visit",
+   "perm": "index | laptop | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.084",
+   "step": 1,
+   "group": "First visit",
+   "perm": "index | laptop | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.085",
+   "step": 1,
+   "group": "First visit",
+   "perm": "offline | phone | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 10,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.086",
+   "step": 1,
+   "group": "First visit",
+   "perm": "offline | phone | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.087",
+   "step": 1,
+   "group": "First visit",
+   "perm": "offline | phone | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 10,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.088",
+   "step": 1,
+   "group": "First visit",
+   "perm": "offline | phone | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.089",
+   "step": 1,
+   "group": "First visit",
+   "perm": "offline | tablet | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 10,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.090",
+   "step": 1,
+   "group": "First visit",
+   "perm": "offline | tablet | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.091",
+   "step": 1,
+   "group": "First visit",
+   "perm": "offline | tablet | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 10,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.092",
+   "step": 1,
+   "group": "First visit",
+   "perm": "offline | tablet | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.093",
+   "step": 1,
+   "group": "First visit",
+   "perm": "offline | laptop | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 10,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.094",
+   "step": 1,
+   "group": "First visit",
+   "perm": "offline | laptop | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.095",
+   "step": 1,
+   "group": "First visit",
+   "perm": "offline | laptop | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 10,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.096",
+   "step": 1,
+   "group": "First visit",
+   "perm": "offline | laptop | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.097",
+   "step": 1,
+   "group": "First visit",
+   "perm": "pricing | phone | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.098",
+   "step": 1,
+   "group": "First visit",
+   "perm": "pricing | phone | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.099",
+   "step": 1,
+   "group": "First visit",
+   "perm": "pricing | phone | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.100",
+   "step": 1,
+   "group": "First visit",
+   "perm": "pricing | phone | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.101",
+   "step": 1,
+   "group": "First visit",
+   "perm": "pricing | tablet | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.102",
+   "step": 1,
+   "group": "First visit",
+   "perm": "pricing | tablet | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.103",
+   "step": 1,
+   "group": "First visit",
+   "perm": "pricing | tablet | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.104",
+   "step": 1,
+   "group": "First visit",
+   "perm": "pricing | tablet | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.105",
+   "step": 1,
+   "group": "First visit",
+   "perm": "pricing | laptop | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.106",
+   "step": 1,
+   "group": "First visit",
+   "perm": "pricing | laptop | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.107",
+   "step": 1,
+   "group": "First visit",
+   "perm": "pricing | laptop | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.108",
+   "step": 1,
+   "group": "First visit",
+   "perm": "pricing | laptop | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.109",
+   "step": 1,
+   "group": "First visit",
+   "perm": "privacy | phone | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.110",
+   "step": 1,
+   "group": "First visit",
+   "perm": "privacy | phone | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.111",
+   "step": 1,
+   "group": "First visit",
+   "perm": "privacy | phone | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.112",
+   "step": 1,
+   "group": "First visit",
+   "perm": "privacy | phone | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.113",
+   "step": 1,
+   "group": "First visit",
+   "perm": "privacy | tablet | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.114",
+   "step": 1,
+   "group": "First visit",
+   "perm": "privacy | tablet | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.115",
+   "step": 1,
+   "group": "First visit",
+   "perm": "privacy | tablet | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.116",
+   "step": 1,
+   "group": "First visit",
+   "perm": "privacy | tablet | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.117",
+   "step": 1,
+   "group": "First visit",
+   "perm": "privacy | laptop | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.118",
+   "step": 1,
+   "group": "First visit",
+   "perm": "privacy | laptop | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.119",
+   "step": 1,
+   "group": "First visit",
+   "perm": "privacy | laptop | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.120",
+   "step": 1,
+   "group": "First visit",
+   "perm": "privacy | laptop | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.121",
+   "step": 1,
+   "group": "First visit",
+   "perm": "terms | phone | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.122",
+   "step": 1,
+   "group": "First visit",
+   "perm": "terms | phone | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.123",
+   "step": 1,
+   "group": "First visit",
+   "perm": "terms | phone | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.124",
+   "step": 1,
+   "group": "First visit",
+   "perm": "terms | phone | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.125",
+   "step": 1,
+   "group": "First visit",
+   "perm": "terms | tablet | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.126",
+   "step": 1,
+   "group": "First visit",
+   "perm": "terms | tablet | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.127",
+   "step": 1,
+   "group": "First visit",
+   "perm": "terms | tablet | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.128",
+   "step": 1,
+   "group": "First visit",
+   "perm": "terms | tablet | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.129",
+   "step": 1,
+   "group": "First visit",
+   "perm": "terms | laptop | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.130",
+   "step": 1,
+   "group": "First visit",
+   "perm": "terms | laptop | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.131",
+   "step": 1,
+   "group": "First visit",
+   "perm": "terms | laptop | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.132",
+   "step": 1,
+   "group": "First visit",
+   "perm": "terms | laptop | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.133",
+   "step": 1,
+   "group": "First visit",
+   "perm": "virtual-team-building-games | phone | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.134",
+   "step": 1,
+   "group": "First visit",
+   "perm": "virtual-team-building-games | phone | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.135",
+   "step": 1,
+   "group": "First visit",
+   "perm": "virtual-team-building-games | phone | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.136",
+   "step": 1,
+   "group": "First visit",
+   "perm": "virtual-team-building-games | phone | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.137",
+   "step": 1,
+   "group": "First visit",
+   "perm": "virtual-team-building-games | tablet | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.138",
+   "step": 1,
+   "group": "First visit",
+   "perm": "virtual-team-building-games | tablet | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.139",
+   "step": 1,
+   "group": "First visit",
+   "perm": "virtual-team-building-games | tablet | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.140",
+   "step": 1,
+   "group": "First visit",
+   "perm": "virtual-team-building-games | tablet | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.141",
+   "step": 1,
+   "group": "First visit",
+   "perm": "virtual-team-building-games | laptop | light | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.142",
+   "step": 1,
+   "group": "First visit",
+   "perm": "virtual-team-building-games | laptop | light | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.143",
+   "step": 1,
+   "group": "First visit",
+   "perm": "virtual-team-building-games | laptop | dark | retro",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 11,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "1.FV.144",
+   "step": 1,
+   "group": "First visit",
+   "perm": "virtual-team-building-games | laptop | dark | modern",
+   "name": "Opens clean: status, no errors, one h1, no sideways scroll, own site only, look and colours applied",
+   "status": "PASS",
+   "checks": 12,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "3.RL.01",
+   "step": 3,
+   "group": "Repeat visit: choices remembered",
+   "perm": "phone | light start | choose retro + dark",
+   "name": "Look and light/dark survive reload, other pages, back and a new tab",
+   "status": "PASS",
+   "checks": 8,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "3.RL.02",
+   "step": 3,
+   "group": "Repeat visit: choices remembered",
+   "perm": "phone | light start | choose modern + dark",
+   "name": "Look and light/dark survive reload, other pages, back and a new tab",
+   "status": "PASS",
+   "checks": 8,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "3.RL.03",
+   "step": 3,
+   "group": "Repeat visit: choices remembered",
+   "perm": "phone | dark start | choose retro + light",
+   "name": "Look and light/dark survive reload, other pages, back and a new tab",
+   "status": "PASS",
+   "checks": 8,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "3.RL.04",
+   "step": 3,
+   "group": "Repeat visit: choices remembered",
+   "perm": "phone | dark start | choose modern + light",
+   "name": "Look and light/dark survive reload, other pages, back and a new tab",
+   "status": "PASS",
+   "checks": 8,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "3.RL.05",
+   "step": 3,
+   "group": "Repeat visit: choices remembered",
+   "perm": "tablet | light start | choose retro + dark",
+   "name": "Look and light/dark survive reload, other pages, back and a new tab",
+   "status": "PASS",
+   "checks": 8,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "3.RL.06",
+   "step": 3,
+   "group": "Repeat visit: choices remembered",
+   "perm": "tablet | light start | choose modern + dark",
+   "name": "Look and light/dark survive reload, other pages, back and a new tab",
+   "status": "PASS",
+   "checks": 8,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "3.RL.07",
+   "step": 3,
+   "group": "Repeat visit: choices remembered",
+   "perm": "tablet | dark start | choose retro + light",
+   "name": "Look and light/dark survive reload, other pages, back and a new tab",
+   "status": "PASS",
+   "checks": 8,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "3.RL.08",
+   "step": 3,
+   "group": "Repeat visit: choices remembered",
+   "perm": "tablet | dark start | choose modern + light",
+   "name": "Look and light/dark survive reload, other pages, back and a new tab",
+   "status": "PASS",
+   "checks": 8,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "3.RL.09",
+   "step": 3,
+   "group": "Repeat visit: choices remembered",
+   "perm": "laptop | light start | choose retro + dark",
+   "name": "Look and light/dark survive reload, other pages, back and a new tab",
+   "status": "PASS",
+   "checks": 8,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "3.RL.10",
+   "step": 3,
+   "group": "Repeat visit: choices remembered",
+   "perm": "laptop | light start | choose modern + dark",
+   "name": "Look and light/dark survive reload, other pages, back and a new tab",
+   "status": "PASS",
+   "checks": 8,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "3.RL.11",
+   "step": 3,
+   "group": "Repeat visit: choices remembered",
+   "perm": "laptop | dark start | choose retro + light",
+   "name": "Look and light/dark survive reload, other pages, back and a new tab",
+   "status": "PASS",
+   "checks": 8,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "3.RL.12",
+   "step": 3,
+   "group": "Repeat visit: choices remembered",
+   "perm": "laptop | dark start | choose modern + light",
+   "name": "Look and light/dark survive reload, other pages, back and a new tab",
+   "status": "PASS",
+   "checks": 8,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "3.RC.01",
+   "step": 3,
+   "group": "Repeat visit: tracker",
+   "perm": "phone | normal",
+   "name": "Same visitor code on every page and every later visit; new session after 30 minutes; new code after storage is cleared",
+   "status": "PASS",
+   "checks": 8,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "3.RC.gpc",
+   "step": 3,
+   "group": "Repeat visit: tracker",
+   "perm": "phone | gpc | first then repeat",
+   "name": "Decline signal: no visitor code stored or sent, on the first and the repeat visit",
+   "status": "FAIL",
+   "checks": 7,
+   "failed": [
+    {
+     "name": "nothing stored",
+     "detail": "1"
+    },
+    {
+     "name": "with a decline signal the page sends NO navigation data at all (privacy page wording)",
+     "detail": "3 messages sent with paths [\"pv:/\",\"exit:/\",\"pv:/games\",\"exit:/games\",\"pv:/\"]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "3.RC.dnt",
+   "step": 3,
+   "group": "Repeat visit: tracker",
+   "perm": "phone | dnt | first then repeat",
+   "name": "Decline signal: no visitor code stored or sent, on the first and the repeat visit",
+   "status": "FAIL",
+   "checks": 7,
+   "failed": [
+    {
+     "name": "nothing stored",
+     "detail": "1"
+    },
+    {
+     "name": "with a decline signal the page sends NO navigation data at all (privacy page wording)",
+     "detail": "3 messages sent with paths [\"pv:/\",\"exit:/\",\"pv:/games\",\"exit:/games\",\"pv:/\"]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "3.RC.blockStorage",
+   "step": 3,
+   "group": "Repeat visit: tracker",
+   "perm": "phone | blockStorage | first then repeat",
+   "name": "Storage blocked: pages still work twice, no script error",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "3.NG.01",
+   "step": 3,
+   "group": "Single login rule",
+   "perm": "all pages | phone+laptop",
+   "name": "Home asks for no login anywhere: no form, no password box, no dialog, no cookie wall, no redirect",
+   "status": "PASS",
+   "checks": 96,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "3.NG.02",
+   "step": 3,
+   "group": "Single login rule",
+   "perm": "first vs repeat | laptop",
+   "name": "A returning visitor sees the same ways in as a first-time visitor (nothing says 'Continue to console'; owner rule says one login gate)",
+   "status": "FAIL",
+   "checks": 2,
+   "failed": [
+    {
+     "name": "a returning visitor is offered a way straight to the console ('Continue to console')",
+     "detail": "no returning-visitor link exists: home keeps no signed-in state, so a returning organizer sees the same 'Sign in' / 'Create' links"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "3.NG.03",
+   "step": 3,
+   "group": "Single login rule",
+   "perm": "static | all pages + bar",
+   "name": "Every Sign in goes to the one console address; no other login address anywhere (pages, bar, llms files)",
+   "status": "PASS",
+   "checks": 33,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "3.NG.04",
+   "step": 3,
+   "group": "Single login rule",
+   "perm": "phone | 360 px",
+   "name": "On a phone, Sign in is reachable in one tap (not only inside the closed menu)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "a visible Sign in link without opening the menu",
+     "detail": "the only Sign in link sits inside the closed menu: a returning organizer needs two taps (Menu, then Sign in)"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "2.HO.404",
+   "step": "1+3",
+   "group": "Hand-off links",
+   "perm": "404 | all console links",
+   "name": "Every link to the console is the exact address, https, no query, no personal data, same CTA text goes to the same place",
+   "status": "PASS",
+   "checks": 37,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HO.contact",
+   "step": "1+3",
+   "group": "Hand-off links",
+   "perm": "contact | all console links",
+   "name": "Every link to the console is the exact address, https, no query, no personal data, same CTA text goes to the same place",
+   "status": "PASS",
+   "checks": 39,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HO.for-hr",
+   "step": "1+3",
+   "group": "Hand-off links",
+   "perm": "for-hr | all console links",
+   "name": "Every link to the console is the exact address, https, no query, no personal data, same CTA text goes to the same place",
+   "status": "PASS",
+   "checks": 39,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HO.games",
+   "step": "1+3",
+   "group": "Hand-off links",
+   "perm": "games | all console links",
+   "name": "Every link to the console is the exact address, https, no query, no personal data, same CTA text goes to the same place",
+   "status": "PASS",
+   "checks": 74,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HO.games-for-hr-teams",
+   "step": "1+3",
+   "group": "Hand-off links",
+   "perm": "games-for-hr-teams | all console links",
+   "name": "Every link to the console is the exact address, https, no query, no personal data, same CTA text goes to the same place",
+   "status": "PASS",
+   "checks": 44,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HO.how-it-works",
+   "step": "1+3",
+   "group": "Hand-off links",
+   "perm": "how-it-works | all console links",
+   "name": "Every link to the console is the exact address, https, no query, no personal data, same CTA text goes to the same place",
+   "status": "PASS",
+   "checks": 39,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HO.index",
+   "step": "1+3",
+   "group": "Hand-off links",
+   "perm": "index | all console links",
+   "name": "Every link to the console is the exact address, https, no query, no personal data, same CTA text goes to the same place",
+   "status": "PASS",
+   "checks": 87,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HO.offline",
+   "step": "1+3",
+   "group": "Hand-off links",
+   "perm": "offline | all console links",
+   "name": "Every link to the console is the exact address, https, no query, no personal data, same CTA text goes to the same place",
+   "status": "PASS",
+   "checks": 37,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HO.pricing",
+   "step": "1+3",
+   "group": "Hand-off links",
+   "perm": "pricing | all console links",
+   "name": "Every link to the console is the exact address, https, no query, no personal data, same CTA text goes to the same place",
+   "status": "PASS",
+   "checks": 47,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HO.privacy",
+   "step": "1+3",
+   "group": "Hand-off links",
+   "perm": "privacy | all console links",
+   "name": "Every link to the console is the exact address, https, no query, no personal data, same CTA text goes to the same place",
+   "status": "PASS",
+   "checks": 39,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HO.terms",
+   "step": "1+3",
+   "group": "Hand-off links",
+   "perm": "terms | all console links",
+   "name": "Every link to the console is the exact address, https, no query, no personal data, same CTA text goes to the same place",
+   "status": "PASS",
+   "checks": 37,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HO.virtual-team-building-games",
+   "step": "1+3",
+   "group": "Hand-off links",
+   "perm": "virtual-team-building-games | all console links",
+   "name": "Every link to the console is the exact address, https, no query, no personal data, same CTA text goes to the same place",
+   "status": "PASS",
+   "checks": 44,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.01",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "phone | hero-create | normal | direct",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "FAIL",
+   "checks": 6,
+   "failed": [
+    {
+     "name": "the visitor code travels with the Create / game links (one journey from home to console)",
+     "detail": "console address was https://console.corporatetambola.com/#/create: the tracker adds its code only to links with no # part, and every Create/game link has #/create"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "2.HC.02",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "phone | hero-create | normal | whatsapp+utm",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "FAIL",
+   "checks": 6,
+   "failed": [
+    {
+     "name": "the visitor code travels with the Create / game links (one journey from home to console)",
+     "detail": "console address was https://console.corporatetambola.com/#/create: the tracker adds its code only to links with no # part, and every Create/game link has #/create"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "2.HC.03",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "phone | hero-create | decline signal | direct",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.04",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "phone | hero-create | decline signal | whatsapp+utm",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.05",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "phone | signin | normal | direct",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 5,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.06",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "phone | signin | normal | whatsapp+utm",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 5,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.07",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "phone | signin | decline signal | direct",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.08",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "phone | signin | decline signal | whatsapp+utm",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.09",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "phone | game-card | normal | direct",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "FAIL",
+   "checks": 6,
+   "failed": [
+    {
+     "name": "the visitor code travels with the Create / game links (one journey from home to console)",
+     "detail": "console address was https://console.corporatetambola.com/#/create: the tracker adds its code only to links with no # part, and every Create/game link has #/create"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "2.HC.10",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "phone | game-card | normal | whatsapp+utm",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "FAIL",
+   "checks": 6,
+   "failed": [
+    {
+     "name": "the visitor code travels with the Create / game links (one journey from home to console)",
+     "detail": "console address was https://console.corporatetambola.com/#/create: the tracker adds its code only to links with no # part, and every Create/game link has #/create"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "2.HC.11",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "phone | game-card | decline signal | direct",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.12",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "phone | game-card | decline signal | whatsapp+utm",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.13",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "phone | bar-tile | normal | direct",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "FAIL",
+   "checks": 6,
+   "failed": [
+    {
+     "name": "the visitor code travels with the Create / game links (one journey from home to console)",
+     "detail": "console address was https://console.corporatetambola.com/#/create: the tracker adds its code only to links with no # part, and every Create/game link has #/create"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "2.HC.14",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "phone | bar-tile | normal | whatsapp+utm",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "FAIL",
+   "checks": 6,
+   "failed": [
+    {
+     "name": "the visitor code travels with the Create / game links (one journey from home to console)",
+     "detail": "console address was https://console.corporatetambola.com/#/create: the tracker adds its code only to links with no # part, and every Create/game link has #/create"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "2.HC.15",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "phone | bar-tile | decline signal | direct",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.16",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "phone | bar-tile | decline signal | whatsapp+utm",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.17",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "laptop | hero-create | normal | direct",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "FAIL",
+   "checks": 6,
+   "failed": [
+    {
+     "name": "the visitor code travels with the Create / game links (one journey from home to console)",
+     "detail": "console address was https://console.corporatetambola.com/#/create: the tracker adds its code only to links with no # part, and every Create/game link has #/create"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "2.HC.18",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "laptop | hero-create | normal | whatsapp+utm",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "FAIL",
+   "checks": 6,
+   "failed": [
+    {
+     "name": "the visitor code travels with the Create / game links (one journey from home to console)",
+     "detail": "console address was https://console.corporatetambola.com/#/create: the tracker adds its code only to links with no # part, and every Create/game link has #/create"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "2.HC.19",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "laptop | hero-create | decline signal | direct",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.20",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "laptop | hero-create | decline signal | whatsapp+utm",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.21",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "laptop | signin | normal | direct",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 5,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.22",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "laptop | signin | normal | whatsapp+utm",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 5,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.23",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "laptop | signin | decline signal | direct",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.24",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "laptop | signin | decline signal | whatsapp+utm",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.25",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "laptop | game-card | normal | direct",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "FAIL",
+   "checks": 6,
+   "failed": [
+    {
+     "name": "the visitor code travels with the Create / game links (one journey from home to console)",
+     "detail": "console address was https://console.corporatetambola.com/#/create: the tracker adds its code only to links with no # part, and every Create/game link has #/create"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "2.HC.26",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "laptop | game-card | normal | whatsapp+utm",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "FAIL",
+   "checks": 6,
+   "failed": [
+    {
+     "name": "the visitor code travels with the Create / game links (one journey from home to console)",
+     "detail": "console address was https://console.corporatetambola.com/#/create: the tracker adds its code only to links with no # part, and every Create/game link has #/create"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "2.HC.27",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "laptop | game-card | decline signal | direct",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.28",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "laptop | game-card | decline signal | whatsapp+utm",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.29",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "laptop | bar-tile | normal | direct",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "FAIL",
+   "checks": 6,
+   "failed": [
+    {
+     "name": "the visitor code travels with the Create / game links (one journey from home to console)",
+     "detail": "console address was https://console.corporatetambola.com/#/create: the tracker adds its code only to links with no # part, and every Create/game link has #/create"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "2.HC.30",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "laptop | bar-tile | normal | whatsapp+utm",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "FAIL",
+   "checks": 6,
+   "failed": [
+    {
+     "name": "the visitor code travels with the Create / game links (one journey from home to console)",
+     "detail": "console address was https://console.corporatetambola.com/#/create: the tracker adds its code only to links with no # part, and every Create/game link has #/create"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "2.HC.31",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "laptop | bar-tile | decline signal | direct",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "2.HC.32",
+   "step": "1+3",
+   "group": "Hand-off click",
+   "perm": "laptop | bar-tile | decline signal | whatsapp+utm",
+   "name": "Click goes to console; nothing personal or campaign-related is in the address; only the origin is sent as referrer",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.001",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from direct | query: none | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.002",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from direct | query: none | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.003",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from direct | query: utm | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.004",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from direct | query: utm | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.005",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from direct | query: utm+click ids | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.006",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from direct | query: utm+click ids | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.007",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from direct | query: utm with e-mail inside | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "FAIL",
+   "checks": 13,
+   "failed": [
+    {
+     "name": "no e-mail address or phone number leaves the browser",
+     "detail": "e-mail address in [{\"s\":\"raajat.agarwal@gmail.com\",\"m\":\"email\",\"c\":\"\"}]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "7.AR.008",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from direct | query: utm with e-mail inside | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "FAIL",
+   "checks": 13,
+   "failed": [
+    {
+     "name": "no e-mail address or phone number leaves the browser",
+     "detail": "e-mail address in [{\"s\":\"raajat.agarwal@gmail.com\",\"m\":\"email\",\"c\":\"\"}]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "7.AR.009",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from direct | query: partner code | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.010",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from direct | query: partner code | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.011",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from direct | query: bad partner code | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.012",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from direct | query: bad partner code | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.013",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from direct | query: utm with angle brackets | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.014",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from direct | query: utm with angle brackets | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.015",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from whatsapp (no referrer) | query: none | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.016",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from whatsapp (no referrer) | query: none | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.017",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from whatsapp (no referrer) | query: utm | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.018",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from whatsapp (no referrer) | query: utm | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.019",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from whatsapp (no referrer) | query: utm+click ids | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.020",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from whatsapp (no referrer) | query: utm+click ids | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.021",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from whatsapp (no referrer) | query: utm with e-mail inside | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "FAIL",
+   "checks": 13,
+   "failed": [
+    {
+     "name": "no e-mail address or phone number leaves the browser",
+     "detail": "e-mail address in [{\"s\":\"raajat.agarwal@gmail.com\",\"m\":\"email\",\"c\":\"\"}]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "7.AR.022",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from whatsapp (no referrer) | query: utm with e-mail inside | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "FAIL",
+   "checks": 13,
+   "failed": [
+    {
+     "name": "no e-mail address or phone number leaves the browser",
+     "detail": "e-mail address in [{\"s\":\"raajat.agarwal@gmail.com\",\"m\":\"email\",\"c\":\"\"}]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "7.AR.023",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from whatsapp (no referrer) | query: partner code | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.024",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from whatsapp (no referrer) | query: partner code | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.025",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from whatsapp (no referrer) | query: bad partner code | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.026",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from whatsapp (no referrer) | query: bad partner code | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.027",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from whatsapp (no referrer) | query: utm with angle brackets | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.028",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from whatsapp (no referrer) | query: utm with angle brackets | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.029",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from linkedin | query: none | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.030",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from linkedin | query: none | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.031",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from linkedin | query: utm | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.032",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from linkedin | query: utm | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.033",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from linkedin | query: utm+click ids | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.034",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from linkedin | query: utm+click ids | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.035",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from linkedin | query: utm with e-mail inside | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "FAIL",
+   "checks": 13,
+   "failed": [
+    {
+     "name": "no e-mail address or phone number leaves the browser",
+     "detail": "e-mail address in [{\"s\":\"raajat.agarwal@gmail.com\",\"m\":\"email\",\"c\":\"\"}]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "7.AR.036",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from linkedin | query: utm with e-mail inside | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "FAIL",
+   "checks": 13,
+   "failed": [
+    {
+     "name": "no e-mail address or phone number leaves the browser",
+     "detail": "e-mail address in [{\"s\":\"raajat.agarwal@gmail.com\",\"m\":\"email\",\"c\":\"\"}]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "7.AR.037",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from linkedin | query: partner code | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.038",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from linkedin | query: partner code | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.039",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from linkedin | query: bad partner code | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.040",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from linkedin | query: bad partner code | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.041",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from linkedin | query: utm with angle brackets | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.042",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from linkedin | query: utm with angle brackets | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.043",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from lnkd.in | query: none | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.044",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from lnkd.in | query: none | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.045",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from lnkd.in | query: utm | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.046",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from lnkd.in | query: utm | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.047",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from lnkd.in | query: utm+click ids | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.048",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from lnkd.in | query: utm+click ids | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.049",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from lnkd.in | query: utm with e-mail inside | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "FAIL",
+   "checks": 13,
+   "failed": [
+    {
+     "name": "no e-mail address or phone number leaves the browser",
+     "detail": "e-mail address in [{\"s\":\"raajat.agarwal@gmail.com\",\"m\":\"email\",\"c\":\"\"}]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "7.AR.050",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from lnkd.in | query: utm with e-mail inside | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "FAIL",
+   "checks": 13,
+   "failed": [
+    {
+     "name": "no e-mail address or phone number leaves the browser",
+     "detail": "e-mail address in [{\"s\":\"raajat.agarwal@gmail.com\",\"m\":\"email\",\"c\":\"\"}]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "7.AR.051",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from lnkd.in | query: partner code | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.052",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from lnkd.in | query: partner code | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.053",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from lnkd.in | query: bad partner code | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.054",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from lnkd.in | query: bad partner code | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.055",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from lnkd.in | query: utm with angle brackets | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.056",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from lnkd.in | query: utm with angle brackets | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.057",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from facebook | query: none | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.058",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from facebook | query: none | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.059",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from facebook | query: utm | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.060",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from facebook | query: utm | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.061",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from facebook | query: utm+click ids | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.062",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from facebook | query: utm+click ids | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.063",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from facebook | query: utm with e-mail inside | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "FAIL",
+   "checks": 13,
+   "failed": [
+    {
+     "name": "no e-mail address or phone number leaves the browser",
+     "detail": "e-mail address in [{\"s\":\"raajat.agarwal@gmail.com\",\"m\":\"email\",\"c\":\"\"}]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "7.AR.064",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from facebook | query: utm with e-mail inside | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "FAIL",
+   "checks": 13,
+   "failed": [
+    {
+     "name": "no e-mail address or phone number leaves the browser",
+     "detail": "e-mail address in [{\"s\":\"raajat.agarwal@gmail.com\",\"m\":\"email\",\"c\":\"\"}]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "7.AR.065",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from facebook | query: partner code | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.066",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from facebook | query: partner code | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.067",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from facebook | query: bad partner code | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.068",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from facebook | query: bad partner code | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.069",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from facebook | query: utm with angle brackets | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.070",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from facebook | query: utm with angle brackets | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.071",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from google | query: none | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.072",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from google | query: none | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.073",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from google | query: utm | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.074",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from google | query: utm | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.075",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from google | query: utm+click ids | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.076",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from google | query: utm+click ids | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.077",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from google | query: utm with e-mail inside | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "FAIL",
+   "checks": 13,
+   "failed": [
+    {
+     "name": "no e-mail address or phone number leaves the browser",
+     "detail": "e-mail address in [{\"s\":\"raajat.agarwal@gmail.com\",\"m\":\"email\",\"c\":\"\"}]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "7.AR.078",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from google | query: utm with e-mail inside | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "FAIL",
+   "checks": 13,
+   "failed": [
+    {
+     "name": "no e-mail address or phone number leaves the browser",
+     "detail": "e-mail address in [{\"s\":\"raajat.agarwal@gmail.com\",\"m\":\"email\",\"c\":\"\"}]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "7.AR.079",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from google | query: partner code | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.080",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from google | query: partner code | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.081",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from google | query: bad partner code | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.082",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from google | query: bad partner code | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.083",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from google | query: utm with angle brackets | page /",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "7.AR.084",
+   "step": 1,
+   "group": "Arrival source",
+   "perm": "from google | query: utm with angle brackets | page /pricing",
+   "name": "Page opens clean; canonical stays clean; tracker sends only host + path + campaign words; nothing personal; no injected markup",
+   "status": "PASS",
+   "checks": 13,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "8.BF.01",
+   "step": 3,
+   "group": "Back / forward",
+   "perm": "phone | retro",
+   "name": "Home > Games > Pricing, then back, back, forward: right page each time, choices kept, menu shut, one page-view per page load",
+   "status": "FAIL",
+   "checks": 7,
+   "failed": [
+    {
+     "name": "the tracker saw each page load once, in order (/, /games, /pricing, /games, /, /games)",
+     "detail": "[\"/\",\"/games\"]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "8.BF.02",
+   "step": 3,
+   "group": "Back / forward",
+   "perm": "phone | modern",
+   "name": "Home > Games > Pricing, then back, back, forward: right page each time, choices kept, menu shut, one page-view per page load",
+   "status": "FAIL",
+   "checks": 7,
+   "failed": [
+    {
+     "name": "the tracker saw each page load once, in order (/, /games, /pricing, /games, /, /games)",
+     "detail": "[\"/games\"]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "8.BF.03",
+   "step": 3,
+   "group": "Back / forward",
+   "perm": "tablet | retro",
+   "name": "Home > Games > Pricing, then back, back, forward: right page each time, choices kept, menu shut, one page-view per page load",
+   "status": "FAIL",
+   "checks": 7,
+   "failed": [
+    {
+     "name": "the tracker saw each page load once, in order (/, /games, /pricing, /games, /, /games)",
+     "detail": "[\"/\",\"/games\"]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "8.BF.04",
+   "step": 3,
+   "group": "Back / forward",
+   "perm": "tablet | modern",
+   "name": "Home > Games > Pricing, then back, back, forward: right page each time, choices kept, menu shut, one page-view per page load",
+   "status": "FAIL",
+   "checks": 7,
+   "failed": [
+    {
+     "name": "the tracker saw each page load once, in order (/, /games, /pricing, /games, /, /games)",
+     "detail": "[\"/games\"]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "8.BF.05",
+   "step": 3,
+   "group": "Back / forward",
+   "perm": "laptop | retro",
+   "name": "Home > Games > Pricing, then back, back, forward: right page each time, choices kept, menu shut, one page-view per page load",
+   "status": "FAIL",
+   "checks": 7,
+   "failed": [
+    {
+     "name": "the tracker saw each page load once, in order (/, /games, /pricing, /games, /, /games)",
+     "detail": "[\"/\",\"/pricing\",\"/games\"]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "8.BF.06",
+   "step": 3,
+   "group": "Back / forward",
+   "perm": "laptop | modern",
+   "name": "Home > Games > Pricing, then back, back, forward: right page each time, choices kept, menu shut, one page-view per page load",
+   "status": "FAIL",
+   "checks": 7,
+   "failed": [
+    {
+     "name": "the tracker saw each page load once, in order (/, /games, /pricing, /games, /, /games)",
+     "detail": "[\"/\",\"/games\"]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "8.BF.hash",
+   "step": 3,
+   "group": "Back / forward",
+   "perm": "laptop | in-page anchors",
+   "name": "In-page jumps (#links) and back do not count as new page views and do not break the page",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "9.OF.phone",
+   "step": 3,
+   "group": "Offline then online",
+   "perm": "phone",
+   "name": "After one visit the pages open again without internet; an unvisited page shows the offline page; back online everything works",
+   "status": "FAIL",
+   "checks": 14,
+   "failed": [
+    {
+     "name": "offline: /terms (the legal page) also opens for a returning visitor",
+     "detail": "shows the offline page: {\"h1\":\"You are offline.\",\"t\":\"You are offline | Corporate Games\"}"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "9.OF.laptop",
+   "step": 3,
+   "group": "Offline then online",
+   "perm": "laptop",
+   "name": "After one visit the pages open again without internet; an unvisited page shows the offline page; back online everything works",
+   "status": "FAIL",
+   "checks": 14,
+   "failed": [
+    {
+     "name": "offline: /terms (the legal page) also opens for a returning visitor",
+     "detail": "shows the offline page: {\"h1\":\"You are offline.\",\"t\":\"You are offline | Corporate Games\"}"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.01",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "404 | phone",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.02",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "404 | tablet",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.03",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "404 | laptop",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.04",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "contact | phone",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.05",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "contact | tablet",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.06",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "contact | laptop",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.07",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "for-hr | phone",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.08",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "for-hr | tablet",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.09",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "for-hr | laptop",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.10",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "games | phone",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.11",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "games | tablet",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.12",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "games | laptop",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.13",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "games-for-hr-teams | phone",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.14",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "games-for-hr-teams | tablet",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.15",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "games-for-hr-teams | laptop",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.16",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "how-it-works | phone",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.17",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "how-it-works | tablet",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.18",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "how-it-works | laptop",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.19",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "index | phone",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.20",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "index | tablet",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.21",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "index | laptop",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.22",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "offline | phone",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.23",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "offline | tablet",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.24",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "offline | laptop",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.25",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "pricing | phone",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.26",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "pricing | tablet",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.27",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "pricing | laptop",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.28",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "privacy | phone",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.29",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "privacy | tablet",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.30",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "privacy | laptop",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.31",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "terms | phone",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.32",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "terms | tablet",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.33",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "terms | laptop",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.34",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "virtual-team-building-games | phone",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.35",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "virtual-team-building-games | tablet",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "4.NJ.36",
+   "step": 1,
+   "group": "JavaScript blocked",
+   "perm": "virtual-team-building-games | laptop",
+   "name": "Page still readable: h1, menu links reachable, a way to the console, no sideways scroll",
+   "status": "PASS",
+   "checks": 6,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "5.SN.01",
+   "step": 1,
+   "group": "Slow network",
+   "perm": "Slow 3G | /",
+   "name": "Readable text arrives in time, nothing breaks; page weight recorded",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": "h1 at 4.3s, load at 5.9s, 269 KB"
+  },
+  {
+   "id": "5.SN.02",
+   "step": 1,
+   "group": "Slow network",
+   "perm": "Slow 3G | /games",
+   "name": "Readable text arrives in time, nothing breaks; page weight recorded",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": "h1 at 3.7s, load at 5.3s, 239 KB"
+  },
+  {
+   "id": "5.SN.03",
+   "step": 1,
+   "group": "Slow network",
+   "perm": "Slow 3G | /pricing",
+   "name": "Readable text arrives in time, nothing breaks; page weight recorded",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": "h1 at 3.2s, load at 5.0s, 217 KB"
+  },
+  {
+   "id": "5.SN.04",
+   "step": 1,
+   "group": "Slow network",
+   "perm": "Slow 3G | /privacy",
+   "name": "Readable text arrives in time, nothing breaks; page weight recorded",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": "h1 at 3.2s, load at 5.1s, 221 KB"
+  },
+  {
+   "id": "5.SN.05",
+   "step": 1,
+   "group": "Slow network",
+   "perm": "Slow 3G | /terms",
+   "name": "Readable text arrives in time, nothing breaks; page weight recorded",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": "h1 at 3.7s, load at 5.3s, 236 KB"
+  },
+  {
+   "id": "5.SN.06",
+   "step": 1,
+   "group": "Slow network",
+   "perm": "Slow 3G | /__no-such-page__",
+   "name": "Readable text arrives in time, nothing breaks; page weight recorded",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": "h1 at 3.2s, load at 4.8s, 202 KB"
+  },
+  {
+   "id": "5.SN.07",
+   "step": 1,
+   "group": "Slow network",
+   "perm": "Fast 3G | /",
+   "name": "Readable text arrives in time, nothing breaks; page weight recorded",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": "h1 at 1.5s, load at 1.5s, 269 KB"
+  },
+  {
+   "id": "5.SN.08",
+   "step": 1,
+   "group": "Slow network",
+   "perm": "Fast 3G | /games",
+   "name": "Readable text arrives in time, nothing breaks; page weight recorded",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": "h1 at 1.0s, load at 1.4s, 239 KB"
+  },
+  {
+   "id": "5.SN.09",
+   "step": 1,
+   "group": "Slow network",
+   "perm": "Fast 3G | /pricing",
+   "name": "Readable text arrives in time, nothing breaks; page weight recorded",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": "h1 at 1.0s, load at 1.4s, 217 KB"
+  },
+  {
+   "id": "5.SN.10",
+   "step": 1,
+   "group": "Slow network",
+   "perm": "Fast 3G | /privacy",
+   "name": "Readable text arrives in time, nothing breaks; page weight recorded",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": "h1 at 1.0s, load at 1.4s, 221 KB"
+  },
+  {
+   "id": "5.SN.11",
+   "step": 1,
+   "group": "Slow network",
+   "perm": "Fast 3G | /terms",
+   "name": "Readable text arrives in time, nothing breaks; page weight recorded",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": "h1 at 1.0s, load at 1.4s, 236 KB"
+  },
+  {
+   "id": "5.SN.12",
+   "step": 1,
+   "group": "Slow network",
+   "perm": "Fast 3G | /__no-such-page__",
+   "name": "Readable text arrives in time, nothing breaks; page weight recorded",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": "h1 at 1.0s, load at 1.3s, 202 KB"
+  },
+  {
+   "id": "5.SN.sw",
+   "step": 3,
+   "group": "Slow network",
+   "perm": "Slow 3G | repeat visit with offline copy",
+   "name": "A returning visitor on a slow line sees the page within the 4-second wait (saved copy) without errors",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": "h1 after 0.1s on a 5 KB/s line"
+  },
+  {
+   "id": "11.CP.01",
+   "step": "1+3",
+   "group": "Cookies and click path",
+   "perm": "normal | phone",
+   "name": "Walk Home > Games > How it works > Pricing > click Create: no cookie; path recorded as paths and click names only; nothing personal; decline honoured",
+   "status": "FAIL",
+   "checks": 7,
+   "failed": [
+    {
+     "name": "page views recorded in order",
+     "detail": "[\"/\",\"/games\",\"/pricing\"]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "11.CP.02",
+   "step": "1+3",
+   "group": "Cookies and click path",
+   "perm": "normal | laptop",
+   "name": "Walk Home > Games > How it works > Pricing > click Create: no cookie; path recorded as paths and click names only; nothing personal; decline honoured",
+   "status": "FAIL",
+   "checks": 7,
+   "failed": [
+    {
+     "name": "page views recorded in order",
+     "detail": "[\"/\",\"/games\",\"/pricing\"]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "11.CP.03",
+   "step": "1+3",
+   "group": "Cookies and click path",
+   "perm": "decline signal (GPC) | phone",
+   "name": "Walk Home > Games > How it works > Pricing > click Create: no cookie; path recorded as paths and click names only; nothing personal; decline honoured",
+   "status": "FAIL",
+   "checks": 5,
+   "failed": [
+    {
+     "name": "decline: nothing about the navigation is sent (the privacy page says no navigation data is collected)",
+     "detail": "4 events sent, e.g. [{\"k\":\"pv\",\"p\":\"/\"},{\"k\":\"exit\",\"n\":\"\",\"m\":75,\"x\":5,\"p\":\"/\"},{\"k\":\"pv\",\"p\":\"/pricing\"}]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "11.CP.04",
+   "step": "1+3",
+   "group": "Cookies and click path",
+   "perm": "decline signal (GPC) | laptop",
+   "name": "Walk Home > Games > How it works > Pricing > click Create: no cookie; path recorded as paths and click names only; nothing personal; decline honoured",
+   "status": "FAIL",
+   "checks": 5,
+   "failed": [
+    {
+     "name": "decline: nothing about the navigation is sent (the privacy page says no navigation data is collected)",
+     "detail": "6 events sent, e.g. [{\"k\":\"pv\",\"p\":\"/\"},{\"k\":\"exit\",\"n\":\"\",\"m\":180,\"x\":8,\"p\":\"/\"},{\"k\":\"pv\",\"p\":\"/games\"}]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "11.CP.05",
+   "step": "1+3",
+   "group": "Cookies and click path",
+   "perm": "do not track | phone",
+   "name": "Walk Home > Games > How it works > Pricing > click Create: no cookie; path recorded as paths and click names only; nothing personal; decline honoured",
+   "status": "FAIL",
+   "checks": 5,
+   "failed": [
+    {
+     "name": "decline: nothing about the navigation is sent (the privacy page says no navigation data is collected)",
+     "detail": "4 events sent, e.g. [{\"k\":\"pv\",\"p\":\"/\"},{\"k\":\"exit\",\"n\":\"\",\"m\":92,\"x\":5,\"p\":\"/\"},{\"k\":\"pv\",\"p\":\"/pricing\"}]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "11.CP.06",
+   "step": "1+3",
+   "group": "Cookies and click path",
+   "perm": "do not track | laptop",
+   "name": "Walk Home > Games > How it works > Pricing > click Create: no cookie; path recorded as paths and click names only; nothing personal; decline honoured",
+   "status": "FAIL",
+   "checks": 5,
+   "failed": [
+    {
+     "name": "decline: nothing about the navigation is sent (the privacy page says no navigation data is collected)",
+     "detail": "8 events sent, e.g. [{\"k\":\"pv\",\"p\":\"/\"},{\"k\":\"exit\",\"n\":\"\",\"m\":184,\"x\":8,\"p\":\"/\"},{\"k\":\"pv\",\"p\":\"/games\"}]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "11.CP.07",
+   "step": "1+3",
+   "group": "Cookies and click path",
+   "perm": "storage blocked | phone",
+   "name": "Walk Home > Games > How it works > Pricing > click Create: no cookie; path recorded as paths and click names only; nothing personal; decline honoured",
+   "status": "FAIL",
+   "checks": 5,
+   "failed": [
+    {
+     "name": "page views recorded in order",
+     "detail": "[\"/\",\"/pricing\"]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "11.CP.08",
+   "step": "1+3",
+   "group": "Cookies and click path",
+   "perm": "storage blocked | laptop",
+   "name": "Walk Home > Games > How it works > Pricing > click Create: no cookie; path recorded as paths and click names only; nothing personal; decline honoured",
+   "status": "FAIL",
+   "checks": 5,
+   "failed": [
+    {
+     "name": "page views recorded in order",
+     "detail": "[\"/\",\"/games\",\"/pricing\"]"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "10.LG.en-IN",
+   "step": 1,
+   "group": "Language",
+   "perm": "browser language en-IN",
+   "name": "Page stays English and complete; tracker records the language code only",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "10.LG.en-US",
+   "step": 1,
+   "group": "Language",
+   "perm": "browser language en-US",
+   "name": "Page stays English and complete; tracker records the language code only",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "10.LG.en-GB",
+   "step": 1,
+   "group": "Language",
+   "perm": "browser language en-GB",
+   "name": "Page stays English and complete; tracker records the language code only",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "10.LG.hi-IN",
+   "step": 1,
+   "group": "Language",
+   "perm": "browser language hi-IN",
+   "name": "Page stays English and complete; tracker records the language code only",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "10.LG.ar-AE",
+   "step": 1,
+   "group": "Language",
+   "perm": "browser language ar-AE",
+   "name": "Page stays English and complete; tracker records the language code only",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "10.LG.words",
+   "step": 1,
+   "group": "Language",
+   "perm": "all pages | link and button words",
+   "name": "Call-to-action words: short, plain, no jargon, no we/our/us, same label never means two things",
+   "status": "PASS",
+   "checks": 434,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "6.DL.404",
+   "step": 1,
+   "group": "Deep links",
+   "perm": "404 | address variants",
+   "name": "Direct address, .html, trailing slash, other case, query, #anchor: right page or one clean redirect",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "6.DL.contact",
+   "step": 1,
+   "group": "Deep links",
+   "perm": "contact | address variants",
+   "name": "Direct address, .html, trailing slash, other case, query, #anchor: right page or one clean redirect",
+   "status": "PASS",
+   "checks": 5,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "6.DL.for-hr",
+   "step": 1,
+   "group": "Deep links",
+   "perm": "for-hr | address variants",
+   "name": "Direct address, .html, trailing slash, other case, query, #anchor: right page or one clean redirect",
+   "status": "PASS",
+   "checks": 5,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "6.DL.games",
+   "step": 1,
+   "group": "Deep links",
+   "perm": "games | address variants",
+   "name": "Direct address, .html, trailing slash, other case, query, #anchor: right page or one clean redirect",
+   "status": "PASS",
+   "checks": 5,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "6.DL.games-for-hr-teams",
+   "step": 1,
+   "group": "Deep links",
+   "perm": "games-for-hr-teams | address variants",
+   "name": "Direct address, .html, trailing slash, other case, query, #anchor: right page or one clean redirect",
+   "status": "PASS",
+   "checks": 5,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "6.DL.how-it-works",
+   "step": 1,
+   "group": "Deep links",
+   "perm": "how-it-works | address variants",
+   "name": "Direct address, .html, trailing slash, other case, query, #anchor: right page or one clean redirect",
+   "status": "PASS",
+   "checks": 5,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "6.DL.index",
+   "step": 1,
+   "group": "Deep links",
+   "perm": "index | address variants",
+   "name": "Direct address, .html, trailing slash, other case, query, #anchor: right page or one clean redirect",
+   "status": "PASS",
+   "checks": 3,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "6.DL.offline",
+   "step": 1,
+   "group": "Deep links",
+   "perm": "offline | address variants",
+   "name": "Direct address, .html, trailing slash, other case, query, #anchor: right page or one clean redirect",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "6.DL.pricing",
+   "step": 1,
+   "group": "Deep links",
+   "perm": "pricing | address variants",
+   "name": "Direct address, .html, trailing slash, other case, query, #anchor: right page or one clean redirect",
+   "status": "PASS",
+   "checks": 5,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "6.DL.privacy",
+   "step": 1,
+   "group": "Deep links",
+   "perm": "privacy | address variants",
+   "name": "Direct address, .html, trailing slash, other case, query, #anchor: right page or one clean redirect",
+   "status": "PASS",
+   "checks": 5,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "6.DL.terms",
+   "step": 1,
+   "group": "Deep links",
+   "perm": "terms | address variants",
+   "name": "Direct address, .html, trailing slash, other case, query, #anchor: right page or one clean redirect",
+   "status": "PASS",
+   "checks": 5,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "6.DL.virtual-team-building-games",
+   "step": 1,
+   "group": "Deep links",
+   "perm": "virtual-team-building-games | address variants",
+   "name": "Direct address, .html, trailing slash, other case, query, #anchor: right page or one clean redirect",
+   "status": "PASS",
+   "checks": 5,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "6.DL.legal",
+   "step": 1,
+   "group": "Deep links",
+   "perm": "legal pages and old addresses",
+   "name": "Every old legal address sends one 301 to a section of /terms that exists; /privacy stays on home",
+   "status": "PASS",
+   "checks": 30,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "6.DL.signin-guesses",
+   "step": 1,
+   "group": "Deep links",
+   "perm": "addresses an organizer might type",
+   "name": "/login /signin /sign-in /console /dashboard /app: send the person to the console sign-in (or at least show a page with a Sign in button)",
+   "status": "FAIL",
+   "checks": 12,
+   "failed": [
+    {
+     "name": "/login reaches the console sign-in in one step (redirect)",
+     "detail": "404 (shows the 404 page, which has a Sign in link)"
+    },
+    {
+     "name": "/signin reaches the console sign-in in one step (redirect)",
+     "detail": "404 (shows the 404 page, which has a Sign in link)"
+    },
+    {
+     "name": "/sign-in reaches the console sign-in in one step (redirect)",
+     "detail": "404 (shows the 404 page, which has a Sign in link)"
+    },
+    {
+     "name": "/console reaches the console sign-in in one step (redirect)",
+     "detail": "404 (shows the 404 page, which has a Sign in link)"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "6.DL.files",
+   "step": 1,
+   "group": "Deep links",
+   "perm": "special files",
+   "name": "version.json, robots, sitemap, llms, security.txt, manifest, icons answer with the right type",
+   "status": "PASS",
+   "checks": 28,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "12.SEO.404",
+   "step": 1,
+   "group": "SEO",
+   "perm": "404",
+   "name": "title, description, canonical, robots, social tags, one h1, structured data, sitemap entry",
+   "status": "PASS",
+   "checks": 7,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "12.SEO.contact",
+   "step": 1,
+   "group": "SEO",
+   "perm": "contact",
+   "name": "title, description, canonical, robots, social tags, one h1, structured data, sitemap entry",
+   "status": "PASS",
+   "checks": 16,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "12.SEO.for-hr",
+   "step": 1,
+   "group": "SEO",
+   "perm": "for-hr",
+   "name": "title, description, canonical, robots, social tags, one h1, structured data, sitemap entry",
+   "status": "FAIL",
+   "checks": 16,
+   "failed": [
+    {
+     "name": "description present, 50 to 155 characters",
+     "detail": "169"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "12.SEO.games",
+   "step": 1,
+   "group": "SEO",
+   "perm": "games",
+   "name": "title, description, canonical, robots, social tags, one h1, structured data, sitemap entry",
+   "status": "PASS",
+   "checks": 16,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "12.SEO.games-for-hr-teams",
+   "step": 1,
+   "group": "SEO",
+   "perm": "games-for-hr-teams",
+   "name": "title, description, canonical, robots, social tags, one h1, structured data, sitemap entry",
+   "status": "PASS",
+   "checks": 28,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "12.SEO.how-it-works",
+   "step": 1,
+   "group": "SEO",
+   "perm": "how-it-works",
+   "name": "title, description, canonical, robots, social tags, one h1, structured data, sitemap entry",
+   "status": "PASS",
+   "checks": 16,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "12.SEO.index",
+   "step": 1,
+   "group": "SEO",
+   "perm": "index",
+   "name": "title, description, canonical, robots, social tags, one h1, structured data, sitemap entry",
+   "status": "FAIL",
+   "checks": 34,
+   "failed": [
+    {
+     "name": "ItemList lists every game the page shows (six, Lucky Draw included)",
+     "detail": "ItemList has 5 games: Corporate Tambola, Corporate Bingo, Corporate Tic Tac Toe, Corporate Snakes and Ladders, Corporate Luck by Chance"
+    }
+   ],
+   "note": "ItemList has 5 items"
+  },
+  {
+   "id": "12.SEO.offline",
+   "step": 1,
+   "group": "SEO",
+   "perm": "offline",
+   "name": "title, description, canonical, robots, social tags, one h1, structured data, sitemap entry",
+   "status": "PASS",
+   "checks": 7,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "12.SEO.pricing",
+   "step": 1,
+   "group": "SEO",
+   "perm": "pricing",
+   "name": "title, description, canonical, robots, social tags, one h1, structured data, sitemap entry",
+   "status": "PASS",
+   "checks": 16,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "12.SEO.privacy",
+   "step": 1,
+   "group": "SEO",
+   "perm": "privacy",
+   "name": "title, description, canonical, robots, social tags, one h1, structured data, sitemap entry",
+   "status": "PASS",
+   "checks": 16,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "12.SEO.terms",
+   "step": 1,
+   "group": "SEO",
+   "perm": "terms",
+   "name": "title, description, canonical, robots, social tags, one h1, structured data, sitemap entry",
+   "status": "PASS",
+   "checks": 16,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "12.SEO.virtual-team-building-games",
+   "step": 1,
+   "group": "SEO",
+   "perm": "virtual-team-building-games",
+   "name": "title, description, canonical, robots, social tags, one h1, structured data, sitemap entry",
+   "status": "PASS",
+   "checks": 26,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "12.SEO.site",
+   "step": 1,
+   "group": "SEO",
+   "perm": "whole site",
+   "name": "titles and descriptions unique; sitemap, robots, llms, security.txt, social image, manifest are right",
+   "status": "PASS",
+   "checks": 56,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "13.VJ.01",
+   "step": 1,
+   "group": "version.json",
+   "perm": "built copy",
+   "name": "version.json answers 200 JSON, not cached, has commit/dirty/builtAt/game; every footer shows the same short commit",
+   "status": "PASS",
+   "checks": 21,
+   "failed": [],
+   "note": "dirty flag not asserted outside CI"
+  },
+  {
+   "id": "14.HD.01",
+   "step": 1,
+   "group": "Headers",
+   "perm": "all page classes",
+   "name": "Security and caching headers from _headers on pages, assets, version.json, manifest, robots",
+   "status": "PASS",
+   "checks": 41,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.001",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "404 | phone | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.002",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "404 | phone | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.003",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "404 | phone | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.004",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "404 | phone | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.005",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "404 | laptop | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.006",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "404 | laptop | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.007",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "404 | laptop | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.008",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "404 | laptop | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.009",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "contact | phone | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.010",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "contact | phone | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.011",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "contact | phone | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.012",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "contact | phone | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.013",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "contact | laptop | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.014",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "contact | laptop | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.015",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "contact | laptop | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.016",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "contact | laptop | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.017",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "for-hr | phone | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.018",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "for-hr | phone | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.019",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "for-hr | phone | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.020",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "for-hr | phone | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.021",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "for-hr | laptop | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.022",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "for-hr | laptop | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.023",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "for-hr | laptop | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.024",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "for-hr | laptop | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.025",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "games | phone | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.026",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "games | phone | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.027",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "games | phone | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.028",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "games | phone | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.029",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "games | laptop | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.030",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "games | laptop | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.031",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "games | laptop | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.032",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "games | laptop | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.033",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "games-for-hr-teams | phone | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.034",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "games-for-hr-teams | phone | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.035",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "games-for-hr-teams | phone | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.036",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "games-for-hr-teams | phone | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.037",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "games-for-hr-teams | laptop | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.038",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "games-for-hr-teams | laptop | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.039",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "games-for-hr-teams | laptop | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.040",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "games-for-hr-teams | laptop | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.041",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "how-it-works | phone | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.042",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "how-it-works | phone | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.043",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "how-it-works | phone | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.044",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "how-it-works | phone | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.045",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "how-it-works | laptop | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.046",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "how-it-works | laptop | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.047",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "how-it-works | laptop | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.048",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "how-it-works | laptop | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.049",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "index | phone | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.050",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "index | phone | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.051",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "index | phone | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.052",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "index | phone | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.053",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "index | laptop | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.054",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "index | laptop | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.055",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "index | laptop | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.056",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "index | laptop | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.057",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "offline | phone | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.058",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "offline | phone | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.059",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "offline | phone | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.060",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "offline | phone | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.061",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "offline | laptop | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.062",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "offline | laptop | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.063",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "offline | laptop | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.064",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "offline | laptop | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.065",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "pricing | phone | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.066",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "pricing | phone | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.067",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "pricing | phone | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.068",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "pricing | phone | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.069",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "pricing | laptop | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.070",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "pricing | laptop | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.071",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "pricing | laptop | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.072",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "pricing | laptop | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.073",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "privacy | phone | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.074",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "privacy | phone | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.075",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "privacy | phone | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.076",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "privacy | phone | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.077",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "privacy | laptop | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.078",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "privacy | laptop | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.079",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "privacy | laptop | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.080",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "privacy | laptop | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.081",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "terms | phone | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.082",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "terms | phone | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.083",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "terms | phone | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.084",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "terms | phone | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.085",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "terms | laptop | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.086",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "terms | laptop | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.087",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "terms | laptop | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.088",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "terms | laptop | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.089",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "virtual-team-building-games | phone | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.090",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "virtual-team-building-games | phone | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.091",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "virtual-team-building-games | phone | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.092",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "virtual-team-building-games | phone | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "FAIL",
+   "checks": 1,
+   "failed": [
+    {
+     "name": "no serious, critical or moderate violation",
+     "detail": "moderate:region x1 .tabbar"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "id": "15.AX.093",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "virtual-team-building-games | laptop | light | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.094",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "virtual-team-building-games | laptop | light | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.095",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "virtual-team-building-games | laptop | dark | retro",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.AX.096",
+   "step": 1,
+   "group": "Accessibility (axe-core)",
+   "perm": "virtual-team-building-games | laptop | dark | modern",
+   "name": "No serious or critical problem found by the automatic scan (includes colour contrast)",
+   "status": "PASS",
+   "checks": 1,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "15.KB.01",
+   "step": 1,
+   "group": "Accessibility basics",
+   "perm": "index | phone+laptop | keyboard",
+   "name": "Skip link is the first stop, focus is visible, menu opens and closes by keyboard, 320 px reflow",
+   "status": "PASS",
+   "checks": 18,
+   "failed": [],
+   "note": ""
+  },
+  {
+   "id": "16.DL.01",
+   "step": 1,
+   "group": "Dead links",
+   "perm": "all pages | internal links, anchors, files",
+   "name": "Every internal link, #anchor, image, script, style, font and icon exists; mailto and tel are well formed; outside links open safely",
+   "status": "PASS",
+   "checks": 660,
+   "failed": [],
+   "note": "5 outside addresses (checked by the live probe on the runner)"
+  },
+  {
+   "id": "17.PR.01",
+   "step": 1,
+   "group": "Prices",
+   "perm": "all pages + llms + JSON-LD",
+   "name": "Any rupee or dollar amount on the site is in the pricing source; the rupee sign is used (no Rs/INR); no GST claim contradicts 'no GST'",
+   "status": "FAIL",
+   "checks": 17,
+   "failed": [
+    {
+     "name": "the six game links on the pricing page go to six different game pages (they are said to be each game's own page)",
+     "detail": "6 links, 1 different address(es): https://console.corporatetambola.com/#/create"
+    }
+   ],
+   "note": "0 price amounts found on home"
+  }
+ ],
+ "external": [
+  "https://console.corporatetambola.com/",
+  "https://console.corporatetambola.com/#/create",
+  "https://dpdp.veridian-aios.com/",
+  "https://veridian-aios.com/",
+  "https://townhall-records.com/"
+ ]
+}

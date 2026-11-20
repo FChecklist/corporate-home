@@ -4,7 +4,7 @@
 //   2. writes dist/version.json  { commit, dirty, builtAt, game: "corporate-games-home" }
 //   3. puts the short version in the footer of every page (between <!--ver--> and <!--/ver-->)
 //   4. makes sure every page loads the shared Corporate Games bar (gamesbar.css + gamesbar.js data-game="home"), adding the two tags if a page lacks them
-//   5. checks: _redirects never touches /version.json or leaves the site, every page is in sitemap.xml (except 404 and offline), no obfuscated e-mail
+//   5. checks: _redirects never touches /version.json or leaves the site (one exception: /login, /signin, /sign-in, /console go to the console sign-in), every page is in sitemap.xml (except 404 and offline), no obfuscated e-mail
 // Cloudflare Pages: build command  node tools/build.mjs   build output directory  dist
 import { execFileSync } from "node:child_process";
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync, statSync } from "node:fs";
@@ -53,7 +53,7 @@ for (const f of ["gamesbar.js", "gamesbar.css", "a.js"]) if (!existsSync(join(ou
 // 5. checks
 const redirects = existsSync(join(root, "_redirects")) ? readFileSync(join(root, "_redirects"), "utf8") : "";
 for (const line of redirects.split("\n").map((l) => l.trim()).filter((l) => l && !l.startsWith("#")))
-  if (/version\.json/.test(line) || /https?:\/\//.test(line)) fail("_redirects rule not allowed: " + line);
+  if (/version\.json/.test(line) || (/https?:\/\//.test(line) && !/^\/\S+\s+https:\/\/console\.corporatetambola\.com\/\s+302$/.test(line))) fail("_redirects rule not allowed (the only outside address allowed is the console sign-in, with a 302): " + line);
 const sitemap = readFileSync(join(out, "sitemap.xml"), "utf8");
 for (const f of pages) {
   if (f === "404.html" || f === "offline.html") continue;

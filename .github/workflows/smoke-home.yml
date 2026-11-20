@@ -22,10 +22,13 @@ jobs:
         run: npm install --no-audit --no-fund && npx playwright install --with-deps chromium
       - run: node tools/build.mjs
       - name: Static checks
-        run: for t in wording-links no-address cache-versioning analytics-copy gamesbar-checksum smoke-regress; do echo "== $t"; node tests/$t.mjs || exit 1; done
+        run: for t in wording-links no-address cache-versioning analytics-copy gamesbar-checksum; do echo "== $t"; node tests/$t.mjs || exit 1; done
       - name: The repo's own browser suite
         env: { NODE_PATH: "${{ github.workspace }}/tests/smoke/node_modules" }
         run: node tests/run.mjs --root dist
+      - name: Regression tests for the smoke-test fixes, then break a copy 7 ways and check each test goes red
+        env: { NODE_PATH: "${{ github.workspace }}/tests/smoke/node_modules" }
+        run: node tests/smoke-regress.mjs && node tests/smoke-falsify.mjs
       - name: Smoke matrix
         env: { NODE_PATH: "${{ github.workspace }}/tests/smoke/node_modules" }
         run: node tests/smoke/matrix.mjs --out smoke-out
