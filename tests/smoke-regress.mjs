@@ -9,6 +9,7 @@ import { execFileSync } from "node:child_process";
 import { createRequire } from "node:module";
 import { chromium, open, beacons } from "./smoke/harness.mjs";
 import { startPages } from "./smoke/pages-server.mjs";
+import { findUnguarded, wrapEmails } from "../tools/email-guard.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const read = (root, f) => readFileSync(join(root, f), "utf8");
@@ -93,6 +94,23 @@ export const TESTS = {
       writeFileSync(join(tmp, "_redirects"), base + "\n/old https://evil.example/ 302\n"); out.push(["the build refuses a redirect to another host", !build()]);
       writeFileSync(join(tmp, "_redirects"), base + "\n/login https://console.corporatetambola.com/ 301\n"); out.push(["the build refuses the console address with a 301 (sign-in guesses stay 302)", !build()]);
       writeFileSync(join(tmp, "_redirects"), base + "\n/version.json /x 302\n"); out.push(["the build refuses any rule on /version.json", !build()]);
+    } finally { rmSync(tmp, { recursive: true, force: true }); }
+    return out;
+  } },
+  // R6: no e-mail address may sit outside <!--email_off-->, or Cloudflare scrambles it (live /terms and /contact did)
+  R6: { name: "every e-mail address on every page is inside <!--email_off--> (Cloudflare must not scramble it); the build refuses a bare one", async run(root) {
+    const out = []; const fs = await import("node:fs");
+    for (const f of fs.readdirSync(root).filter((x) => x.endsWith(".html"))) { const h = read(root, f); out.push([`${f}: no address outside the guard (${[...new Set(findUnguarded(h))].join(",") || "none"})`, findUnguarded(h).length === 0]); }
+    const terms = read(root, "terms.html"); out.push(["terms: the three addresses in the text are still shown to the reader", (terms.replace(/<[^>]+>/g, "").match(/hello@corporatetambola\.com/g) || []).length >= 3]);
+    const contact = read(root, "contact.html"); out.push(["contact: the Write to the team button still opens a mail", /<a class="btn main" href="mailto:hello@corporatetambola\.com">Write to the team<\/a>/.test(contact)]);
+    const sample = '<p>Write to hello@corporatetambola.com now</p><a href="mailto:a@b.co">x</a><script type="application/ld+json">{"email":"c@d.co"}</script>';
+    out.push(["wrapEmails guards text and mailto links, leaves script data alone, and is idempotent", findUnguarded(sample).length === 2 && findUnguarded(wrapEmails(sample)).length === 0 && wrapEmails(wrapEmails(sample)) === wrapEmails(sample) && wrapEmails(sample).includes('{"email":"c@d.co"}')]);
+    const repo = resolve(HERE, ".."); const tmp = mkdtempSync(join(tmpdir(), "home-r6-"));
+    try {
+      cpSync(repo, tmp, { recursive: true, filter: (src) => !/[\\/](\.git|node_modules|dist|docs)([\\/]|$)/.test(src) });
+      const build = () => { try { execFileSync("node", [join(tmp, "tools", "build.mjs")], { cwd: tmp, stdio: "pipe" }); return true; } catch { return false; } };
+      out.push(["the build accepts the pages as shipped", build()]);
+      writeFileSync(join(tmp, "pricing.html"), read(tmp, "pricing.html").replace("</main>", "<p>Write to hello@corporatetambola.com</p></main>")); out.push(["the build refuses a page with a bare address", !build()]);
     } finally { rmSync(tmp, { recursive: true, force: true }); }
     return out;
   } },

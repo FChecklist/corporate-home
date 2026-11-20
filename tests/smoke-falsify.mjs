@@ -22,6 +22,8 @@ export const BREAKS = [
   { test: "R4", name: "make the phone bottom bar a plain div again (every page)", run: (d) => { for (const f of readdirSync(d).filter((x) => x.endsWith(".html"))) edit(d, f, (s) => s.replace(/<nav class="tabbar"[^>]*>(.*?)<\/nav>/, '<div class="tabbar">$1</div>')); } },
   { test: "R5", name: "remove the four sign-in redirects", run: (d) => edit(d, "_redirects", (s) => s.replace(/^\/(login|signin|sign-in|console) .*$/gm, "")) },
   { test: "R5", name: "send /login to the wrong place", run: (d) => edit(d, "_redirects", (s) => s.replace("/login https://console.corporatetambola.com/ 302", "/login https://console.corporatetambola.com/#/create 302")) },
+  { test: "R6", name: "take the guard off one address in /terms", run: (d) => edit(d, "terms.html", (s) => s.replace("<!--email_off-->hello@corporatetambola.com<!--/email_off-->", "hello@corporatetambola.com")) },
+  { test: "R6", name: "take every guard off /contact", run: (d) => edit(d, "contact.html", (s) => s.replace(/<!--\/?email_off-->/g, "")) },
 ];
 
 if (pathToFileURL(resolve(process.argv[1])).href === import.meta.url) {

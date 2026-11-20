@@ -26,7 +26,7 @@ jobs:
       - name: The repo's own browser suite
         env: { NODE_PATH: "${{ github.workspace }}/tests/smoke/node_modules" }
         run: node tests/run.mjs --root dist
-      - name: Regression tests for the smoke-test fixes, then break a copy 7 ways and check each test goes red
+      - name: Regression tests for the smoke-test fixes, then break a copy 9 ways and check each test goes red
         env: { NODE_PATH: "${{ github.workspace }}/tests/smoke/node_modules" }
         run: node tests/smoke-regress.mjs && node tests/smoke-falsify.mjs
       - name: Smoke matrix
@@ -44,6 +44,10 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - run: node tests/smoke/live-probe.mjs --out smoke-out
+      - name: Real browser walk of the live site (first visit, hand-off to the console, repeat visit, offline)
+        if: always()
+        working-directory: tests/smoke
+        run: npm install --no-audit --no-fund && npx playwright install --with-deps chromium && node live-browser.mjs --out ../../smoke-out
       - uses: actions/upload-artifact@v4
         if: always()
         with: { name: live-probe, path: smoke-out }
