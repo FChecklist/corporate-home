@@ -43,11 +43,15 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
-      - run: node tests/smoke/live-probe.mjs --out smoke-out
+      - name: Install Chromium for the browser walk (quiet)
+        working-directory: tests/smoke
+        run: npm install --no-audit --no-fund >/dev/null 2>&1 && npx playwright install --with-deps chromium >/dev/null 2>&1 && echo installed
+      - name: Read-only HTTP probe of the live site
+        run: node tests/smoke/live-probe.mjs --out smoke-out | cut -c1-420
       - name: Real browser walk of the live site (first visit, hand-off to the console, repeat visit, offline)
         if: always()
         working-directory: tests/smoke
-        run: npm install --no-audit --no-fund && npx playwright install --with-deps chromium && node live-browser.mjs --out ../../smoke-out
+        run: node live-browser.mjs --out ../../smoke-out | cut -c1-420
       - uses: actions/upload-artifact@v4
         if: always()
         with: { name: live-probe, path: smoke-out }
