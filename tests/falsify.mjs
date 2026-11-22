@@ -38,7 +38,8 @@ export const MUTATIONS = {
   T11: [{ file: "index.html", find: 'aria-label="Corporate Bingo"><svg class="gb"', replace: 'aria-label="Open Bingo"><svg class="gb"', why: "a link's spoken name no longer contains the words you can see" },
          { file: "site.css", find: "--muted:#5C3B43", replace: "--muted:#C9B7A5", why: "light mode grey text is too pale" }],
   T12: [{ file: "sw.js", find: '"/privacy", ', replace: "", why: "a page is no longer saved for offline" }],
-  T13: [{ file: "index.html", find: '<link rel="stylesheet" href="/site.css?v=7">', replace: '<link rel="stylesheet" href="/site.css?v=7"><script src="https://stats.example.com/a.js"></script>', why: "an outside tracker is added" }],
+  T13: [{ file: "index.html", find: '<link rel="stylesheet" href="/site.css?v=8">', replace: '<link rel="stylesheet" href="/site.css?v=8"><script src="https://stats.example.com/a.js"></script>', why: "an outside tracker is added" },
+        { file: "_headers", find: "connect-src 'self' https://console.corporatetambola.com;", replace: "connect-src 'self' https://*.corporatetambola.com;", why: "the policy lets the page connect to every sub-site, not just the console" }],
   T15: [{ file: "site.css", find: "scroll-padding-top:calc(var(--bar) + 20px)", replace: "scroll-padding-top:0", why: "a heading jumped to hides behind the sticky top bar" }],
   T14: [{ file: "site.js", find: 'localStorage.setItem("cg-theme", next)', replace: "void next", why: "the choice is no longer remembered" }],
   // ---- Home v2.0.0 (T16 to T21) ----
@@ -94,6 +95,22 @@ export const MUTATIONS = {
         { file: "privacy.html", find: "if your browser sends Global Privacy Control (or Do Not Track), it counts as No.", replace: "your browser may send a signal.", why: "the privacy page no longer tells people about the signal" }],
   T23: [{ file: "site.css", find: ".consent-row{display:flex;flex-wrap:wrap;gap:10px}", replace: ".consent-row{display:flex;flex-wrap:wrap;gap:10px;min-width:420px}", why: "the cookie question is wider than a 360 px phone" },
         { file: "site.css", find: ".consent-text{margin:0 auto 12px;font-size:15.5px;line-height:1.5;color:var(--ink)}", replace: ".consent-text{margin:0 auto 12px;font-size:15.5px;line-height:1.5;color:var(--ink);white-space:nowrap}", why: "the cookie question text cannot wrap, so a phone scrolls sideways" }],
+
+  // ---- 2.2.0: staying signed in (T24, and T13 for the policy) ----
+  T24: [{ file: "gate.js", find: 'credentials: "include"', replace: 'credentials: "omit"', why: "the page asks without the console cookie, so the console can never say signed in" },
+        { file: "gate.js", find: "if (v !== signedIn) { signedIn = v; apply(); }", replace: 'if (v !== signedIn) { signedIn = v; try { localStorage.setItem("ctz-in", v ? "1" : "0"); } catch (e) { /* blocked */ } apply(); }', why: "the signed-in state is saved on the device" },
+        { file: "_headers", find: "connect-src 'self' https://console.corporatetambola.com;", replace: "connect-src 'self';", why: "the policy forbids the question to the console, so the browser refuses it" },
+        { file: "gate.js", find: "if (j && j.signedIn === true) set(true); else if (j && j.signedIn === false) set(false);", replace: "if (j && j.signedIn) set(true);", why: "any truthy word (the text \"true\") counts as signed in" },
+        { file: "gate.js", find: "}, 4000);", replace: "}, 4000000);", why: "no time limit: a console that never answers is waited for forever" },
+        { file: "gate.js", find: "if (j && j.signedIn === true) set(true);", replace: "if (j && j.email) document.title = String(j.email); if (j && j.signedIn === true) set(true);", why: "the page reads the visitor's e-mail from the answer" },
+        { file: "gate.js", find: ".catch(function () { window.clearTimeout(timer); /* blocked, offline, slow or odd: the page stays as it is */ });", replace: ".catch(function (e) { window.clearTimeout(timer); throw e; });", why: "a blocked or failed answer raises an error in the page" },
+        { file: "gate.js", find: "var ME = \"https://console.corporatetambola.com/api/me\";", replace: "var ME = \"https://console.corporatetambola.com/api/me\"; try { document.cookie.length; } catch (e) { /* x */ }", why: "the page reads cookies" },
+        { file: "site.css", find: "nav.main a.btn[data-gate]{min-width:10rem;", replace: "nav.main a.btn[data-gate]{min-width:0;", why: "the Sign in button is narrower than Open console, so the top bar jumps" },
+        { file: "site.css", find: "line-height:1.5;height:1.5em;", replace: "line-height:1.5;height:auto;", why: "the Signed in line is not reserved, so the front page jumps down" },
+        { file: "index.html", find: '<p class="signed-note" id="signed-note" role="status"></p>', replace: "", why: "the front page has nowhere to say Signed in" },
+        { file: "gate.js", find: 'a.textContent = signedIn ? "Open console" :', replace: "a.textContent = false ? \"Open console\" :", why: "the buttons never change to Open console" },
+        { file: "privacy.html", find: "and Safari may close the door sooner", replace: "and nothing else changes it", why: "the privacy line no longer mentions Safari" },
+        { file: "privacy.html", find: "one plain question to your console when a page opens: are you signed in? The answer only changes the Sign in button, and it is never saved on your device.", replace: "nothing.", why: "the privacy page hides that the question is asked" }],
 };
 
 const hashDir = (d) => { const h = createHash("sha256"); const walk = (p) => { for (const f of readdirSync(p).sort()) { if (f === ".git" || f === "last-run.json" || f === "node_modules" || f === "dist") continue; const q = join(p, f); if (statSync(q).isDirectory()) walk(q); else h.update(f).update(readFileSync(q)); } }; walk(d); return h.digest("hex"); };

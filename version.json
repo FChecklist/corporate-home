@@ -1,9 +1,13 @@
 {
   "product": "corporate-games-home",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "commit": "filled in by tools/build.mjs",
   "builtAt": "filled in by tools/build.mjs",
   "changes": [
+    { "id": "2.2.0-01", "what": "Stay signed in on the same phone or laptop. If you are already signed in to your console, this website now shows Signed in and an Open console button, so you do not sign in a second time.", "where": "gate.js, all pages (links), index", "pr": "#7" },
+    { "id": "2.2.0-02", "what": "When a page opens, this website asks your console one plain question: are you signed in? Nothing about you is saved. If the console cannot be reached or says no, the page looks exactly as before.", "where": "gate.js, _headers (connection policy)", "pr": "#7" },
+    { "id": "2.2.0-03", "what": "The Data and privacy page now says, in a few plain lines, how staying signed in works and when you may need to sign in again.", "where": "privacy page", "pr": "#7" },
+    { "id": "2.2.0-04", "what": "The Sign in button keeps the same width when it turns into Open console, so nothing on the page moves. On a small laptop it says Console, to fit.", "where": "site.css", "pr": "#7" },
     { "id": "2.1.0-01", "what": "If your browser sends a privacy signal (Global Privacy Control or Do Not Track), it now counts as No. Nothing is asked and nothing is stored until you press Yes yourself.", "where": "consent.js, site.js, privacy page", "pr": "#6" },
     { "id": "2.1.0-02", "what": "Saying No now removes the offline copy of the pages for good, even a copy made by an older version of this website, and it does not come back.", "where": "sw.js, site.js", "pr": "#6" },
     { "id": "2.1.0-03", "what": "The offline copy now starts only after you say Yes, never on its own.", "where": "sw.js, site.js", "pr": "#6" },

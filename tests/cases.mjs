@@ -4,7 +4,7 @@
 import { createRequire } from "node:module";
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
-import { WIDTHS, PAGES, pageUrl, openPage, checker, contrastRatio, COLOR_PROBE, LAYOUT_PROBE, listFiles, read, heightFor } from "./lib.mjs";
+import { WIDTHS, PAGES, pageUrl, openPage, checker, contrastRatio, COLOR_PROBE, LAYOUT_PROBE, listFiles, read, heightFor, ME_URL } from "./lib.mjs";
 
 const OWNER_LINE = "We work closely with HR teams in organizing online events and games.";
 const GAME_URLS = { Tambola: "https://housie.corporatetambola.com/", Bingo: "https://bingo.corporatetambola.com/", "Tic Tac Toe": "https://tictactoe.corporatetambola.com/", "Snakes and Ladders": "https://snakes.corporatetambola.com/", "Luck by Chance": "https://luck.corporatetambola.com/" };
@@ -312,7 +312,7 @@ export const CASES_OLD = [
     await o.close();
   } },
 
-  { id: "T13", name: "No tracking: every request stays on this site, no cookies, a strict content policy", async run({ base, browser, root, headers, c }) {
+  { id: "T13", name: "No tracking: every request stays on this site (but the console question), no cookies, a strict content policy", async run({ base, browser, root, headers, c }) {
     for (const f of listFiles(root)) {
       const html = read(root, f);
       const ext = [...html.matchAll(/<(?:script|img|iframe|link|source|video|audio)\b[^>]*(?:src|href)="(https?:)?\/\/[^"]*"/g)].filter((m) => !/rel="canonical"/.test(m[0]) && !/<link[^>]*rel="(?:canonical)"/.test(m[0]));
@@ -323,14 +323,17 @@ export const CASES_OLD = [
     for (const p of PAGES) {
       const o = await openPage(browser, pageUrl(base, p), { w: 1280, record: { allow404: p === "404" }, consent: "ask" });
       await o.page.waitForTimeout(150);
-      const off = o.events.requests.filter((u) => !u.startsWith(base) && !u.startsWith("data:"));
-      c.check(`${p}: every request is to this site`, off.length === 0, off.join(" | "));
+      // 2.2.0: the one outside request is the console's plain "am I signed in?" question (T24 checks it in detail); nothing else leaves this site
+      const off = o.events.requests.filter((u) => !u.startsWith(base) && !u.startsWith("data:") && u !== ME_URL);
+      c.check(`${p}: every request is to this site (the one console question aside)`, off.length === 0, off.join(" | "));
+      c.check(`${p}: at most one console question per page load`, o.events.requests.filter((u) => u === ME_URL).length <= 1, "more than one");
       c.check(`${p}: no cookie`, (await o.ctx.cookies()).length === 0 && (await o.page.evaluate(() => document.cookie)) === "", "cookie set");
       c.check(`${p}: nothing stored before you choose`, (await o.page.evaluate(() => localStorage.length + sessionStorage.length)) === 0, "storage used");
       await o.close();
     }
     const csp = headers["Content-Security-Policy"] || "";
     c.check("the content policy is strict (self only, no unsafe, no wildcard, no frames)", /default-src 'self'/.test(csp) && /script-src 'self'(;|$)/.test(csp) && !/unsafe-/.test(csp) && !/\*/.test(csp) && /frame-ancestors 'none'/.test(csp), csp);
+    c.check("the content policy lets the page ask the console and no other site (connect-src: self + the console only)", /connect-src 'self' https:\/\/console\.corporatetambola\.com(;|$)/.test(csp), csp);
   } },
 
   { id: "T14", name: "Light/dark button works, is remembered on this device, and the page still works when storage is blocked", async run({ base, browser, c }) {
