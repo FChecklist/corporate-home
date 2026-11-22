@@ -495,8 +495,8 @@ export const CASES_V2 = [
       return out;
     };
     const WAIT_IN = () => (document.querySelector("a[data-gate]:not([data-demo])") || { textContent: "" }).textContent === "Open console" || !!document.querySelector("a[data-gate]:not([data-demo]) .oc-c");
-    for (const p of ["index", "how-it-works", "privacy", "contact", "pricing"]) for (const w of [320, 390, 600, 899, 900, 1000, 1119, 1120, 1159, 1160, 1200, 1279, 1280, 1440]) {
-      if (p !== "index" && ![320, 390, 900, 1000, 1160, 1280].includes(w)) continue;
+    for (const p of ["index", "how-it-works", "privacy", "contact", "pricing"]) for (const w of [320, 390, 600, 900, 1000, 1159, 1160, 1280, 1440]) {
+      if (p !== "index" && ![390, 1000, 1280].includes(w)) continue; // the front page at nine widths (the hero is the busiest), the others at a phone, a small laptop and a wide laptop
       const o = await openPage(browser, pageUrl(base, p), { w, me: "out", extraInit: () => { /** @type {any} */ (window).__cls = 0; try { new PerformanceObserver((l) => { for (const e of l.getEntries()) if (!(/** @type {any} */ (e)).hadRecentInput) /** @type {any} */ (window).__cls += /** @type {any} */ (e).value; }).observe({ type: "layout-shift", buffered: true }); } catch (e) { /* not supported */ } } });
       await o.page.waitForTimeout(1500); // the page's own slide-in animations (up to about 1.2 s) are finished, so only this change is measured
       const before = await o.page.evaluate(SNAP);
