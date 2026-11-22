@@ -1,9 +1,15 @@
 {
   "product": "corporate-games-home",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "commit": "filled in by tools/build.mjs",
   "builtAt": "filled in by tools/build.mjs",
   "changes": [
+    { "id": "2.1.0-01", "what": "If your browser sends a privacy signal (Global Privacy Control or Do Not Track), it now counts as No. Nothing is asked and nothing is stored until you press Yes yourself.", "where": "consent.js, site.js, privacy page", "pr": "#6" },
+    { "id": "2.1.0-02", "what": "Saying No now removes the offline copy of the pages for good, even a copy made by an older version of this website, and it does not come back.", "where": "sw.js, site.js", "pr": "#6" },
+    { "id": "2.1.0-03", "what": "The offline copy now starts only after you say Yes, never on its own.", "where": "sw.js, site.js", "pr": "#6" },
+    { "id": "2.1.0-04", "what": "The fair-play line about numbers now sits only with Tambola and Bingo, where it is true.", "where": "index", "pr": "#6" },
+    { "id": "2.1.0-05", "what": "Plainer words on the Data and privacy page about cookies and your device.", "where": "privacy page", "pr": "#6" },
+    { "id": "2.1.0-06", "what": "Checked on a small phone, 360 px wide: every page fits, also while the cookie question is open.", "where": "tests only", "pr": "#6" },
     { "id": "2.0.0-01", "what": "Signing in now happens in one place: your console. This website only links you there, and never asks for a password.", "where": "all pages (links), gate.js", "pr": "#1" },
     { "id": "2.0.0-02", "what": "A clear cookie choice. Nothing is stored on your device until you answer, and No, thanks is always fine.", "where": "consent.js, privacy page", "pr": "#1" },
     { "id": "2.0.0-03", "what": "A pricing page with the real credit packs, in rupees and in US dollars. No GST is added.", "where": "pricing.html", "pr": "#1" },

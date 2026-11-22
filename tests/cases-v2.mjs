@@ -1,16 +1,19 @@
-// Cases T16 to T21: the Home v2.0.0 behaviours. Each one has a break-it-and-see-red run in tests/falsify.mjs.
+// Cases T16 to T23: the Home v2.0.0 behaviours (T16-T21) and the 2.1.0 honesty fixes (T22 offline copy and privacy signal, T23 360 px). Each one has a break-it-and-see-red run in tests/falsify.mjs.
 //   T16 cookie choice   T17 one sign-in gate (first visit, repeat visit, hand-off)   T18 SEO   T19 pricing packs
 //   T20 the owner's wording rules (suite rules 1.1)   T21 version, footer, /changes
-import { readFileSync, existsSync, statSync } from "node:fs";
+import { readFileSync, existsSync, statSync, cpSync, mkdtempSync, rmSync, copyFileSync } from "node:fs";
 import { createRequire } from "node:module";
-import { join } from "node:path";
-import { PAGES, pageUrl, openPage, listFiles, read } from "./lib.mjs";
+import { tmpdir } from "node:os";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import { PAGES, pageUrl, openPage, listFiles, read, startServer, LAYOUT_PROBE } from "./lib.mjs";
 
 const text = (html) => html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<svg[\s\S]*?<\/svg>/g, " ").replace(/<[^>]+>/g, " ").replace(/&middot;/g, "·").replace(/&rarr;/g, "→").replace(/&rsquo;/g, "\u2019").replace(/&ldquo;|&rdquo;/g, '"').replace(/&#8377;/g, "\u20B9").replace(/&amp;/g, "&").replace(/&nbsp;/g, " ").replace(/&copy;/g, "©").replace(/\s+/g, " ").trim();
 const CONSOLE = "https://console.corporatetambola.com/";
 const PACKS = [[100, 2399, 34], [250, 3499, 51], [500, 4699, 67], [750, 5899, 84], [1000, 7099, 101], [2500, 11799, 169], [5000, 17699, 253], [10000, 29499, 421]];
 const INDEXED = ["index", "games", "how-it-works", "for-hr", "pricing", "privacy", "contact", "changes"];
 const pathOf = (p) => (p === "index" ? "/" : "/" + p);
+const stubConsoleRoute = (/** @type {any} */ ctx) => ctx.route(/^https:\/\/console\.corporatetambola\.com\//, (/** @type {any} */ r) => r.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>console</title><p>console</p>" }));
 const stubConsole = (ctx) => ctx.route(/^https:\/\/console\.corporatetambola\.com\//, (r) => r.fulfill({ status: 200, contentType: "text/html", body: "<!doctype html><title>console</title><p>console</p>" }));
 
 export const CASES_V2 = [
@@ -229,7 +232,8 @@ export const CASES_V2 = [
     const T = (f) => text(read(root, f));
     const home = T("index.html"), priv = T("privacy.html"), how = T("how-it-works.html"), hr = T("for-hr.html"), pricing = T("pricing.html");
     const FAIR = "No one knows the next number: not the organizer, not the host, not even the software.";
-    c.check("fairness line, word for word, on the home page", home.includes(FAIR), "missing");
+    c.check("fairness line, word for word, on the home page, and only for the number games (Tambola and Bingo)", home.includes("Tambola and Bingo. " + FAIR), "missing or not scoped");
+    for (const f of listFiles(root).filter((x) => x !== "index.html")) c.check(`${f}: the fairness line is not claimed here (it is true only for the number games, and is said once on the home page)`, !text(read(root, f)).includes("No one knows the next number"), "claimed");
     c.check("24-hour deletion with IDs on the home page, how it works and privacy", /erased within 24 hours after the game ends/.test(home) && /invited IDs|IDs/.test(home) && /erased within 24 hours after the game ends/.test(how) && /invited IDs/.test(how) && /IDs you invited/.test(priv) && /erased within 24 hours after the game ends/.test(priv), "missing");
     c.check("privacy line: designed to follow US privacy laws, EU GDPR and India\u2019s DPDP (home and privacy)", /Designed to follow US privacy laws, EU GDPR and India\u2019s DPDP\./.test(home), "missing");
     for (const [f, t] of [["index.html", home], ["how-it-works.html", how], ["for-hr.html", hr], ["pricing.html", pricing]]) c.check(`${f}: you (the company) give the prizes directly to the winners (owner's line)`, /You \(the company\) give the prizes directly to the winners/.test(t), "missing");
@@ -266,7 +270,7 @@ export const CASES_V2 = [
     c.check("version agrees in version.json, package.json and the source file", v.version === pkg.version && v.version === src.version, `${v.version} ${pkg.version} ${src.version}`);
     c.check("version.json keeps at most the last 20 changes, each with id, what, where, pr", v.changes.length >= 1 && v.changes.length <= 20 && v.changes.every((x) => x.id && x.what && x.where && x.pr), v.changes.length);
     const log = readFileSync(join(repo, "CHANGELOG.md"), "utf8");
-    c.check("CHANGELOG.md has an entry for this version with Added/Changed, PR and audit lines", new RegExp("^## " + v.version.replace(/\./g, "\\.") + "\\b", "m").test(log) && /- Added:/.test(log) && /- Changed:/.test(log) && /PR #1/.test(log) && /Audits:/.test(log), "entry missing");
+    c.check("CHANGELOG.md has an entry for this version with Added/Changed, PR and audit lines", new RegExp("^## " + v.version.replace(/\./g, "\\.") + "\\b", "m").test(log) && /- Added:/.test(log) && /- Changed:/.test(log) && /PR #\d+/.test(log) && /Audits:/.test(log), "entry missing");
     c.check("docs/KNOWLEDGE.md exists and is not published", existsSync(join(repo, "docs", "KNOWLEDGE.md")) && !existsSync(join(root, "docs")) && !existsSync(join(root, "KNOWLEDGE.md")), "published or missing");
     for (const f of listFiles(root)) {
       const html = read(root, f);
@@ -281,5 +285,120 @@ export const CASES_V2 = [
     c.check("a click on the footer version opens /changes", await (async () => { await o.page.goto(base + "/"); await o.page.locator(".buildline a[href='/changes']").first().click(); await o.page.waitForURL(/\/changes$/); return true; })(), "no navigation");
     await o.close();
     c.check("/version.json is never cached (so the version shown is the version live)", /no-store/.test(readFileSync(join(repo, "_headers"), "utf8").split("/version.json")[1] || ""), "missing no-store");
+  } },
+
+  { id: "T22", name: "Offline copy and privacy signal: nothing saved before a Yes; a No removes the helper and every saved copy, even from an older helper; the browser's privacy signal counts as No", async run({ base, browser, root, c }) {
+    const sw = read(root, "sw.js");
+    const onInstall = (sw.match(/addEventListener\("install"[^\n]*/) || [""])[0];
+    c.check("the helper saves nothing when it starts (install makes no copy; the page asks for it after a Yes)", /install/.test(onInstall) && !/caches\.|addAll/.test(onInstall), onInstall);
+    c.check("the helper adds files only to a copy that already exists, and stops on a No", /caches\.has\(V\)/.test(sw) && /ctz-stop/.test(sw) && /ctz-keep/.test(sw), "gate missing");
+    const state = (page) => page.evaluate(async () => ({ regs: (await navigator.serviceWorker.getRegistrations()).length, caches: await Promise.all((await caches.keys()).map(async (k) => k + ":" + (await (await caches.open(k)).keys()).length)), ctl: !!navigator.serviceWorker.controller }));
+    const cacheEntries = (page, name) => page.evaluate(async (n) => ((await caches.keys()).includes(n) ? (await (await caches.open(n)).keys()).length : 0), name);
+    /** waits (up to 15 s) until the saved copy called name holds at least n files; returns how many it holds */
+    const waitCopy = async (page, name, n = 12) => { for (let i = 0; i < 75; i++) { const k = await cacheEntries(page, name).catch(() => 0); if (k >= n) return k; await page.waitForTimeout(200); } return cacheEntries(page, name).catch(() => 0); };
+    const yesThenNo = async (label, site, cacheName) => {
+      const o = await openPage(browser, site + "/", { w: 1280, consent: "ask" });
+      const p = o.page;
+      await p.locator("#consent button[data-consent=yes]").click();
+      await p.evaluate(() => navigator.serviceWorker.ready.then(() => 1));
+      await waitCopy(p, cacheName);
+      await p.reload(); await p.waitForTimeout(400);
+      c.check(`${label}: after Yes the copy exists and the helper is in charge`, (await cacheEntries(p, cacheName)) >= 12 && (await state(p)).ctl, JSON.stringify(await state(p)));
+      await p.locator("[data-consent-open]").first().click();
+      await p.locator("#consent button[data-consent=no]").click();
+      // the page is still in the old helper's hands: keep asking for files, the way a real page does while it lives
+      for (let i = 0; i < 6; i++) { await p.evaluate((n) => Promise.all(["/site.css", "/og-image.svg", "/favicon.svg", "/fonts/Inter-normal-400.woff2", "/games"].map((u) => fetch(u + "?late=" + n).then((r) => r.text()).catch(() => ""))), i); await p.waitForTimeout(250); }
+      await p.waitForTimeout(700);
+      const after = await state(p);
+      c.check(`${label}: after No no saved copy and no helper are left, even after files were asked for late`, after.regs === 0 && after.caches.length === 0, JSON.stringify(after));
+      await p.waitForTimeout(1500);
+      c.check(`${label}: and it stays that way`, JSON.stringify((await state(p)).caches) === "[]", JSON.stringify(await state(p)));
+      await p.goto(site + "/games"); await p.waitForTimeout(800);
+      const next = await state(p);
+      c.check(`${label}: the next page has no helper in charge and no saved copy`, next.regs === 0 && next.caches.length === 0 && !next.ctl, JSON.stringify(next));
+      return o;
+    };
+    // 1. the helper of this version
+    const a = await yesThenNo("this version's helper", base, "home-v12");
+    // changing your mind again works: Yes after No brings the copy back
+    await a.page.locator("[data-consent-open]").first().click();
+    await a.page.locator("#consent button[data-consent=yes]").click();
+    c.check("this version's helper: Yes after No brings the offline copy back", (await waitCopy(a.page, "home-v12")) >= 12, JSON.stringify(await state(a.page)));
+    await a.close();
+    // 2. an older helper (version 2.0.0), which saves files by itself and does not know about a No: a copy of the built site that carries it
+    const tmp = mkdtempSync(join(tmpdir(), "home-older-helper-"));
+    try {
+      cpSync(root, tmp, { recursive: true });
+      copyFileSync(join(dirname(fileURLToPath(import.meta.url)), "fixtures", "sw-v11-older-worker.js"), join(tmp, "sw.js"));
+      const srv = await startServer(tmp);
+      try {
+        const b = await yesThenNo("older helper", srv.base, "home-v11");
+        await b.close();
+        // a visitor who never answers (first visit with an older helper still installed from before): the page removes it at once
+        const o = await openPage(browser, srv.base + "/", { w: 1280, consent: "ask", extraInit: () => { /* nothing */ } });
+        await o.page.locator("#consent button[data-consent=yes]").click();
+        await o.page.evaluate(() => navigator.serviceWorker.ready.then(() => 1)); await o.page.waitForTimeout(1500);
+        await o.page.evaluate(() => localStorage.clear()); await o.page.reload(); await o.page.waitForTimeout(1200);
+        const un = await state(o.page);
+        c.check("older helper, answer forgotten (asked again): no helper, no saved copy while the question is open", un.regs === 0 && un.caches.length === 0, JSON.stringify(un));
+        await o.close();
+      } finally { await srv.close(); }
+    } finally { rmSync(tmp, { recursive: true, force: true }); }
+
+    // 3. the browser's privacy signal (Global Privacy Control, or the older Do Not Track)
+    const GPC = () => { Object.defineProperty(navigator, "globalPrivacyControl", { get: () => true }); };
+    const DNT = () => { Object.defineProperty(navigator, "doNotTrack", { get: () => "1" }); };
+    for (const [label, init] of /** @type {[string, () => void][]} */ ([["Global Privacy Control", GPC], ["Do Not Track", DNT]])) {
+      const g = await openPage(browser, base + "/", { w: 1280, consent: "ask", extraInit: init });
+      const p = g.page; await p.waitForTimeout(600);
+      c.check(`${label}: nothing is asked`, (await p.locator("#consent").count()) === 0, "banner shown");
+      const st = await p.evaluate(async () => ({ ls: localStorage.length + sessionStorage.length, regs: (await navigator.serviceWorker.getRegistrations()).length, caches: (await caches.keys()).length, cookie: document.cookie, allows: /** @type {any} */ (window).ctzConsent && /** @type {any} */ (window).ctzConsent.allows("comfort") }));
+      c.check(`${label}: nothing is stored, no offline copy, no cookie; it counts as No`, st.ls === 0 && st.regs === 0 && st.caches === 0 && st.cookie === "" && st.allows === false, JSON.stringify(st));
+      await stubConsoleRoute(g.ctx);
+      await p.locator("a[data-gate]:not([data-demo])").first().click({ force: true }); await p.waitForURL(/console\.corporatetambola\.com/); await p.goBack();
+      c.check(`${label}: pressing Sign in stores no visit note`, (await p.evaluate(() => localStorage.getItem("ctz-visited"))) === null, "note stored");
+      await p.locator("[data-consent-open]").first().click();
+      const words = (await p.locator("#consent").innerText()).replace(/\s+/g, " ");
+      c.check(`${label}: the footer button still opens the question, and it says the signal counts as No`, /counts as No until you press Yes/.test(words), words);
+      await p.locator("#consent button[data-consent=yes]").click();
+      const yes = await p.evaluate(() => JSON.parse(localStorage.getItem("ctz-consent") || "null"));
+      c.check(`${label}: your own Yes beats the signal (stored, marked as given with the signal on)`, !!yes && yes.comfort === true && yes.s === 1 && (await p.evaluate(() => !!(/** @type {any} */ (window).ctzConsent && /** @type {any} */ (window).ctzConsent.allows("comfort")))), JSON.stringify(yes));
+      await g.close();
+    }
+    // a Yes given before the signal was on loses to the signal, and the visit note is removed
+    const old = await openPage(browser, base + "/", { w: 1280, consent: "ask", extraInit: () => { try { if (!localStorage.getItem("ctz-consent")) { localStorage.setItem("ctz-consent", JSON.stringify({ v: 1, comfort: true, on: "2026-11-01" })); localStorage.setItem("ctz-visited", "1"); } } catch (e) { /* blocked */ } Object.defineProperty(navigator, "globalPrivacyControl", { get: () => true }); } });
+    await old.page.waitForTimeout(800);
+    const o2 = await old.page.evaluate(async () => ({ note: localStorage.getItem("ctz-visited"), regs: (await navigator.serviceWorker.getRegistrations()).length, allows: !!(/** @type {any} */ (window).ctzConsent && /** @type {any} */ (window).ctzConsent.allows("comfort")), link: (document.querySelector("a[data-gate]:not([data-demo])") || { textContent: "" }).textContent }));
+    c.check("an old Yes loses to the signal: no visit note, no offline copy, the link says Sign in (not Your console)", o2.note === null && o2.regs === 0 && o2.allows === false && /^Sign in/.test(String(o2.link).trim()), JSON.stringify(o2));
+    await old.close();
+    // the privacy page tells people about the signal, in plain words
+    const priv = text(read(root, "privacy.html"));
+    c.check("privacy page: says a browser privacy signal counts as No, and that your own Yes counts", /Global Privacy Control/.test(priv) && /counts as No/.test(priv) && /Press Yes yourself/.test(priv), "missing");
+  } },
+
+  { id: "T23", name: "360 px wide: no sideways scroll on any page, with the cookie question open, with the signal line, and answered (light and dark)", async run({ base, browser, c }) {
+    const W = 360;
+    const probe = () => ({ sw: document.documentElement.scrollWidth, bw: document.body.scrollWidth, iw: window.innerWidth, cw: document.documentElement.clientWidth, out: [...document.querySelectorAll("body *")].filter((e) => { const r = e.getBoundingClientRect(); const cs = getComputedStyle(e); return r.width > 0 && cs.display !== "none" && cs.visibility !== "hidden" && !e.closest(".skip, .sprite") && (r.right > document.documentElement.clientWidth + 1); }).slice(0, 3).map((e) => e.tagName + "." + (e.className || "")) });
+    for (const p of PAGES) for (const scheme of /** @type {const} */ (["light", "dark"])) {
+      const o = await openPage(browser, pageUrl(base, p), { w: W, scheme, consent: "ask", record: { allow404: p === "404" } });
+      const pr = await o.page.evaluate(probe);
+      c.check(`${p} ${scheme}: question open, no sideways scroll at ${W} px`, pr.sw <= W && pr.bw <= W && pr.out.length === 0, JSON.stringify(pr));
+      const box = await o.page.evaluate(() => { const b = document.getElementById("consent"); if (!b) return null; const r = b.getBoundingClientRect(); return { l: r.left, r: r.right, h: r.height, vh: innerHeight }; });
+      c.check(`${p} ${scheme}: the question fits the width and takes at most 60% of the height`, !!box && box.l >= 0 && box.r <= W + 1 && box.h <= box.vh * 0.6, JSON.stringify(box));
+      await o.close();
+    }
+    // the longer question (signal line) and the answered page, with the layout rules of T06 (no overlaps, tap targets, nothing cut)
+    for (const p of ["index", "privacy", "pricing"]) {
+      const o = await openPage(browser, pageUrl(base, p), { w: W, consent: "ask", extraInit: () => { Object.defineProperty(navigator, "globalPrivacyControl", { get: () => true }); } });
+      await o.page.locator("[data-consent-open]").first().click({ force: true });
+      const pr = await o.page.evaluate(probe);
+      c.check(`${p}: question with the signal line open, no sideways scroll at ${W} px`, pr.sw <= W && pr.bw <= W && pr.out.length === 0, JSON.stringify(pr));
+      const h = await o.page.evaluate(() => { const b = document.getElementById("consent"); return b ? b.getBoundingClientRect().height / innerHeight : 9; });
+      c.check(`${p}: and it still takes at most 60% of the height`, h <= 0.6, String(h));
+      await o.page.locator("#consent button[data-consent=no]").click();
+      const bad = await o.page.evaluate(LAYOUT_PROBE, W);
+      c.check(`${p}: answered, the page passes the layout rules at ${W} px`, bad.length === 0, bad.join(" | "));
+      await o.close();
+    }
   } },
 ];

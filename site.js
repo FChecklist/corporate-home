@@ -33,14 +33,35 @@
     });
   });
   lookLabel();
-  /* The offline copy of the pages is kept only after a "Yes" in the cookie choice. After a "No", any earlier copy is removed. */
-  function offline() {
-    if (!("serviceWorker" in navigator) || !(location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1")) return;
-    var yes = !!(window.ctzConsent && window.ctzConsent.allows("comfort"));
-    if (yes) { navigator.serviceWorker.register("/sw.js").catch(function () { /* no offline copy: the site still works online */ }); return; }
-    navigator.serviceWorker.getRegistrations().then(function (rs) { rs.forEach(function (r) { r.unregister(); }); }).catch(function () { /* nothing to remove */ });
+  /* The offline copy of the pages is kept only after a "Yes" in the cookie choice. After a "No" (or while nothing is answered, or your browser sends a privacy signal) any copy is removed and none is made.
+     The helper (sw.js) is told to stop and removes itself. An older helper cannot be told, so while one still runs this page, the saved files are removed again every 0.3 seconds. */
+  /** @type {number} */
+  var watching = 0;
+  function yes() { return !!(window.ctzConsent && window.ctzConsent.allows("comfort")); }
+  /** removes every saved copy this site made (their names start with "home-") */
+  function wipe() {
     if (window.caches) caches.keys().then(function (ks) { ks.forEach(function (k) { if (k.indexOf("home-") === 0) caches.delete(k); }); }).catch(function () { /* nothing to remove */ });
   }
+  /** asks the helper to keep the offline copy (only ever called after a Yes) */
+  function keep() {
+    navigator.serviceWorker.ready.then(function (r) { if (r.active && yes()) r.active.postMessage({ type: "ctz-keep" }); }).catch(function () { /* no offline copy: the site still works online */ });
+  }
+  function offline() {
+    if (!("serviceWorker" in navigator) || !(location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1")) return;
+    var sw = navigator.serviceWorker;
+    if (yes()) {
+      if (watching) { clearInterval(watching); watching = 0; }
+      sw.register("/sw.js").then(keep).catch(function () { /* no offline copy: the site still works online */ });
+      return;
+    }
+    if (sw.controller) sw.controller.postMessage({ type: "ctz-stop" });
+    sw.getRegistrations().then(function (rs) {
+      rs.forEach(function (r) { [r.active, r.waiting, r.installing].forEach(function (w) { if (w) w.postMessage({ type: "ctz-stop" }); }); r.unregister(); });
+    }).catch(function () { /* nothing to remove */ }).then(wipe);
+    wipe();
+    if (sw.controller && !watching) watching = window.setInterval(function () { if (yes()) { clearInterval(watching); watching = 0; } else wipe(); }, 300);
+  }
+  if ("serviceWorker" in navigator) navigator.serviceWorker.addEventListener("controllerchange", function () { if (yes()) keep(); });
   document.addEventListener("ctz-consent", offline);
   offline();
 })();

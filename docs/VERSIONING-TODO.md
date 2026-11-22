@@ -1,6 +1,6 @@
 # Versioning to do (Corporate Games home)
 
-Done in PR #1 (20 Nov 2026), version 2.0.0, not yet merged or deployed:
+Done in PR #1 (20 Nov 2026), version 2.0.0, merged into home-bar-qa, not deployed as far as known. Version 2.1.0 (PR #6, 21 Nov 2026) follows the same rules: version.json, package.json, CHANGELOG entry, footer, /changes and docs/KNOWLEDGE.md all updated in the same PR:
 1. `version.json` source file (product, version, changes[last 20]: id, what, where, pr). The build (`tools/build.mjs`) adds commit, dirty and builtAt and writes `/version.json`. DONE.
 2. First version number: the live build 7711fb0 is 1.0.0 (in CHANGELOG only); this PR is 2.0.0. DONE.
 3. Footer shows `vX.Y.Z` linking to `/changes`. DONE (every page).

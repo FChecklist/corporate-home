@@ -298,7 +298,7 @@ export const CASES_OLD = [
     const p = o.page;
     await p.evaluate(() => navigator.serviceWorker.ready.then(() => true));
     const cacheName = (read(root, "sw.js").match(/const V = "([^"]+)"/) || [])[1];
-    await p.waitForFunction(async (name) => (await caches.keys()).includes(name) && (await (await caches.open(name)).keys()).length >= 12, cacheName, { timeout: 15000 }).catch(() => {});
+    for (let i = 0; i < 75; i++) { const k = await p.evaluate(async (name) => ((await caches.keys()).includes(name) ? (await (await caches.open(name)).keys()).length : 0), cacheName); if (k >= 12) break; await p.waitForTimeout(200); } // poll: an async function given to waitForFunction counts as done at once
     await p.goto(base + "/games"); await p.waitForTimeout(300);
     await o.ctx.setOffline(true);
     await p.goto(base + "/games", { waitUntil: "load" });

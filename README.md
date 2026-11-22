@@ -50,14 +50,14 @@ The owner's decisions for every Corporate Games product. Full text: `plans/ID-IN
 
 suiteRulesVersion: 1.1 (20 Nov 2026). Owner rules copy: docs/SUITE_RULES.md. Source: marketing-ledger plans/SUITE-RULES-VERSION-2026-11-20.md.
 
-## Checks (version 2.0.0)
+## Checks (version 2.1.0)
 ```
 npm ci && npx playwright install chromium
 npm run typecheck   # TypeScript checks the site's JavaScript
 npm run build       # refuses a wrong version, missing page, page missing from sitemap
 npm run contrast    # every text colour pair, every look and scheme
 npm run links       # every link, anchor and file; outside links only on the allowed list
-npm test            # T01-T21 in real Chromium, on dist/
+npm test            # T01-T23 in real Chromium, on dist/
 npm run falsify     # breaks each behaviour on purpose; each test must go red
 ```
 CI: `.github/workflows/ci.yml`. Knowledge file for the next person: `docs/KNOWLEDGE.md`. Sign-in is on console.corporatetambola.com only; this site links there and has no login or payment.
