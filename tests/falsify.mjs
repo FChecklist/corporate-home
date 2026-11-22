@@ -108,7 +108,7 @@ export const MUTATIONS = {
         { file: "site.css", find: "nav.main a.btn[data-gate]{min-width:10rem;", replace: "nav.main a.btn[data-gate]{min-width:0;", why: "the Sign in button is narrower than Open console, so the top bar jumps" },
         { file: "site.css", find: "line-height:1.5;height:1.5em;", replace: "line-height:1.5;height:auto;", why: "the Signed in line is not reserved, so the front page jumps down" },
         { file: "index.html", find: '<p class="signed-note" id="signed-note" role="status"></p>', replace: "", why: "the front page has nowhere to say Signed in" },
-        { file: "gate.js", find: 'a.textContent = signedIn ? "Open console" :', replace: "a.textContent = false ? \"Open console\" :", why: "the buttons never change to Open console" },
+        { file: "gate.js", find: "if (signedIn) openConsole(a); else a.textContent", replace: "if (false) openConsole(a); else a.textContent", why: "the buttons never change to Open console" },
         { file: "privacy.html", find: "and Safari may close the door sooner", replace: "and nothing else changes it", why: "the privacy line no longer mentions Safari" },
         { file: "privacy.html", find: "one plain question to your console when a page opens: are you signed in? The answer only changes the Sign in button, and it is never saved on your device.", replace: "nothing.", why: "the privacy page hides that the question is asked" }],
 };
