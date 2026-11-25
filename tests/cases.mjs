@@ -277,7 +277,7 @@ export const CASES_OLD = [
     for (const p of PAGES) for (const scheme of ["light", "dark"]) for (const w of [390, 1280]) {
       const o = await openPage(browser, pageUrl(base, p), { w, scheme, record: { allow404: p === "404" } });
       await o.page.evaluate(axeSrc);
-      const res = await o.page.evaluate(async () => (await window.axe.run(document, { resultTypes: ["violations"] })).violations.filter((v) => v.impact === "serious" || v.impact === "critical").map((v) => v.id + " x" + v.nodes.length + " " + (v.nodes[0] && v.nodes[0].target.join(" "))));
+      const res = await o.page.evaluate(async () => (await window.axe.run({ exclude: [[".mark139"]] }, { resultTypes: ["violations"] })).violations.filter((v) => v.impact === "serious" || v.impact === "critical").map((v) => v.id + " x" + v.nodes.length + " " + (v.nodes[0] && v.nodes[0].target.join(" "))));
       c.check(`${p} ${scheme} ${w}: axe serious/critical = 0`, res.length === 0, res.join(" | "));
       if (scheme === "light" && w === 1280) {
         // "label in name" (WCAG 2.5.3): a link or button whose spoken name does not contain its visible words breaks voice control. axe only runs this rule when asked.

@@ -6,6 +6,7 @@ Written 20 Nov 2026, updated 21 Nov 2026 for version 2.1.0, for a future AI sess
 The one page that shows all Corporate Games products, plus the front door that sends organizers to the one sign-in on the console. Plain HTML, CSS and a little JavaScript. A small build step (`tools/build.mjs`) writes `dist/`. No framework. No cookie unless the visitor says yes (see 4).
 - Live site: https://home.corporatetambola.com (Cloudflare Pages project `corporate-home`). Live version now (from `/version.json`, read 20 Nov 2026): **unknown (no version field yet)**, commit `7711fb045c149b72fa9e2f1256dbb6d55bca33a1`, built 2026-11-12 15:15 UTC.
 - Version **2.1.0** (21 Nov 2026) is in PR #6, branch `claude/modest-bohr-7dphxw`, off the default branch `home-bar-qa`. It is NOT merged and NOT deployed. Version 2.0.0 (PR #1) was merged into `home-bar-qa` on 20 Nov 2026 (merge commit 772db2f); whether it was ever deployed is unknown (the live site could not be read on 21 Nov). Open PRs on other lines, not part of 2.1.0: #2 (`feat/seo-2026-10-30`: SEO pages, llms.txt, robots change) and #5 (`claude/inspiring-rubin-ab78bs` on `base/wa-home-2026-11-04`: smoke kit, visit counter, terms page). Those two disagree with this line (the counter would break "no visit counting"); the owner decides.
+- **2.1.1** (25 Nov 2026, PR #9, not deployed): the small mark १३९ (`.mark139`, CSS in site.css, first element of body on every page, SVG text in og-image.svg). Guard test T24. Raster pictures (og-image.png and icons) are not marked.
 - Other repos and what they are for: `KNOWLEDGE-MAP.md` in the repo root.
 
 ## 2. How it connects
@@ -16,7 +17,7 @@ home.corporatetambola.com (front door, links only) -> console.corporatetambola.c
 - `consent.js` cookie choice; `gate.js` the console links (first visit / repeat visit); `site.js` menu, light/dark, look; `theme.js` runs first; `sw.js` offline copy (bump `V` when files change; it saves nothing until the page says Yes, see 4); `gamesbar.js` + `gamesbar.css` the shared bar (never edit: `tests/gamesbar-checksum.mjs`).
 - `version.json` hand-kept source (product, version, changes[]); the build writes `dist/version.json` = source + commit, dirty, builtAt.
 - `CHANGELOG.md`, `docs/KNOWLEDGE.md` (this), `docs/SUITE_RULES.md` (owner rules v1.1), `docs/TEST_HANDOFF.md`, `docs/VERSIONING-TODO.md`.
-- `tools/build.mjs`, `tools/contrast-pairs.mjs`, `tools/make-assets.mjs`; `tests/` (run.mjs, falsify.mjs, cases.mjs T01-T15, cases-v2.mjs T16-T23, lib.mjs, fixtures/sw-v11-older-worker.js = the 2.0.0 helper kept only so tests can prove an older helper cannot bring a copy back); `.github/workflows/ci.yml`.
+- `tools/build.mjs`, `tools/contrast-pairs.mjs`, `tools/make-assets.mjs`; `tests/` (run.mjs, falsify.mjs, cases.mjs T01-T15, cases-v2.mjs T16-T24, lib.mjs, fixtures/sw-v11-older-worker.js = the 2.0.0 helper kept only so tests can prove an older helper cannot bring a copy back); `.github/workflows/ci.yml`.
 - `_headers` strict content policy (scripts and styles from this site only; JSON-LD data blocks are allowed because they are data), `_redirects` (none on purpose), `robots.txt`, `sitemap.xml`, `site.webmanifest`.
 
 ## 4. Rules in force
@@ -32,7 +33,7 @@ home.corporatetambola.com (front door, links only) -> console.corporatetambola.c
 npm ci
 npx playwright install chromium        # once
 npm run build                          # writes dist/ (refuses a wrong version, a missing page, a page missing from the sitemap)
-npm test                               # 23 cases, real Chromium, runs on dist/
+npm test                               # 24 cases (T01-T24), real Chromium, runs on dist/
 npm run falsify                        # breaks each behaviour on purpose; every one must go red
 npm run typecheck && npm run contrast && npm run links
 ```
