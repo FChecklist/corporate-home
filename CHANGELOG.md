@@ -2,6 +2,12 @@
 
 Reconstructed on 20 Nov 2026 from git history, tags and the live `/version.json` (https://home.corporatetambola.com/version.json). Before this file there was no changelog and no version policy; entries below the live one are approximate (dates from tags and commits). Unknown values are written "unknown", not guessed. From now on follow the standard: marketing-ledger plans/VERSION-AND-KNOWLEDGE-STANDARD-2026-11-20.md section 2.2 (newest first; Added/Changed/Fixed; what, where, PR, two audit PASS ids, rollback id).
 
+## 2.1.1 (25 Nov 2026) - not committed, not deployed, not merged
+Owner order of 25 Nov 2026: the small mark १३९ at the very top centre of every page. Commit: none yet (patch applied by a human).
+- Added: `<div class="mark139">` as the first element of body on all 10 pages (404, changes, contact, for-hr, games, how-it-works, index, offline, pricing, privacy); its CSS once in site.css (cache mark `?v=8`); the same mark as SVG text with the thin red line in og-image.svg. Absolute at the top, no clicks, hidden from screen readers and copy, no layout change.
+- Added: test T24 (exactly one mark per page, approved CSS and colours, share picture) with a break-it run in tests/falsify.mjs.
+- Not done: raster pictures og-image.png, apple-touch-icon.png, icon-192.png, icon-512.png, icon-maskable-512.png (not touched by order; icons are not marked).
+
 ## 2.1.0 (21 Nov 2026) - PR #6, NOT deployed, NOT merged
 Honest cookie and offline behaviour, a privacy signal, fairness wording only where true. One writer, one branch (`claude/modest-bohr-7dphxw`), off `home-bar-qa` at 772db2f (2.0.0). The older open PRs (#2 SEO pass, #5 smoke test) are on other lines and are NOT part of this change.
 - Fixed: a "No" did not stop an older offline helper (service worker) from saving files again while the page was still open. Found by test: after No, a page that asked for more files brought the saved copy (`home-v11`) back, and it stayed until the next page was opened. Now the page tells the helper to stop and delete, removes the helper, deletes every `home-` copy, and, while an older helper that cannot be told still runs the page, deletes again every 0.3 seconds. Where: site.js, sw.js.

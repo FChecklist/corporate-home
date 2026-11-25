@@ -1,9 +1,10 @@
 {
   "product": "corporate-games-home",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "commit": "filled in by tools/build.mjs",
   "builtAt": "filled in by tools/build.mjs",
   "changes": [
+    { "id": "2.1.1-01", "what": "A very small mark, the numerals १३९, now sits at the top centre of every page and of the share picture. It changes nothing else.", "where": "all pages, site.css, og-image.svg", "pr": "none yet" },
     { "id": "2.1.0-01", "what": "If your browser sends a privacy signal (Global Privacy Control or Do Not Track), it now counts as No. Nothing is asked and nothing is stored until you press Yes yourself.", "where": "consent.js, site.js, privacy page", "pr": "#6" },
     { "id": "2.1.0-02", "what": "Saying No now removes the offline copy of the pages for good, even a copy made by an older version of this website, and it does not come back.", "where": "sw.js, site.js", "pr": "#6" },
     { "id": "2.1.0-03", "what": "The offline copy now starts only after you say Yes, never on its own.", "where": "sw.js, site.js", "pr": "#6" },

@@ -92,6 +92,8 @@ export const MUTATIONS = {
         { file: "consent.js", find: "if (comfort && signal()) o.s = 1;", replace: "", why: "a Yes pressed with the signal on is not recognised as the visitor's own word" },
         { file: "consent.js", find: 'n.globalPrivacyControl === true || n.doNotTrack === "1" || w.doNotTrack === "1" || n.msDoNotTrack === "1"', replace: 'n.doNotTrack === "1"', why: "Global Privacy Control is ignored" },
         { file: "privacy.html", find: "if your browser sends Global Privacy Control (or Do Not Track), it counts as No.", replace: "your browser may send a signal.", why: "the privacy page no longer tells people about the signal" }],
+  T24: [{ file: "site.css", find: "font-size:6px;font-weight:700;color:#0B2A6B", replace: "font-size:7px;font-weight:700;color:#0B2A6B", why: "the mark is 7px instead of 6px" },
+        { file: "contact.html", find: '<div class="mark139" lang="hi" aria-hidden="true"><span>\u0967\u0969\u096F</span></div>', replace: "", why: "one page loses the mark" }],
   T23: [{ file: "site.css", find: ".consent-row{display:flex;flex-wrap:wrap;gap:10px}", replace: ".consent-row{display:flex;flex-wrap:wrap;gap:10px;min-width:420px}", why: "the cookie question is wider than a 360 px phone" },
         { file: "site.css", find: ".consent-text{margin:0 auto 12px;font-size:15.5px;line-height:1.5;color:var(--ink)}", replace: ".consent-text{margin:0 auto 12px;font-size:15.5px;line-height:1.5;color:var(--ink);white-space:nowrap}", why: "the cookie question text cannot wrap, so a phone scrolls sideways" }],
 };

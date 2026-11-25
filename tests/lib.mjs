@@ -151,7 +151,7 @@ export const LAYOUT_PROBE = (W) => {
   // the name in the top bar must fit its own box (it may not run under the menu or the links)
   const bn = document.querySelector(".brand"); if (bn && bn.scrollWidth > bn.clientWidth + 1) bad.push(`top bar name does not fit: ${bn.scrollWidth} > ${bn.clientWidth}`);
   // type size
-  for (const e of all) { if (e.children.length === 0 && e.textContent.trim().length > 1 && parseFloat(getComputedStyle(e).fontSize) < 12.5) bad.push(`tiny text: ${name(e)} ${getComputedStyle(e).fontSize}`); }
+  for (const e of all) { if (e.closest(".mark139")) continue; if (e.children.length === 0 && e.textContent.trim().length > 1 && parseFloat(getComputedStyle(e).fontSize) < 12.5) bad.push(`tiny text: ${name(e)} ${getComputedStyle(e).fontSize}`); }
   return bad.slice(0, 20);
 };
 

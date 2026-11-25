@@ -1,4 +1,4 @@
-// Cases T16 to T23: the Home v2.0.0 behaviours (T16-T21) and the 2.1.0 honesty fixes (T22 offline copy and privacy signal, T23 360 px). Each one has a break-it-and-see-red run in tests/falsify.mjs.
+// Cases T16 to T24: the Home v2.0.0 behaviours (T16-T21) and the 2.1.0 honesty fixes (T22 offline copy and privacy signal, T23 360 px). T24 is the small mark १३९ on every page. Each one has a break-it-and-see-red run in tests/falsify.mjs.
 //   T16 cookie choice   T17 one sign-in gate (first visit, repeat visit, hand-off)   T18 SEO   T19 pricing packs
 //   T20 the owner's wording rules (suite rules 1.1)   T21 version, footer, /changes
 import { readFileSync, existsSync, statSync, cpSync, mkdtempSync, rmSync, copyFileSync } from "node:fs";
@@ -79,7 +79,7 @@ export const CASES_V2 = [
     for (const [scheme, w] of /** @type {[string, number][]} */ ([["light", 360], ["dark", 360], ["light", 1280], ["dark", 1280]])) {
       const x = await openPage(browser, base + "/", { w, scheme, consent: "ask" });
       await x.page.evaluate(axeSrc);
-      const res = await x.page.evaluate(async () => (await /** @type {any} */ (window).axe.run(document, { resultTypes: ["violations"] })).violations.filter((v) => v.impact === "serious" || v.impact === "critical").map((v) => v.id + " x" + v.nodes.length + " " + (v.nodes[0] && v.nodes[0].target.join(" "))));
+      const res = await x.page.evaluate(async () => (await /** @type {any} */ (window).axe.run({ exclude: [[".mark139"]] }, { resultTypes: ["violations"] })).violations.filter((v) => v.impact === "serious" || v.impact === "critical").map((v) => v.id + " x" + v.nodes.length + " " + (v.nodes[0] && v.nodes[0].target.join(" "))));
       c.check(`question open, ${scheme} ${w}: axe serious/critical = 0`, res.length === 0, res.join(" | "));
       await x.close();
     }
@@ -400,5 +400,25 @@ export const CASES_V2 = [
       c.check(`${p}: answered, the page passes the layout rules at ${W} px`, bad.length === 0, bad.join(" | "));
       await o.close();
     }
+  } },
+  { id: "T24", name: "The small mark \u0967\u0969\u096F: exactly one on every page source and in the share picture, with the approved CSS", async run({ c }) {
+    const SRC = join(dirname(fileURLToPath(import.meta.url)), "..");
+    const pages = listFiles(SRC).filter((f) => /^[^/\\]+\.html$/.test(f));
+    c.check("there are pages to scan", pages.length >= 10, String(pages.length));
+    for (const f of pages) {
+      const html = readFileSync(join(SRC, f), "utf8");
+      const n = (html.match(/class="mark139"/g) || []).length;
+      c.check(f + ": exactly one mark139", n === 1, String(n));
+      c.check(f + ": the mark is the first thing in body", html.includes('<body>\n<div class="mark139" lang="hi" aria-hidden="true"><span>\u0967\u0969\u096F</span></div>'), "wrong place or markup");
+      c.check(f + ": loads site.css", /href="\/site\.css/.test(html), "no shared stylesheet");
+    }
+    const css = readFileSync(join(SRC, "site.css"), "utf8");
+    const rule = (css.match(/\.mark139\{[^}]*\}/g) || []);
+    c.check("site.css has the mark139 rule once", rule.length === 1, String(rule.length));
+    const r = rule[0] || "";
+    for (const t of ["position:absolute", "top:0", "pointer-events:none", "user-select:none", "font-size:6px", "font-weight:700", "color:#0B2A6B", "text-align:center"]) c.check("css: " + t, r.includes(t), r);
+    c.check("css: the numerals underline", css.includes(".mark139 span{display:inline-block;border-bottom:.5px solid #7A1010;padding-bottom:.5px}"), "line differs");
+    const svg = readFileSync(join(SRC, "og-image.svg"), "utf8");
+    c.check("og-image.svg: one mark with the numerals, colours and red line", (svg.match(/\u0967\u0969\u096F/g) || []).length === 1 && svg.includes('fill="#0B2A6B"') && svg.includes('fill="#7A1010"'), "missing");
   } },
 ];
