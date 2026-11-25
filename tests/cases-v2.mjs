@@ -1,7 +1,7 @@
 // Cases T16 to T24: the Home v2.0.0 behaviours (T16-T21) and the 2.1.0 honesty fixes (T22 offline copy and privacy signal, T23 360 px). T24 is the small mark १३९ on every page. Each one has a break-it-and-see-red run in tests/falsify.mjs.
 //   T16 cookie choice   T17 one sign-in gate (first visit, repeat visit, hand-off)   T18 SEO   T19 pricing packs
 //   T20 the owner's wording rules (suite rules 1.1)   T21 version, footer, /changes
-import { readFileSync, existsSync, statSync, cpSync, mkdtempSync, rmSync, copyFileSync } from "node:fs";
+import { readFileSync, existsSync, statSync, cpSync, mkdtempSync, rmSync, copyFileSync, readdirSync } from "node:fs";
 import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
@@ -403,7 +403,16 @@ export const CASES_V2 = [
   } },
   { id: "T24", name: "The small mark \u0967\u0969\u096F: exactly one on every page source and in the share picture, with the approved CSS", async run({ c }) {
     const SRC = join(dirname(fileURLToPath(import.meta.url)), "..");
-    const pages = listFiles(SRC).filter((f) => /^[^/\\]+\.html$/.test(f));
+    // every .html page at any depth, in the source and in the generated dist/ (if built)
+    const walk = (/** @type {string} */ dir, /** @type {string} */ rel, /** @type {string[]} */ out) => {
+      for (const e of readdirSync(join(dir, rel), { withFileTypes: true })) {
+        if (e.isDirectory()) { if (!["node_modules", ".git", "dist", "tests", "tools", "docs"].includes(e.name)) walk(dir, rel ? rel + "/" + e.name : e.name, out); }
+        else if (e.name.endsWith(".html")) out.push(rel ? rel + "/" + e.name : e.name);
+      }
+      return out;
+    };
+    const pages = walk(SRC, "", []);
+    if (existsSync(join(SRC, "dist"))) for (const f of walk(join(SRC, "dist"), "", [])) pages.push("dist/" + f);
     c.check("there are pages to scan", pages.length >= 10, String(pages.length));
     for (const f of pages) {
       const html = readFileSync(join(SRC, f), "utf8");
