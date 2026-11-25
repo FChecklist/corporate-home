@@ -4,6 +4,7 @@
 //   2. writes dist/version.json from the hand-kept version.json (product, version, changes) plus commit, dirty and builtAt
 //   3. puts vX.Y.Z in the footer of every page (between <!--ver--> and <!--/ver-->, links to /changes) and fills the /changes page with the last 10 changes
 //   4. makes sure every page loads the shared Corporate Games bar (gamesbar.css + gamesbar.js data-game="home"), adding the two tags if a page lacks them
+//   4b. notify me (the corporate-push opt-in), shipped dark: push-config.json holds ONE value, "api". Empty = the block, push-optin.js and push-optin.css are left out of dist/ completely. A plain https address = the block is put on the front page, the two files are loaded there, and the build refuses unless _headers connect-src lists that address.
 //   5. checks: version agrees in version.json, package.json and CHANGELOG.md; _redirects never touches /version.json or leaves the site; every page is in sitemap.xml (except 404 and offline); no obfuscated e-mail; docs/ and tests/ are not published
 // Cloudflare Pages: build command  node tools/build.mjs   build output directory  dist
 import { execFileSync } from "node:child_process";
@@ -13,7 +14,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const out = join(root, "dist");
-const SKIP = new Set([".git", ".gitignore", ".github", "node_modules", "dist", "tests", "tools", "docs", "package.json", "package-lock.json", "README.md", "KNOWLEDGE-MAP.md", "CHANGELOG.md", "tsconfig.json", "tsconfig.tools.json", "types.d.ts", "version.json"]);
+const SKIP = new Set([".git", ".gitignore", ".github", "node_modules", "dist", "tests", "tools", "docs", "package.json", "package-lock.json", "README.md", "KNOWLEDGE-MAP.md", "CHANGELOG.md", "tsconfig.json", "tsconfig.tools.json", "types.d.ts", "version.json", "push-config.json"]);
 const fail = (m) => { console.error("BUILD FAILED: " + m); process.exit(1); };
 const git = (...a) => { try { return execFileSync("git", a, { cwd: root, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim(); } catch { return null; } };
 
@@ -41,6 +42,30 @@ writeFileSync(join(out, "version.json"), JSON.stringify(version, null, 2) + "\n"
 const shortV = "v" + src.version;
 const esc = (t) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const changesHtml = '<ul class="plainlist">' + src.changes.slice(0, 10).map((c) => "<li>" + esc(c.what) + "</li>").join("") + "</ul>";
+
+// 2b. notify me (corporate-push opt-in), shipped dark. ONE config value: push-config.json "api". Empty today, so nothing is rendered, loaded or requested.
+let pushApi = "";
+if (existsSync(join(root, "push-config.json"))) {
+  let pc;
+  try { pc = JSON.parse(readFileSync(join(root, "push-config.json"), "utf8")); } catch { fail("push-config.json is not valid JSON"); }
+  if (!pc || typeof pc.api !== "string") fail('push-config.json must look like { "api": "" }');
+  pushApi = pc.api.trim().toLowerCase();
+}
+if (pushApi && !/^https:\/\/[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+(:\d{1,5})?$/.test(pushApi)) fail('push-config.json "api" must be empty (dark) or a plain https address such as https://push.example.com (no path, no slash at the end)');
+const PUSH_RE = /<!--push-optin-->[\s\S]*?<!--\/push-optin-->/;
+let indexHtml = readFileSync(join(out, "index.html"), "utf8");
+if (!PUSH_RE.test(indexHtml)) fail("index.html has no <!--push-optin--> block");
+if (!pushApi) {
+  indexHtml = indexHtml.replace(PUSH_RE, "");
+  for (const f of ["push-optin.js", "push-optin.css"]) rmSync(join(out, f), { force: true });
+} else {
+  const headersTxt = existsSync(join(root, "_headers")) ? readFileSync(join(root, "_headers"), "utf8") : "";
+  const connect = ((headersTxt.match(/connect-src([^;]*)/) || [])[1] || "").split(/\s+/).filter(Boolean);
+  if (!connect.includes(pushApi)) fail('push-config.json sets "' + pushApi + '" but _headers connect-src does not list it. Add that one address to connect-src first (see docs/KNOWLEDGE.md, Notify me)');
+  indexHtml = indexHtml.replace(PUSH_RE, (m) => m.replace(/<!--\/?push-optin-->/g, "").replace("@PUSH_API@", () => pushApi).replace('<section id="notify" hidden>', '<section id="notify">').replace('<section id="notify" class="wash-teal" hidden>', '<section id="notify" class="wash-teal">'));
+  indexHtml = indexHtml.replace("</head>", () => '<link rel="stylesheet" href="/push-optin.css?v=1">\n</head>').replace("</body>", () => '<script src="/push-optin.js?v=1" defer></script>\n</body>');
+}
+writeFileSync(join(out, "index.html"), indexHtml);
 
 // 3 + 4. pages
 const pages = readdirSync(out).filter((f) => f.endsWith(".html"));

@@ -319,11 +319,11 @@ export const CASES_V2 = [
       return o;
     };
     // 1. the helper of this version
-    const a = await yesThenNo("this version's helper", base, "home-v12");
+    const a = await yesThenNo("this version's helper", base, "home-v13");
     // changing your mind again works: Yes after No brings the copy back
     await a.page.locator("[data-consent-open]").first().click();
     await a.page.locator("#consent button[data-consent=yes]").click();
-    c.check("this version's helper: Yes after No brings the offline copy back", (await waitCopy(a.page, "home-v12")) >= 12, JSON.stringify(await state(a.page)));
+    c.check("this version's helper: Yes after No brings the offline copy back", (await waitCopy(a.page, "home-v13")) >= 12, JSON.stringify(await state(a.page)));
     await a.close();
     // 2. an older helper (version 2.0.0), which saves files by itself and does not know about a No: a copy of the built site that carries it
     const tmp = mkdtempSync(join(tmpdir(), "home-older-helper-"));
