@@ -2,8 +2,8 @@
 
 Reconstructed on 20 Nov 2026 from git history, tags and the live `/version.json` (https://home.corporatetambola.com/version.json). Before this file there was no changelog and no version policy; entries below the live one are approximate (dates from tags and commits). Unknown values are written "unknown", not guessed. From now on follow the standard: marketing-ledger plans/VERSION-AND-KNOWLEDGE-STANDARD-2026-11-20.md section 2.2 (newest first; Added/Changed/Fixed; what, where, PR, two audit PASS ids, rollback id).
 
-## 2.1.1 (25 Nov 2026) - not committed, not deployed, not merged
-Owner order of 25 Nov 2026: the small mark १३९ at the very top centre of every page. Commit: 2cfd318 (parent of the test-honesty patch; patch applied by a human).
+## 2.1.1 (25 Nov 2026) - PR #9, NOT deployed, NOT merged
+Owner order of 25 Nov 2026: the small mark १३९ at the very top centre of every page. Commits on branch `p1/mark-139-2026-11-25`: 2cfd318 (the mark), af26191 (follow-up: the guard test walks every page, notes made honest), and the commit after it (test T24 now reads the copy being tested, so the break-it run in tests/falsify.mjs can turn it red; before, it always read the real folder and could not fail). Audits: two audit rounds are on PR #9; the second round found the T24 fault and the stale notes, both fixed here.
 - Added: `<div class="mark139">` as the first element of body on all 10 pages (404, changes, contact, for-hr, games, how-it-works, index, offline, pricing, privacy); its CSS once in site.css (cache mark `?v=8`); the same mark as SVG text with the thin red line in og-image.svg. Absolute at the top, no clicks, hidden from screen readers and copy, no layout change.
 - Added: test T24 (exactly one mark per page, approved CSS and colours, share picture) with a break-it run in tests/falsify.mjs.
 - Not done: raster pictures og-image.png, apple-touch-icon.png, icon-192.png, icon-512.png, icon-maskable-512.png (not touched by order; icons are not marked).

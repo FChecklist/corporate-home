@@ -401,8 +401,8 @@ export const CASES_V2 = [
       await o.close();
     }
   } },
-  { id: "T24", name: "The small mark \u0967\u0969\u096F: exactly one on every page source and in the share picture, with the approved CSS", async run({ c }) {
-    const SRC = join(dirname(fileURLToPath(import.meta.url)), "..");
+  { id: "T24", name: "The small mark \u0967\u0969\u096F: exactly one on every page source and in the share picture, with the approved CSS", async run({ c, root }) {
+    const SRC = join(root, ".."); // the source folder of whatever build is being tested (in tests/falsify.mjs: the broken temporary copy, not the real folder)
     // every .html page at any depth, in the source and in the generated dist/ (if built)
     const walk = (/** @type {string} */ dir, /** @type {string} */ rel, /** @type {string[]} */ out) => {
       for (const e of readdirSync(join(dir, rel), { withFileTypes: true })) {
