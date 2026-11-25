@@ -20,6 +20,7 @@ const text = (html) => html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/
 const hrefs = (html) => [...html.matchAll(/<a\b[^>]*\bhref="([^"]*)"/g)].map((m) => m[1]);
 
 import { CASES_V2 } from "./cases-v2.mjs";
+import { CASES_PUSH } from "./cases-push.mjs";
 
 export const CASES_OLD = [
   { id: "T01", name: "Every link on every page works (pages, #anchors, icons, files)", async run({ base, root, c }) {
@@ -370,4 +371,4 @@ export const CASES_OLD = [
   } },
 ];
 
-export const CASES = [...CASES_OLD, ...CASES_V2];
+export const CASES = [...CASES_OLD, ...CASES_V2, ...CASES_PUSH];

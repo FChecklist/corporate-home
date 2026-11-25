@@ -1,6 +1,6 @@
 {
   "name": "corporate-games-home",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "private": true,
   "description": "home.corporatetambola.com: plain static pages. One small build step (tools/build.mjs) writes dist/ with version.json. Tests: Playwright + axe-core (npm ci, then npx playwright install chromium).",
   "scripts": {

@@ -76,8 +76,8 @@ export const MUTATIONS = {
         { file: "how-it-works.html", find: "<h2>Ready to start?</h2>", replace: "<h2>Ready to start?</h2><p>No one knows the next number: not the organizer, not the host, not even the software.</p>", why: "the fairness line is repeated on a page about games that draw no numbers" },
         { file: "privacy.html", find: "The winners record: who won which prize, by number</td>", replace: "Contact details a winner confirms to receive a prize</td>", why: "the 365-day prize-contact line is back" }],
   T21: [{ file: "tools/build.mjs", find: '"<!--ver-->" + shortV + "<!--/ver-->");\n  if (f === "changes.html")', replace: '"<!--ver-->v9.9.9<!--/ver-->");\n  if (f === "changes.html")', why: "the footer shows a different version than version.json" },
-        { file: "version.json", find: '"version": "2.2.0",', replace: '"version": "2.2.1",', why: "version bumped in version.json only (build must refuse)" },
-        { file: "CHANGELOG.md", find: "## 2.2.0 (22 Nov 2026)", replace: "## 1.9.9 (22 Nov 2026)", why: "no CHANGELOG entry for this version (build must refuse)" },
+        { file: "version.json", find: '"version": "2.3.0",', replace: '"version": "2.3.1",', why: "version bumped in version.json only (build must refuse)" },
+        { file: "CHANGELOG.md", find: "## 2.3.0 (25 Nov 2026)", replace: "## 1.9.9 (25 Nov 2026)", why: "no CHANGELOG entry for this version (build must refuse)" },
         { file: "_headers", find: "/version.json\n  Cache-Control: no-store", replace: "/version.json\n  Cache-Control: public, max-age=86400", why: "version.json may be cached for a day" },
         { file: "changes.html", find: "<!--changes-->", replace: "<!--changes-gone-->", why: "the /changes page loses its list marker (build must refuse)" },
         { file: "version.json", find: '"what": "If your browser sends a privacy signal', replace: '"what": "Fixed a CSP token leak in gate.js (commit 5df73d2a328e); If your browser sends a privacy signal', why: "internal details leak into the public What's new list" }],
@@ -111,6 +111,18 @@ export const MUTATIONS = {
         { file: "gate.js", find: "if (signedIn) openConsole(a); else a.textContent", replace: "if (false) openConsole(a); else a.textContent", why: "the buttons never change to Open console" },
         { file: "privacy.html", find: "and Safari may close the door sooner", replace: "and nothing else changes it", why: "the privacy line no longer mentions Safari" },
         { file: "privacy.html", find: "one plain question to your console when a page opens: are you signed in? The answer only changes the Sign in button, and it is never saved on your device.", replace: "nothing.", why: "the privacy page hides that the question is asked" }],
+
+  // ---- 2.3.0: notify me, shipped dark (T25) ----
+  T25: [{ file: "sw.js", find: "self.addEventListener('push', function (event) {", replace: "self.addEventListener('pushed', function (event) {", why: "sw.js loses its push handler" },
+        { file: "sw.js", find: "self.addEventListener('notificationclick', function (event) {", replace: "self.addEventListener('notificationclicked', function (event) {", why: "sw.js loses its notificationclick handler" },
+        { file: "privacy.html", find: "kept until you tap Stop notifications or your browser drops it", replace: "kept for ever", why: "the privacy page no longer says how long the browser address is kept" },
+        { file: "privacy.html", find: "a browser address, not your name, e-mail or phone", replace: "not personal data", why: "the privacy page says the address is not personal data" },
+        { file: "push-config.json", find: '"api": ""', replace: '"api": "https://push.example.test"', why: "the address is set while _headers does not list it (the build must refuse)" },
+        { file: "tools/build.mjs", find: 'indexHtml = indexHtml.replace(PUSH_RE, "");', replace: 'indexHtml = indexHtml.replace(PUSH_RE, (m) => m.replace("@PUSH_API@", "https://push.example.test").replace(" hidden", ""));', why: "the block is rendered even though the address is empty" },
+        { file: "push-optin.js", find: "function mountAll() {", replace: "function mountAll() { try { Notification.requestPermission(); } catch (e) { /* x */ }", why: "the permission prompt opens on page load" },
+        { file: "push-optin.js", find: "function mountAll() {", replace: "function mountAll() { try { fetch(document.querySelector('[data-push-optin]').getAttribute('data-push-api') + '/vapid-public'); } catch (e) { /* x */ }", why: "the page calls the notification service on load" },
+        { file: "push-optin.js", find: "stop.hidden = false; // M4: always available, in every state, no condition", replace: "stop.hidden = state === 'idle';", why: "Stop notifications is hidden until the button was used" },
+        { file: "index.html", find: 'data-push-site="home"', replace: 'data-push-site="console"', why: "the front page offers the console wording" }],
 };
 
 const hashDir = (d) => { const h = createHash("sha256"); const walk = (p) => { for (const f of readdirSync(p).sort()) { if (f === ".git" || f === "last-run.json" || f === "node_modules" || f === "dist") continue; const q = join(p, f); if (statSync(q).isDirectory()) walk(q); else h.update(f).update(readFileSync(q)); } }; walk(d); return h.digest("hex"); };

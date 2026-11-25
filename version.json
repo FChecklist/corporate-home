@@ -1,9 +1,13 @@
 {
   "product": "corporate-games-home",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "commit": "filled in by tools/build.mjs",
   "builtAt": "filled in by tools/build.mjs",
   "changes": [
+    { "id": "2.3.0-01", "what": "A notify-me button is ready on the front page, switched off for now. Nothing appears, nothing is asked and nothing is sent until it is switched on.", "where": "index, push-config.json", "pr": "#8" },
+    { "id": "2.3.0-02", "what": "When it is switched on, you tap one button and allow it in your browser. Only then does your browser get notified about new games and offers. A Stop notifications button is always next to it.", "where": "index", "pr": "#8" },
+    { "id": "2.3.0-03", "what": "The Data and privacy page now says what is saved (a browser address, not your name, e-mail or phone), how long it is kept, and how to stop.", "where": "privacy page", "pr": "#8" },
+    { "id": "2.3.0-04", "what": "The website helper can now show a notification when one arrives. It saves nothing new and changes nothing about the offline copy.", "where": "sw.js", "pr": "#8" },
     { "id": "2.2.0-01", "what": "Stay signed in on the same phone or laptop. If you are already signed in to your console, this website now shows Signed in and an Open console button, so you do not sign in a second time.", "where": "gate.js, all pages (links), index", "pr": "#7" },
     { "id": "2.2.0-02", "what": "When a page opens, this website asks your console one plain question: are you signed in? Nothing about you is saved. If the console cannot be reached or says no, the page looks exactly as before.", "where": "gate.js, _headers (connection policy)", "pr": "#7" },
     { "id": "2.2.0-03", "what": "The Data and privacy page now says, in a few plain lines, how staying signed in works and when you may need to sign in again.", "where": "privacy page", "pr": "#7" },
@@ -19,9 +23,6 @@
     { "id": "2.0.0-03", "what": "A pricing page with the real credit packs, in rupees and in US dollars. No GST is added.", "where": "pricing.html", "pr": "#1" },
     { "id": "2.0.0-04", "what": "Clearer promises: fair play, everything about your players erased within 24 hours, and you give the prizes directly to the winners.", "where": "index, how-it-works, for-hr, privacy", "pr": "#1" },
     { "id": "2.0.0-05", "what": "Two looks, Retro and Modern, each with light and dark colours.", "where": "site.css, theme.js, site.js", "pr": "#1" },
-    { "id": "2.0.0-06", "what": "Better search results and link previews when pages are shared.", "where": "page heads, sitemap.xml, robots.txt", "pr": "#1" },
-    { "id": "2.0.0-07", "what": "This What's new page, and the version number at the bottom of every page.", "where": "changes.html, footer", "pr": "#1" },
-    { "id": "2.0.0-08", "what": "Lucky Draw is shown as coming soon.", "where": "index, games, contact", "pr": "#1" },
-    { "id": "2.0.0-09", "what": "Kinder, truer privacy words. The offline copy of the pages is kept only after you say Yes.", "where": "consent.js, site.js, privacy page", "pr": "#1" }
+    { "id": "2.0.0-06", "what": "Better search results and link previews when pages are shared.", "where": "page heads, sitemap.xml, robots.txt", "pr": "#1" }
   ]
 }
