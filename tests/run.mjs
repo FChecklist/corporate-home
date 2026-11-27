@@ -9,6 +9,7 @@ import { startServer, launchChrome, checker, isMain } from "./lib.mjs";
 import { CASES } from "./cases.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
+const CASE_LIMIT_MS = Number(process.env.CASE_LIMIT_MS) || 240000; // the slowest case takes about 1 minute
 
 export async function runCases(ids, root, browser) {
   const srv = await startServer(root);
@@ -16,7 +17,10 @@ export async function runCases(ids, root, browser) {
   try {
     for (const cs of CASES.filter((x) => !ids || ids.includes(x.id))) {
       const c = checker(); const t0 = Date.now(); let err = "";
-      try { await cs.run({ base: srv.base, root, browser, headers: srv.headers, c }); } catch (e) { err = String(e && e.stack || e).split("\n").slice(0, 3).join(" / "); c.check("the case ran to the end", false, err); }
+      // a case that hangs (a browser call that never returns) counts as failed after CASE_LIMIT_MS, so one stuck page cannot stall the whole run
+      let timer;
+      try { await Promise.race([cs.run({ base: srv.base, root, browser, headers: srv.headers, c }), new Promise((_, no) => { timer = setTimeout(() => no(new Error("the case did not finish within " + CASE_LIMIT_MS / 1000 + " seconds (stuck)")), CASE_LIMIT_MS); })]); } catch (e) { err = String(e && e.stack || e).split("\n").slice(0, 3).join(" / "); c.check("the case ran to the end", false, err); }
+      clearTimeout(timer);
       out.push({ id: cs.id, name: cs.name, checks: c.count, failed: c.failed, ms: Date.now() - t0 });
     }
   } finally { await srv.close(); }

@@ -53,13 +53,55 @@ export async function launchChrome() {
   } catch (e) { release(); throw e; }
 }
 
+// ---- the console's "am I signed in?" answer (GET /api/me), stubbed in every page the tests open ----
+export const ME_URL = "https://console.corporatetambola.com/api/me";
+/** what the stub answers. cors: "ok" = the exact page origin + credentials (what the console must send); the others are the ways a browser must refuse. */
+export const ME_PRESETS = {
+  out: { status: 200, body: { signedIn: false } },
+  in: { status: 200, body: { signedIn: true, id: "u-4711", email: "someone@example.test", name: "Pat Example" } },
+  server500: { status: 500, body: { signedIn: true } },
+  notfound: { status: 404, body: { signedIn: true } },
+  garbage: { status: 200, raw: "<html>not json</html>" },
+  stringTrue: { status: 200, body: { signedIn: "true" } },
+  noField: { status: 200, body: { ok: true } },
+  netfail: { abort: true },
+  hang: { hang: true },
+  blockedNullOrigin: { status: 200, body: { signedIn: true }, cors: "none" }, // (Playwright adds CORS headers by itself when none are given, so "no header" is shown as the literal "null": the browser refuses both the same way)
+  blockedWrongOrigin: { status: 200, body: { signedIn: true }, cors: "wrongorigin" },
+  blockedWildcard: { status: 200, body: { signedIn: true }, cors: "wildcard" },
+  blockedNoCredentials: { status: 200, body: { signedIn: true }, cors: "nocreds" },
+};
+/** @param {any} ctx @param {string} first the preset the stub starts with */
+async function stubMe(ctx, first) {
+  const st = { cur: ME_PRESETS[first] || first, seen: [], set(p) { st.cur = ME_PRESETS[p] || p; } };
+  await ctx.route(ME_URL, async (route) => {
+    const req = route.request(), m = st.cur;
+    st.seen.push({ method: req.method(), url: req.url(), headers: await req.allHeaders() });
+    if (m.abort) return route.abort("failed");
+    if (m.hang) return; // never answers
+    const origin = req.headers()["origin"] || "";
+    const h = { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store", Vary: "Origin" };
+    if (m.cors === undefined || m.cors === "ok" || m.cors === "nocreds") h["Access-Control-Allow-Origin"] = origin;
+    if (m.cors === "wrongorigin") h["Access-Control-Allow-Origin"] = "https://home.corporatetambola.com";
+    if (m.cors === "wildcard") h["Access-Control-Allow-Origin"] = "*";
+    if (m.cors === "none") h["Access-Control-Allow-Origin"] = "null";
+    if (m.cors !== "none" && m.cors !== "nocreds") h["Access-Control-Allow-Credentials"] = "true";
+    if (req.method() === "OPTIONS") return route.fulfill({ status: 204, headers: { ...h, "Access-Control-Allow-Methods": "GET", "Access-Control-Allow-Headers": req.headers()["access-control-request-headers"] || "" } });
+    return route.fulfill({ status: m.status, headers: h, body: m.raw !== undefined ? m.raw : JSON.stringify(m.body) });
+  });
+  return st;
+}
+
 /** consent: "answered" (default) = the cookie question is already answered No, so the banner does not sit on top of the layout checks; "ask" = a first visit, nothing stored. */
-/** @param {any} browser @param {string} url @param {{ w: number, h?: number, scheme?: any, extraInit?: any, record?: { allow404?: boolean }, consent?: "answered" | "ask" }} opts */
-export async function openPage(browser, url, { w, h, scheme = "light", extraInit, record, consent = "answered" }) {
+/** me: what the console stub answers when the page asks "am I signed in?" (a key of ME_PRESETS, default "out" = signed out); o.me.set(...) changes it, o.me.seen lists the requests it got. */
+/** @param {any} browser @param {string} url @param {{ w: number, h?: number, scheme?: any, extraInit?: any, record?: { allow404?: boolean }, consent?: "answered" | "ask", me?: string, cookie?: boolean }} opts */
+export async function openPage(browser, url, { w, h, scheme = "light", extraInit, record, consent = "answered", me = "out", cookie = false }) {
   const mobile = w < 900;
   const ctx = await browser.newContext({ viewport: { width: w, height: h ?? heightFor(w) }, colorScheme: scheme, deviceScaleFactor: 1, ...(mobile ? { isMobile: true, hasTouch: true } : {}) });
   if (consent === "answered") await ctx.addInitScript(() => { try { if (!localStorage.getItem("ctz-consent")) localStorage.setItem("ctz-consent", JSON.stringify({ v: 1, comfort: false, on: "2026-11-20" })); } catch (e) { /* blocked */ } });
   if (extraInit) await ctx.addInitScript(extraInit);
+  const meStub = await stubMe(ctx, me);
+  if (cookie) await ctx.addCookies([{ name: "console_session", value: "opaque-test-value", domain: "console.corporatetambola.com", path: "/", secure: true, sameSite: "None" }]);
   const page = await ctx.newPage();
   const events = { console: [], requests: [], failed: [], bad: [] };
   page.on("console", (m) => { if (m.type() === "error" || m.type() === "warning") events.console.push(m.type() + ": " + m.text()); });
@@ -68,7 +110,7 @@ export async function openPage(browser, url, { w, h, scheme = "light", extraInit
   page.on("requestfailed", (r) => events.failed.push(r.url() + " " + (r.failure()?.errorText || "")));
   page.on("response", (r) => { if (r.status() >= 400 && !(record && record.allow404)) events.bad.push(r.status() + " " + r.url()); });
   await page.goto(url, { waitUntil: "load" });
-  return { page, ctx, events, close: () => ctx.close() };
+  return { page, ctx, events, me: meStub, close: () => ctx.close() };
 }
 
 /** collects named checks; a case passes when none failed */

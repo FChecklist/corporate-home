@@ -143,6 +143,13 @@ nav.main a:hover,.tbtn:hover{background:var(--tint)}
 nav.main a[aria-current=page]{background:var(--tint);color:var(--ink);font-weight:650}
 nav.main a.btn{margin-left:8px;color:var(--on-action);font-weight:650;padding:0 22px;min-height:44px}
 nav.main a.btn:hover{background:var(--action)}
+/* The top-bar button keeps ONE width whether it says Sign in or Open console, so nothing in the bar moves when the answer arrives (T24). Small laptops have no room for "Open console": only "Console" shows there. */
+@media (min-width:900px) and (max-width:1159.98px){nav.main a.btn[data-gate]{min-width:5.6rem;padding:0 10px;justify-content:center}nav.main a.btn[data-gate] .oc-open{display:none}nav.main a.btn[data-gate] .oc-c{text-transform:capitalize}}
+@media (min-width:900px) and (max-width:1119.98px){nav.main a.btn[data-gate]{min-width:5.3rem}}
+@media (min-width:1160px) and (max-width:1279.98px){nav.main a.btn[data-gate]{min-width:6.95rem;justify-content:center}nav.main a.btn[data-gate] .oc-open{display:none}nav.main a.btn[data-gate] .oc-c{text-transform:capitalize}}
+@media (min-width:1280px){nav.main a.btn[data-gate]{min-width:10rem;justify-content:center}}
+/* the Sign in / Open console buttons in the page and the bottom bar keep the width of "Sign in or start", so a row of buttons never wraps differently when the answer arrives */
+.btn-row a.btn[data-gate]:not([data-demo]),.tabbar a.btn[data-gate]{min-width:10.9rem;justify-content:center}
 .tbtn{border:0;background:transparent;cursor:pointer;font-family:var(--sans);min-width:44px;justify-content:center}
 
 /* ---------- first screen ---------- */
@@ -153,6 +160,7 @@ nav.main a.btn:hover{background:var(--action)}
 .hero .kicker{background:var(--paper);color:var(--accent);padding:7px 14px;border-radius:999px;box-shadow:var(--shadow);letter-spacing:.08em}
 .hero-contact{margin:22px 0 0;font-size:15.5px;color:var(--ink)}
 .hero-contact a{color:var(--link);font-weight:600}
+.signed-note{margin:6px 0 0;font-size:15.5px;line-height:1.5;height:1.5em;font-weight:650;color:var(--ink)}
 .six{position:relative;min-width:0}
 .six-title{margin:0 0 10px;color:var(--ink);font:700 15.5px/1.3 var(--sans)}
 .six ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}

@@ -1,4 +1,4 @@
-// Cases T16 to T23: the Home v2.0.0 behaviours (T16-T21) and the 2.1.0 honesty fixes (T22 offline copy and privacy signal, T23 360 px). Each one has a break-it-and-see-red run in tests/falsify.mjs.
+// Cases T16 to T24: the Home v2.0.0 behaviours (T16-T21) and the 2.1.0 honesty fixes (T22 offline copy and privacy signal, T23 360 px) and the 2.2.0 staying-signed-in call (T24). Each one has a break-it-and-see-red run in tests/falsify.mjs.
 //   T16 cookie choice   T17 one sign-in gate (first visit, repeat visit, hand-off)   T18 SEO   T19 pricing packs
 //   T20 the owner's wording rules (suite rules 1.1)   T21 version, footer, /changes
 import { readFileSync, existsSync, statSync, cpSync, mkdtempSync, rmSync, copyFileSync } from "node:fs";
@@ -6,7 +6,7 @@ import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { PAGES, pageUrl, openPage, listFiles, read, startServer, LAYOUT_PROBE } from "./lib.mjs";
+import { PAGES, pageUrl, openPage, listFiles, read, startServer, LAYOUT_PROBE, ME_URL } from "./lib.mjs";
 
 const text = (html) => html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<svg[\s\S]*?<\/svg>/g, " ").replace(/<[^>]+>/g, " ").replace(/&middot;/g, "·").replace(/&rarr;/g, "→").replace(/&rsquo;/g, "\u2019").replace(/&ldquo;|&rdquo;/g, '"').replace(/&#8377;/g, "\u20B9").replace(/&amp;/g, "&").replace(/&nbsp;/g, " ").replace(/&copy;/g, "©").replace(/\s+/g, " ").trim();
 const CONSOLE = "https://console.corporatetambola.com/";
@@ -30,7 +30,7 @@ export const CASES_V2 = [
     c.check("equal prominence: same size, colours and weight (no dark pattern)", btn.length === 2 && btn[0].w === btn[1].w && btn[0].h === btn[1].h && btn[0].bg === btn[1].bg && btn[0].color === btn[1].color && btn[0].fw === btn[1].fw && btn[0].fs === btn[1].fs && btn[0].bd === btn[1].bd, JSON.stringify(btn));
     c.check("a button is at least 44 px tall", btn.every((b) => b.h >= 44), JSON.stringify(btn));
     c.check("no choice is pre-selected: nothing stored, no cookie, before the answer", (await page.evaluate(() => localStorage.length + sessionStorage.length)) === 0 && (await ctx.cookies()).length === 0 && (await page.evaluate(() => document.cookie)) === "" && (await page.evaluate(async () => (await navigator.serviceWorker.getRegistrations()).length + (await caches.keys()).length)) === 0, "stored before consent");
-    c.check("no request leaves this site before the answer", o.events.requests.every((u) => u.startsWith(base) || u.startsWith("data:")), o.events.requests.filter((u) => !u.startsWith(base)).join(" "));
+    c.check("no request leaves this site before the answer, except the console's plain \"am I signed in?\" question (T24); that question sends no cookie of this site and stores nothing", o.events.requests.every((u) => u.startsWith(base) || u.startsWith("data:") || u === ME_URL), o.events.requests.filter((u) => !u.startsWith(base) && u !== ME_URL).join(" "));
     // the page still works while the question is open: nothing is blocked, the sign-in link is a plain link
     await stubConsole(ctx);
     await page.locator("#consent button[data-consent=no]").click();
@@ -398,6 +398,155 @@ export const CASES_V2 = [
       await o.page.locator("#consent button[data-consent=no]").click();
       const bad = await o.page.evaluate(LAYOUT_PROBE, W);
       c.check(`${p}: answered, the page passes the layout rules at ${W} px`, bad.length === 0, bad.join(" | "));
+      await o.close();
+    }
+  } },
+
+  { id: "T24", name: "Staying signed in: Home asks the console once; signed in shows Signed in + Open console; signed out, an error, a slow answer or blocked CORS leave the page exactly as it was; nothing stored; no layout shift", async run({ base, root, browser, c }) {
+    const SIGNED_OUT_TEXT = /^Sign in( or start)?$/;
+    const links = () => [...document.querySelectorAll("a[data-gate]:not([data-demo])")].map((a) => ({ t: (a.textContent || "").trim(), h: a.getAttribute("href"), al: a.getAttribute("aria-label") }));
+    const noteText = () => { const n = document.getElementById("signed-note"); return n ? (n.textContent || "") : null; };
+    const pageErrors = (/** @type {any} */ o) => o.events.console.filter((/** @type {string} */ m) => /^pageerror/.test(m));
+    const pageConsole = (/** @type {any} */ o) => o.events.console.filter((/** @type {string} */ m) => !/Failed to load resource|net::ERR|blocked by CORS policy|Access-Control-Allow|status of (404|500)/i.test(m));
+    const SECRETS = ["someone@example.test", "Pat Example", "u-4711"];
+
+    // ---- the code and the policy, read as text ----
+    const gate = read(root, "gate.js");
+    c.check("gate.js asks the console's /api/me with the browser's cookies included, as a plain GET", /https:\/\/console\.corporatetambola\.com\/api\/me/.test(gate) && /credentials:\s*"include"/.test(gate) && /method:\s*"GET"/.test(gate), "contract missing");
+    c.check("gate.js gives up after 4 seconds", /setTimeout\([^)]*\)?[\s\S]{0,120}4000/.test(gate) && /abort\(\)/.test(gate), "no timeout");
+    c.check("gate.js never reads or writes a cookie", !/document\.cookie/.test(gate) && !/cookieStore/.test(gate), "touches cookies");
+    c.check("gate.js never stores the signed-in state: its only storage write is the existing visit note, and it is not in the answer's path", (gate.match(/localStorage\.setItem|sessionStorage|indexedDB|caches\./g) || []).length === 1 && /localStorage\.setItem\(VISIT, "1"\)/.test(gate), "stores something else");
+    const fields = new Set([...gate.matchAll(/\bj\.([A-Za-z_]+)/g)].map((m) => m[1]));
+    c.check("gate.js reads one field of the answer, signedIn, and nothing else (no identity)", fields.size === 1 && fields.has("signedIn"), [...fields].join(","));
+    c.check("gate.js does not log, count or send the answer anywhere (no console, beacon, image, second request)", !/\bconsole\.(log|warn|error|info|debug|trace)/.test(gate) && !/sendBeacon|new Image|XMLHttpRequest/.test(gate) && (gate.match(/\bfetch\(/g) || []).length === 1, "reports");
+    const csp = (/** @type {string} */ (read(root, "_headers").match(/Content-Security-Policy:.*/)?.[0]) || "");
+    c.check("the content policy allows the console for connections and nothing else new", /connect-src 'self' https:\/\/console\.corporatetambola\.com;/.test(csp) && !/\*/.test(csp), csp);
+    const priv = text(read(root, "privacy.html"));
+    c.check("privacy page: one honest line on staying signed in and its limits (cookies, incognito window, installed phone app, Safari)", /Staying signed in\./.test(priv) && /clear your cookies/.test(priv) && /incognito window/.test(priv) && /installed phone app/.test(priv) && /Safari/.test(priv) && /sign in again/.test(priv), "line missing");
+    c.check("privacy page: says the one question to the console is asked and not saved", /one plain question to your console/.test(priv) && /never saved on your device/.test(priv), "question not disclosed");
+
+    // ---- signed out: nothing changes ----
+    const out = await openPage(browser, base + "/", { w: 1280, consent: "ask", me: "out", cookie: true });
+    await out.page.waitForTimeout(500);
+    const lo = await out.page.evaluate(links);
+    c.check("signed out: the buttons still say Sign in / Sign in or start, no aria-label added", lo.length >= 3 && lo.every((a) => SIGNED_OUT_TEXT.test(a.t) && a.al === null), JSON.stringify(lo));
+    c.check("signed out: no 'Signed in' text anywhere, the reserved line is empty", (await out.page.evaluate(noteText)) === "" && !/Signed in/.test(await out.page.evaluate(() => document.body.innerText)), "text shown");
+    c.check("signed out: the console was asked exactly once, no errors from the page", out.me.seen.length === 1 && pageErrors(out).length === 0 && pageConsole(out).length === 0, JSON.stringify([out.me.seen.length, out.events.console]));
+    await out.close();
+
+    // ---- signed in ----
+    const inn = await openPage(browser, base + "/", { w: 1280, consent: "ask", me: "in", cookie: true });
+    await inn.page.waitForFunction(() => (document.querySelector("a[data-gate]:not([data-demo])") || { textContent: "" }).textContent === "Open console");
+    const li = await inn.page.evaluate(links);
+    c.check("signed in: every Sign in button now says Open console and still goes to the console", li.length >= 3 && li.every((a) => a.t === "Open console" && /^https:\/\/console\.corporatetambola\.com\/\?/.test(String(a.h)) && /visit=repeat/.test(String(a.h))), JSON.stringify(li));
+    c.check("signed in: the spoken name starts with the visible words and says Signed in", li.every((a) => a.al === "Signed in. Open console"), JSON.stringify(li));
+    c.check("signed in: the front page says Signed in", (await inn.page.evaluate(noteText)) === "Signed in", String(await inn.page.evaluate(noteText)));
+    c.check("signed in: the free-game link keeps its own words", (await inn.page.locator("a[data-demo]").first().textContent()) === "Try a free game with 10 people", "demo link changed");
+    const s0 = inn.me.seen[0] || { method: "", headers: {}, url: "" };
+    c.check("the request: one GET, no preflight, no query, carries the console cookie, Origin is this page, nothing else attached", inn.me.seen.length === 1 && s0.method === "GET" && s0.url === ME_URL && /console_session=opaque-test-value/.test(String(s0.headers["cookie"])) && s0.headers["origin"] === base && !s0.headers["authorization"] && !s0.headers["x-requested-with"], JSON.stringify(s0));
+    const dump = await inn.page.evaluate(() => JSON.stringify({ ls: { ...localStorage }, ss: { ...sessionStorage }, ck: document.cookie, html: document.documentElement.outerHTML }));
+    c.check("what the console answered about you (e-mail, name, id) appears nowhere on the page, in storage or in a cookie", SECRETS.every((s) => !dump.includes(s)), "identity leaked");
+    c.check("no other request carries it either", SECRETS.every((s) => !inn.events.requests.some((u) => u.includes(encodeURIComponent(s)) || u.includes(s))), inn.events.requests.join(" "));
+    c.check("signed in, nothing stored: no storage keys at all (the cookie question is still open), no cookie on this site", (await inn.page.evaluate(() => localStorage.length + sessionStorage.length)) === 0 && (await inn.ctx.cookies(base)).length === 0, "stored");
+    c.check("signed in: no errors from the page", pageErrors(inn).length === 0 && pageConsole(inn).length === 0, JSON.stringify(inn.events.console));
+    // forgotten on reload: the next page load asks again, and a changed answer wins
+    inn.me.set("out"); await inn.page.reload({ waitUntil: "load" }); await inn.page.waitForTimeout(500);
+    c.check("after a reload with the console saying signed out, the page says Sign in again (nothing was remembered)", (await inn.page.evaluate(links)).every((a) => SIGNED_OUT_TEXT.test(a.t)) && (await inn.page.evaluate(noteText)) === "", JSON.stringify(await inn.page.evaluate(links)));
+    // back button (page restored from memory): asked again
+    inn.me.set("in"); await inn.page.evaluate(() => window.dispatchEvent(new PageTransitionEvent("pageshow", { persisted: true })));
+    await inn.page.waitForFunction(() => (document.querySelector("a[data-gate]:not([data-demo])") || { textContent: "" }).textContent === "Open console");
+    inn.me.set("out"); await inn.page.evaluate(() => window.dispatchEvent(new PageTransitionEvent("pageshow", { persisted: true })));
+    await inn.page.waitForFunction(() => /^Sign in/.test((document.querySelector("a[data-gate]:not([data-demo])") || { textContent: "" }).textContent || ""));
+    c.check("back button: the page asks again, so signing out elsewhere shows here too", true);
+    await inn.close();
+
+    // ---- every other page says Open console in its header and bottom bar too ----
+    for (const p of ["games", "privacy", "contact", "pricing"]) {
+      const o = await openPage(browser, pageUrl(base, p), { w: 1280, me: "in" });
+      await o.page.waitForFunction(() => (document.querySelector("a[data-gate]:not([data-demo])") || { textContent: "" }).textContent === "Open console");
+      c.check(`${p}: signed in, every console link says Open console`, (await o.page.evaluate(links)).every((a) => a.t === "Open console"), JSON.stringify(await o.page.evaluate(links)));
+      await o.close();
+    }
+
+    // ---- the answer being "Yes, remember me" does not fight it ----
+    const yesInit = () => { try { localStorage.setItem("ctz-consent", JSON.stringify({ v: 1, comfort: true, on: "2026-11-22" })); localStorage.setItem("ctz-visited", "1"); } catch (e) { /* blocked */ } };
+    const yi = await openPage(browser, base + "/", { w: 1280, me: "in", extraInit: yesInit });
+    await yi.page.waitForFunction(() => (document.querySelector("a[data-gate]:not([data-demo])") || { textContent: "" }).textContent === "Open console");
+    const ykeys = await yi.page.evaluate(() => Object.keys(localStorage).sort().join(","));
+    c.check("said Yes + signed in: Open console wins over Your console, and the only stored words are the ones the visitor's Yes already allowed", ykeys === "ctz-consent,ctz-visited", ykeys);
+    await yi.close();
+    const yo = await openPage(browser, base + "/", { w: 1280, me: "out", extraInit: yesInit });
+    await yo.page.waitForTimeout(500);
+    c.check("said Yes + signed out: the repeat-visit words (Your console) still work as before", (await yo.page.evaluate(links)).every((a) => /^(Your console|Go to your console)$/.test(a.t)), JSON.stringify(await yo.page.evaluate(links)));
+    await yo.close();
+
+    // ---- no layout shift when the answer arrives: every page, from a small phone to a wide laptop ----
+    // Every box on the page is measured before and after. Only the words inside the Sign in buttons may change; no box may move, grow or shrink.
+    const SNAP = () => {
+      const out = /** @type {Record<string, number[]>} */ ({});
+      let i = 0;
+      for (const e of document.querySelectorAll("body *")) {
+        if (e.closest("svg, .sprite") || e.closest("a[data-gate]:not([data-demo])") && !e.matches("a[data-gate]")) continue; // the words inside a Sign in button
+        i++;
+        const r = e.getBoundingClientRect();
+        out[i + ":" + e.tagName + "." + String(e.className).slice(0, 20)] = [r.left, r.top, r.width, r.height].map((n) => Math.round(n * 2) / 2);
+      }
+      out["doc"] = [document.documentElement.scrollWidth, document.documentElement.scrollHeight, 0, 0];
+      return out;
+    };
+    const WAIT_IN = () => (document.querySelector("a[data-gate]:not([data-demo])") || { textContent: "" }).textContent === "Open console" || !!document.querySelector("a[data-gate]:not([data-demo]) .oc-c");
+    for (const p of ["index", "how-it-works", "privacy", "contact", "pricing"]) for (const w of [320, 390, 600, 900, 1000, 1159, 1160, 1280, 1440]) {
+      if (p !== "index" && ![390, 1000, 1280].includes(w)) continue; // the front page at nine widths (the hero is the busiest), the others at a phone, a small laptop and a wide laptop
+      const o = await openPage(browser, pageUrl(base, p), { w, me: "out", extraInit: () => { /** @type {any} */ (window).__cls = 0; try { new PerformanceObserver((l) => { for (const e of l.getEntries()) if (!(/** @type {any} */ (e)).hadRecentInput) /** @type {any} */ (window).__cls += /** @type {any} */ (e).value; }).observe({ type: "layout-shift", buffered: true }); } catch (e) { /* not supported */ } } });
+      await o.page.waitForTimeout(1500); // the page's own slide-in animations (up to about 1.2 s) are finished, so only this change is measured
+      const before = await o.page.evaluate(SNAP);
+      const cls0 = await o.page.evaluate(() => /** @type {any} */ (window).__cls);
+      o.me.set("in"); await o.page.evaluate(() => window.dispatchEvent(new PageTransitionEvent("pageshow", { persisted: true })));
+      await o.page.waitForFunction(WAIT_IN);
+      await o.page.waitForTimeout(150);
+      const after = await o.page.evaluate(SNAP);
+      const keys = Object.keys(before);
+      const bad = keys.filter((k) => JSON.stringify(before[k]) !== JSON.stringify(after[k]) && !(/^\d+:A\./.test(k) && before[k][0] === after[k][0] && before[k][1] === after[k][1] && before[k][3] === after[k][3] && /btn/.test(k)));
+      const cls = (await o.page.evaluate(() => /** @type {any} */ (window).__cls)) - cls0; // only what happens after the answer; the page's own first paint is not this change
+      c.check(`${p} @${w}: when the answer arrives no box moves, grows or shrinks (the Sign in buttons may only change their words)`, bad.length === 0 && Object.keys(after).length === keys.length, bad.slice(0, 4).map((k) => k + " " + before[k] + " -> " + after[k]).join(" | "));
+      c.check(`${p} @${w}: the browser's own layout-shift score after the answer is 0`, cls < 0.0001, String(cls));
+      await o.close();
+    }
+
+    // ---- errors, odd answers: the page stays exactly as it was, quietly ----
+    for (const p of ["server500", "notfound", "garbage", "stringTrue", "noField", "netfail"]) {
+      const o = await openPage(browser, base + "/", { w: 1280, me: p });
+      await o.page.waitForTimeout(600);
+      c.check(`${p}: the page stays signed out (words, no 'Signed in')`, (await o.page.evaluate(links)).every((a) => SIGNED_OUT_TEXT.test(a.t) && a.al === null) && (await o.page.evaluate(noteText)) === "", JSON.stringify(await o.page.evaluate(links)));
+      c.check(`${p}: the console was asked, and the page raised no error of its own`, o.me.seen.length === 1 && pageErrors(o).length === 0 && pageConsole(o).length === 0, JSON.stringify([o.me.seen.length, o.events.console]));
+      await o.close();
+    }
+    // ---- blocked by the browser's cross-site rules: even if the body says signedIn:true, the page never sees it ----
+    for (const p of ["blockedNullOrigin", "blockedWrongOrigin", "blockedWildcard", "blockedNoCredentials"]) {
+      const o = await openPage(browser, base + "/", { w: 1280, me: p, cookie: true });
+      await o.page.waitForTimeout(600);
+      c.check(`${p}: the request was made, the browser refused the answer, the page stays signed out`, o.me.seen.length >= 1 && (await o.page.evaluate(links)).every((a) => SIGNED_OUT_TEXT.test(a.t)) && (await o.page.evaluate(noteText)) === "", JSON.stringify([o.me.seen.length, await o.page.evaluate(links)]));
+      c.check(`${p}: no error from the page's own code`, pageErrors(o).length === 0 && pageConsole(o).length === 0, JSON.stringify(o.events.console));
+      await o.close();
+    }
+    // ---- a console that never answers: the page loads at once, gives up after 4 seconds, stays signed out ----
+    const t0 = Date.now();
+    const slow = await openPage(browser, base + "/", { w: 1280, me: "hang" });
+    c.check("a console that never answers does not hold up the page (load finished at once)", Date.now() - t0 < 3500, String(Date.now() - t0));
+    await slow.page.click("nav [data-theme-toggle]");
+    c.check("and the page works meanwhile (buttons answer)", ["dark", "light"].includes((await slow.page.getAttribute("html", "data-theme")) || ""), "stuck");
+    await slow.page.waitForTimeout(4800);
+    c.check("after 4 seconds the question is dropped (request cancelled), the page stays signed out, no error", slow.events.failed.some((f) => f.startsWith(ME_URL)) && (await slow.page.evaluate(links)).every((a) => SIGNED_OUT_TEXT.test(a.t)) && pageErrors(slow).length === 0, JSON.stringify([slow.events.failed, slow.events.console]));
+    await slow.close();
+
+    // ---- accessibility with the signed-in words ----
+    const axeSrc = readFileSync(createRequire(import.meta.url).resolve("axe-core/axe.min.js"), "utf8");
+    for (const [w, scheme] of /** @type {[number, any][]} */ ([[1280, "light"], [390, "dark"]])) {
+      const o = await openPage(browser, base + "/", { w, scheme, me: "in" });
+      await o.page.waitForFunction(() => (document.getElementById("signed-note") || { textContent: "" }).textContent === "Signed in");
+      await o.page.evaluate(axeSrc);
+      const res = await o.page.evaluate(async () => (await /** @type {any} */ (window).axe.run(document, { resultTypes: ["violations"], runOnly: { type: "rule", values: ["label-content-name-mismatch", "color-contrast", "link-name", "aria-allowed-attr", "aria-valid-attr-value"] } })).violations.map((/** @type {any} */ v) => v.id + " x" + v.nodes.length));
+      c.check(`signed in, ${scheme} ${w}: accessibility rules (name matches visible words, contrast, link names) pass`, res.length === 0, res.join(" | "));
       await o.close();
     }
   } },
