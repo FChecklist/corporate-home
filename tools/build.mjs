@@ -10,10 +10,11 @@ import { execFileSync } from "node:child_process";
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync, statSync } from "node:fs";
 import { resolve, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { HIDDEN_GAMES, hideInHtml, hideInGamesBar, leftovers, TEXT_SWAPS } from "./visible-games.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const out = join(root, "dist");
-const SKIP = new Set([".git", ".gitignore", ".github", "node_modules", "dist", "tests", "tools", "docs", "package.json", "package-lock.json", "README.md", "KNOWLEDGE-MAP.md", "CHANGELOG.md", "tsconfig.json", "tsconfig.tools.json", "types.d.ts", "version.json"]);
+const SKIP = new Set([".git", ".gitignore", ".github", "node_modules", "dist", "tests", "tools", "docs", "functions", "package.json", "package-lock.json", "README.md", "KNOWLEDGE-MAP.md", "CHANGELOG.md", "tsconfig.json", "tsconfig.tools.json", "types.d.ts", "version.json"]);
 const fail = (m) => { console.error("BUILD FAILED: " + m); process.exit(1); };
 const git = (...a) => { try { return execFileSync("git", a, { cwd: root, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim(); } catch { return null; } };
 
@@ -42,10 +43,19 @@ const shortV = "v" + src.version;
 const esc = (t) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const changesHtml = '<ul class="plainlist">' + src.changes.slice(0, 10).map((c) => "<li>" + esc(c.what) + "</li>").join("") + "</ul>";
 
+// 2b. hidden games (boss decision 27 Nov 2026): tools/visible-games.mjs holds the one switch; the copy in dist/ loses the hidden games, the source pages stay whole
+const hidden = process.env.HOME_HIDDEN_GAMES === undefined ? HIDDEN_GAMES : process.env.HOME_HIDDEN_GAMES.split(",").map((x) => x.trim()).filter(Boolean); // the env value is for the test that builds both ways
+for (const f of ["og-image-3.png", "og-image-3.svg"]) { // the share picture for three games replaces og-image.* only while games are hidden; it is never published under its own name
+  if (hidden.length) cpSync(join(out, f), join(out, f.replace("-3", "")));
+  rmSync(join(out, f), { force: true });
+}
+if (hidden.length) writeFileSync(join(out, "gamesbar.js"), hideInGamesBar(readFileSync(join(out, "gamesbar.js"), "utf8"), hidden));
+
 // 3 + 4. pages
 const pages = readdirSync(out).filter((f) => f.endsWith(".html"));
 for (const f of pages) {
   let s = readFileSync(join(out, f), "utf8");
+  s = hideInHtml(s, hidden, f);
   if (!/<!--ver-->[^<]*<!--\/ver-->/.test(s)) fail(f + " has no <!--ver--> marker in the footer");
   s = s.replace(/<!--ver-->[^<]*<!--\/ver-->/g, "<!--ver-->" + shortV + "<!--/ver-->");
   if (f === "changes.html") { if (!/<!--changes-->[\s\S]*<!--\/changes-->/.test(s)) fail("changes.html has no <!--changes--> marker"); s = s.replace(/<!--changes-->[\s\S]*<!--\/changes-->/, "<!--changes-->" + changesHtml + "<!--/changes-->"); }
@@ -58,6 +68,15 @@ for (const f of pages) {
 for (const f of ["gamesbar.js", "gamesbar.css"]) if (!existsSync(join(out, f))) fail(f + " is missing from the output");
 
 // 5. checks
+if (hidden.length) {
+  for (const [from] of TEXT_SWAPS) if (!readFileSync(join(root, "games.html"), "utf8").includes(from) && !readFileSync(join(root, "index.html"), "utf8").includes(from)) fail("visible-games: wording to swap is no longer in the pages: " + from.slice(0, 50));
+  const walk = (d) => readdirSync(d).flatMap((n) => (statSync(join(d, n)).isDirectory() ? walk(join(d, n)) : [join(d, n)]));
+  for (const p of walk(out)) {
+    if (!/\.(html|js|xml|txt|svg|webmanifest|json)$/.test(p) || /version\.json$/.test(p)) continue;
+    const bad = leftovers(readFileSync(p, "utf8"), hidden).filter((b) => !(p.endsWith("gamesbar.js") && /its badge drawing/.test(b)));
+    if (bad.length) fail(p.slice(out.length + 1) + " still shows a hidden game (" + bad.join("; ") + ")");
+  }
+}
 const redirects = existsSync(join(root, "_redirects")) ? readFileSync(join(root, "_redirects"), "utf8") : "";
 for (const line of redirects.split("\n").map((l) => l.trim()).filter((l) => l && !l.startsWith("#")))
   if (/version\.json/.test(line) || /https?:\/\//.test(line)) fail("_redirects rule not allowed: " + line);
@@ -68,5 +87,5 @@ for (const f of pages) {
   if (!sitemap.includes("<loc>" + loc + "</loc>")) fail("sitemap.xml does not list " + loc);
 }
 if (!statSync(join(out, "version.json")).size) fail("version.json is empty");
-for (const bad of ["docs", "tests", "tools", "KNOWLEDGE.md", "CHANGELOG.md", "node_modules"]) if (existsSync(join(out, bad))) fail(bad + " must not be published");
+for (const bad of ["docs", "tests", "tools", "functions", "KNOWLEDGE.md", "CHANGELOG.md", "node_modules"]) if (existsSync(join(out, bad))) fail(bad + " must not be published");
 console.log("built " + pages.length + " pages -> dist/   version " + shortV + " (" + commit.slice(0, 7) + ")" + (dirty ? " (working copy has changes)" : "") + "   " + version.builtAt);

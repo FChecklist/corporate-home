@@ -1,9 +1,11 @@
 {
   "product": "corporate-games-home",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "commit": "filled in by tools/build.mjs",
   "builtAt": "filled in by tools/build.mjs",
   "changes": [
+    { "id": "2.2.1-02", "what": "The plain addresses corporatetambola.com and www.corporatetambola.com now send you to home.corporatetambola.com, so there is one address for this website.", "where": "functions/_middleware.js", "pr": "#8" },
+    { "id": "2.2.1-01", "what": "Home now shows three games: Tambola, Bingo and Lucky Draw. The other three are not offered here for now. The page text, the share picture and the games bar say three games.", "where": "index, games, privacy page, all footers, games bar, share picture", "pr": "#8" },
     { "id": "2.2.0-01", "what": "Stay signed in on the same phone or laptop. If you are already signed in to your console, this website now shows Signed in and an Open console button, so you do not sign in a second time.", "where": "gate.js, all pages (links), index", "pr": "#7" },
     { "id": "2.2.0-02", "what": "When a page opens, this website asks your console one plain question: are you signed in? Nothing about you is saved. If the console cannot be reached or says no, the page looks exactly as before.", "where": "gate.js, _headers (connection policy)", "pr": "#7" },
     { "id": "2.2.0-03", "what": "The Data and privacy page now says, in a few plain lines, how staying signed in works and when you may need to sign in again.", "where": "privacy page", "pr": "#7" },

@@ -12,6 +12,7 @@ const fonts = `@font-face{font-family:Inter;src:url(${url("fonts/Inter-normal-40
 const icon = (pad) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%"><rect width="64" height="64" fill="#7A1022"/><g transform="translate(${pad} ${pad}) scale(${(64 - 2 * pad) / 64})"><circle cx="32" cy="32" r="22" fill="none" stroke="#F2C14E" stroke-width="2.5" stroke-dasharray="2 5" stroke-linecap="round"/><g fill="#F2C14E"><circle cx="32" cy="19" r="4.2"/><circle cx="43.3" cy="25.5" r="4.2"/><circle cx="43.3" cy="38.5" r="4.2"/><circle cx="32" cy="45" r="4.2"/><circle cx="20.7" cy="38.5" r="4.2"/><circle cx="20.7" cy="25.5" r="4.2"/></g><circle cx="32" cy="32" r="5.5" fill="#FFF6DC"/></g></svg>`;
 const jobs = [
   ["og-image.png", 1200, 630, readFileSync(resolve(root, "og-image.svg"), "utf8")],
+  ["og-image-3.png", 1200, 630, readFileSync(resolve(root, "og-image-3.svg"), "utf8")], // the share picture while three games are hidden (tools/visible-games.mjs)
   ["apple-touch-icon.png", 180, 180, icon(4)], // iOS rounds the corners itself, so the square is full-bleed
   ["icon-192.png", 192, 192, icon(4)],
   ["icon-512.png", 512, 512, icon(4)],
