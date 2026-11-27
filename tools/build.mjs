@@ -46,7 +46,7 @@ const changesHtml = '<ul class="plainlist">' + src.changes.slice(0, 10).map((c) 
 // 2b. hidden games (boss decision 27 Nov 2026): tools/visible-games.mjs holds the one switch; the copy in dist/ loses the hidden games, the source pages stay whole
 const hidden = process.env.HOME_HIDDEN_GAMES === undefined ? HIDDEN_GAMES : process.env.HOME_HIDDEN_GAMES.split(",").map((x) => x.trim()).filter(Boolean); // the env value is for the test that builds both ways
 for (const f of ["og-image-3.png", "og-image-3.svg"]) { // the share picture for three games replaces og-image.* only while games are hidden; it is never published under its own name
-  if (hidden.length) cpSync(join(out, f), join(out, f.replace("-3", "")));
+  if (hidden.length) { if (existsSync(join(out, f))) cpSync(join(out, f), join(out, f.replace("-3", ""))); else console.log("WARNING: " + f + " is not rendered yet; the old share picture stays until the follow-up PATCH renders it"); }
   rmSync(join(out, f), { force: true });
 }
 if (hidden.length) writeFileSync(join(out, "gamesbar.js"), hideInGamesBar(readFileSync(join(out, "gamesbar.js"), "utf8"), hidden));

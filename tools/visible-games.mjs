@@ -42,6 +42,7 @@ export function hideInHtml(html, hidden = HIDDEN_GAMES, file = "") {
     s = s.replace(new RegExp('<article class="(?:card|row) g-' + id + '">[\\s\\S]*?</article>\\r?\\n?', "g"), ""); // cards and rows
     s = s.replace(new RegExp('<li><a href="https://' + esc(host) + '\\.corporatetambola\\.com/[^"]*">[^<]*</a></li>', "g"), ""); // e.g. privacy links
     s = s.replace(new RegExp('<symbol id="(?:mk|i)-' + id + '"[\\s\\S]*?</symbol>\\r?\\n?', "g"), ""); // the unused badge drawings
+    s = s.replace(new RegExp('<p class="fine note-line">[^<]*' + esc(GAMES[id].name) + '[^<]*</p>\r?\n?', "g"), ""); // a one-line note about that game only (privacy page)
   }
   for (const [from, to] of TEXT_SWAPS) s = s.split(from).join(to);
   return s;

@@ -23,7 +23,6 @@
     { "id": "2.0.0-05", "what": "Two looks, Retro and Modern, each with light and dark colours.", "where": "site.css, theme.js, site.js", "pr": "#1" },
     { "id": "2.0.0-06", "what": "Better search results and link previews when pages are shared.", "where": "page heads, sitemap.xml, robots.txt", "pr": "#1" },
     { "id": "2.0.0-07", "what": "This What's new page, and the version number at the bottom of every page.", "where": "changes.html, footer", "pr": "#1" },
-    { "id": "2.0.0-08", "what": "Lucky Draw is shown as coming soon.", "where": "index, games, contact", "pr": "#1" },
-    { "id": "2.0.0-09", "what": "Kinder, truer privacy words. The offline copy of the pages is kept only after you say Yes.", "where": "consent.js, site.js, privacy page", "pr": "#1" }
+    { "id": "2.0.0-08", "what": "Lucky Draw is shown as coming soon.", "where": "index, games, contact", "pr": "#1" }
   ]
 }
