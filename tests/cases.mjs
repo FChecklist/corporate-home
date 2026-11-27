@@ -6,6 +6,10 @@ import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { WIDTHS, PAGES, pageUrl, openPage, checker, contrastRatio, COLOR_PROBE, LAYOUT_PROBE, listFiles, read, heightFor, ME_URL } from "./lib.mjs";
 
+import { HIDDEN_GAMES } from "../tools/visible-games.mjs";
+// the games the build hides (tools/visible-games.mjs, 27 Nov 2026): a hidden game must be ABSENT from every page; with the switch empty all six must be present again
+const HID = new Set(HIDDEN_GAMES), ID_OF = { "Tic Tac Toe": "ttt", "Snakes and Ladders": "snakes", "Luck by Chance": "luck" };
+const gameShown = (name) => !HID.has(ID_OF[name]);
 const OWNER_LINE = "We work closely with HR teams in organizing online events and games.";
 const GAME_URLS = { Tambola: "https://housie.corporatetambola.com/", Bingo: "https://bingo.corporatetambola.com/", "Tic Tac Toe": "https://tictactoe.corporatetambola.com/", "Snakes and Ladders": "https://snakes.corporatetambola.com/", "Luck by Chance": "https://luck.corporatetambola.com/" };
 const ALLOWED_EXTERNAL = [
@@ -51,7 +55,7 @@ export const CASES_OLD = [
     }
     for (const f of ["index.html", "games.html"]) {
       const html = read(root, f);
-      for (const [n, u] of Object.entries(GAME_URLS)) c.check(`${f}: ${n} links to ${u}`, html.includes(`href="${u}"`), "missing");
+      for (const [n, u] of Object.entries(GAME_URLS)) c.check(`${f}: ${n} ${gameShown(n) ? "links to" : "is hidden: no link to"} ${u}`, html.includes(`href="${u}"`) === gameShown(n), gameShown(n) ? "missing" : "hidden game still linked");
       const draw = html.match(/<article class="(?:card|row) g-draw">[\s\S]*?<\/article>/);
       c.check(`${f}: the Lucky Draw card says Coming soon and links only to the contact page`, !!draw && /Coming soon/.test(draw[0]) && !/Live now|class="tag"/i.test(draw[0]) && [...draw[0].matchAll(/href="([^"#][^"]*)"/g)].every((m) => m[1] === "/contact"), draw ? draw[0].slice(0, 120) : "no card");
       c.check(`${f}: the Lucky Draw card carries no date`, !!draw && !/\d/.test(text(draw[0]).replace("Lucky Draw", "")), "digits in card");
@@ -69,7 +73,7 @@ export const CASES_OLD = [
     // the shared bar carries its own addresses: only the home site, the five game sites and the contact page; never the old hub, never the console
     const bar = readFileSync(join(root, "gamesbar.js"), "utf8");
     const barUrls = [...bar.matchAll(/"(https:\/\/[^"]+)"/g)].map((m) => m[1]);
-    c.check("gamesbar.js: at least 7 addresses, all on the allowed list", barUrls.length >= 7 && barUrls.every((u) => /^https:\/\/(home|housie|bingo|tictactoe|snakes|luck)\.corporatetambola\.com\/(contact)?$/.test(u)), barUrls.filter((u) => !/^https:\/\/(home|housie|bingo|tictactoe|snakes|luck)\.corporatetambola\.com\/(contact)?$/.test(u)).join(" "));
+    c.check("gamesbar.js: at least 7 addresses, all on the allowed list", barUrls.length >= 7 - HID.size && barUrls.every((u) => /^https:\/\/(home|housie|bingo|tictactoe|snakes|luck)\.corporatetambola\.com\/(contact)?$/.test(u)), barUrls.filter((u) => !/^https:\/\/(home|housie|bingo|tictactoe|snakes|luck)\.corporatetambola\.com\/(contact)?$/.test(u)).join(" "));
     c.check("gamesbar.js: first item is the home site, never the old hub or the console", bar.includes('var HOME = "https://home.corporatetambola.com/"') && !/games\.corporatetambola\.com|console\.corporatetambola\.com/.test(bar), "wrong home");
   } },
 
@@ -224,7 +228,7 @@ export const CASES_OLD = [
     c.check("the tagline, word for word", home.includes("Every ticket on the player\u2019s own phone, nothing to install. Each ticket is unique."), "missing");
     c.check("compliance: 'Designed to follow US privacy laws, EU GDPR and India\u2019s DPDP'", /Designed to follow US privacy laws, EU GDPR and India\u2019s DPDP/.test(home), "missing");
     c.check("close group: 'Your game is for the people you invite.'", home.includes("Your game is for the people you invite.") && home.includes("You decide who joins"), "missing");
-    for (const n of ["Tambola", "Bingo", "Tic Tac Toe", "Snakes and Ladders", "Luck by Chance", "Lucky Draw"]) c.check(`home names ${n}`, home.includes(n), "missing");
+    for (const n of ["Tambola", "Bingo", "Tic Tac Toe", "Snakes and Ladders", "Luck by Chance", "Lucky Draw"]) c.check(`home ${gameShown(n) ? "names" : "does not name (hidden)"} ${n}`, home.includes(n) === gameShown(n), "wrong");
     // the first screen carries the game picker twice (.choose on laptops, .six on phones; only one shows): count the page with the phone one, the longer, once
     const words = text(read(root, "index.html").replace(/<div class="choose">[\s\S]*?<\/ul><\/div>/, "")).split(/\s+/).length;
     c.check("home page is short (limit 950 words)", words <= 950, words + " words");
@@ -235,7 +239,7 @@ export const CASES_OLD = [
     c.check("for-hr page carries the owner's sentence", hr.includes(OWNER_LINE), "missing");
     c.check("how-it-works says player details are erased within 24 hours", how.includes("erased within 24 hours after the game ends"), "missing");
     c.check("contact page has the e-mail and the phone number", ct.includes("hello@corporatetambola.com") && ct.includes("(+91) 96503 97480"), "missing");
-    c.check("games page names all six games", ["Tambola", "Bingo", "Tic Tac Toe", "Snakes and Ladders", "Luck by Chance", "Lucky Draw"].every((n) => gm.includes(n)), "missing");
+    c.check("games page names exactly the shown games (all six when nothing is hidden)", ["Tambola", "Bingo", "Tic Tac Toe", "Snakes and Ladders", "Luck by Chance", "Lucky Draw"].every((n) => gm.includes(n) === gameShown(n)), "wrong");
     c.check("the privacy page names the Grievance Officer and 7 days", /Grievance Officer/.test(text(read(root, "privacy.html"))) && /within 7 days/.test(text(read(root, "privacy.html"))), "missing");
     c.check("the privacy page has the billing sentence, word for word", text(read(root, "privacy.html")).includes("We keep billing data for audit and tax reasons."), "missing");
   } },
@@ -303,7 +307,7 @@ export const CASES_OLD = [
     await o.ctx.setOffline(true);
     await p.goto(base + "/games", { waitUntil: "load" });
     c.check("offline: the saved-copy helper (service worker) is in charge of the page", await p.evaluate(() => !!navigator.serviceWorker.controller), "no controller");
-    c.check("offline: a visited page opens", (await p.textContent("h1")).includes("Six games for your people"), await p.title());
+    c.check("offline: a visited page opens", (await p.textContent("h1")).includes(HID.size ? "Three games for your people" : "Six games for your people"), await p.title());
     await p.goto(base + "/privacy", { waitUntil: "load" });
     c.check("offline: a page that was saved at install opens", (await p.textContent("h1")).includes("What we keep"), await p.title());
     await p.goto(base + "/never-opened-page", { waitUntil: "load" }).catch(() => {});
