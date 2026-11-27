@@ -43,7 +43,8 @@ ok("ON: three cards and rows (Tambola, Bingo, Lucky Draw), copy says three games
 const bar = read(on, "gamesbar.js");
 assert.deepEqual([...bar.matchAll(/^\s*\{ id: "(\w+)",/gm)].map((m) => m[1]), ["tambola", "bingo", "draw"]); assert.doesNotThrow(() => new Function(bar));
 assert.equal(existsSync(join(on, "og-image-3.png")) || existsSync(join(on, "og-image-3.svg")), false);
-if (existsSync(join(root, "og-image-3.png"))) assert.equal(readFileSync(join(on, "og-image.png")).equals(readFileSync(join(root, "og-image-3.png"))), true); else console.log("SKIPPED: og-image-3.png check (picture not rendered yet, follow-up PATCH)");
+assert.equal(existsSync(join(root, "og-image-3.png")), true, "og-image-3.png must exist (the three-game share picture)");
+assert.equal(readFileSync(join(on, "og-image.png")).equals(readFileSync(join(root, "og-image-3.png"))), true, "with games hidden the share picture must be the three-game one");
 ok("ON: the built games bar lists three and still parses; the share picture is the three-game one and og-image-3.* is not published");
 assert.match(read(on, "sitemap.xml"), /<loc>https:\/\/home\.corporatetambola\.com\/games<\/loc>/);
 assert.equal(/lucifertech/i.test(walk(on).filter((p) => TEXT.test(p)).map((p) => readFileSync(p, "utf8")).join("\n")), false);
