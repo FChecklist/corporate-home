@@ -65,7 +65,7 @@ export function leftovers(text, hidden = HIDDEN_GAMES) {
   const bad = [];
   for (const id of hidden) {
     const { host, name } = GAMES[id];
-    for (const [label, re] of [["its address", new RegExp("//" + esc(host) + "\\.corporatetambola\\.com")], ["its name", new RegExp(esc(name))], ["its card or list item", new RegExp('class="(?:card |row )?g-' + id + '"')], ["its badge drawing", new RegExp('id="(?:mk|i)-' + id + '"')]]) if (re.test(text)) bad.push(id + ": " + label);
+    for (const [label, re] of /** @type {[string, RegExp][]} */ ([["its address", new RegExp("//" + esc(host) + "\\.corporatetambola\\.com")], ["its name", new RegExp(esc(name))], ["its card or list item", new RegExp('class="(?:card |row )?g-' + id + '"')], ["its badge drawing", new RegExp('id="(?:mk|i)-' + id + '"')]])) if (re.test(text)) bad.push(id + ": " + label);
   }
   if (hidden.length && /\bSix games\b|\bsix games\b/.test(text)) bad.push('the text still says "Six games"');
   return bad;
